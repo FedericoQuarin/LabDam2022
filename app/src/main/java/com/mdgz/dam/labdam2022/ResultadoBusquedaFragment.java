@@ -13,6 +13,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
+import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,15 +22,12 @@ import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
  */
 public class ResultadoBusquedaFragment extends Fragment {
 
-    private FragmentBusquedaBinding binding;
-
-    private SeekBar seekBarCapacidad;
-    private TextView txtViewCapacidad;
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private FragmentResultadoBusquedaBinding binding;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -69,7 +67,7 @@ public class ResultadoBusquedaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentBusquedaBinding.inflate(inflater, container, false);
+        binding = FragmentResultadoBusquedaBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -77,25 +75,6 @@ public class ResultadoBusquedaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        seekBarCapacidad = binding.seekBarCapacidad;
-        txtViewCapacidad = binding.txtViewCapacidad;
 
-        txtViewCapacidad.setText(seekBarCapacidad.getProgress() + "dasdsa personas");
-        seekBarCapacidad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                txtViewCapacidad.setText(i + " personas");
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
     }
 }
