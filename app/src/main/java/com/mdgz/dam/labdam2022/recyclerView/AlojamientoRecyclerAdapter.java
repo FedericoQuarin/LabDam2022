@@ -2,12 +2,14 @@ package com.mdgz.dam.labdam2022.recyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.RecyclerViewBusquedaAlojamientosBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 
@@ -25,22 +27,20 @@ public class AlojamientoRecyclerAdapter
     }
 
     public class AlojamientoViewHolder extends RecyclerView.ViewHolder {
-        // TODO ver si se puede usar binding
-        // private RecyclerViewBusquedaAlojamientosBinding binding;
-
         TextView nombre;
-        TextView descripcion;
-        TextView id;
+        //TextView descripcion;
+        //TextView id;
         TextView capacidad;
         TextView precio;
 
         public AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding binding) {
             super(binding.getRoot());
+            View v = binding.getRoot();
             this.nombre = binding.txtNombreRecyclerView;
-            // this.descripcion = v.findViewById(R.id.txtDescripcionRecyclerView);
-            // this.id = v.findViewById(R.id.txtIdRecyclerView);
+            //this.descripcion = v.findViewById(R.id.txtDescripcionRecyclerView);
+            //this.id = v.findViewById(R.id.txtIdRecyclerView);
             this.capacidad = binding.txtCapacidadRecyclerView;
-            this.precio = binding.labelPrecioRecyclerView;
+            this.precio = binding.txtPrecioRecyclerView;
         }
     }
 
@@ -64,10 +64,10 @@ public class AlojamientoRecyclerAdapter
 
         Alojamiento alojamiento = this.alojamientos.get(position);
 
-        // alojamientoHolder.id.setText(alojamiento.getId());
+        //alojamientoHolder.id.setText(alojamiento.getId());
         alojamientoHolder.nombre.setText(alojamiento.getTitulo());
-        // alojamientoHolder.descripcion.setText(alojamiento.getDescripcion());
-        alojamientoHolder.capacidad.setText(alojamiento.getCapacidad());
+        //alojamientoHolder.descripcion.setText(alojamiento.getDescripcion());
+        alojamientoHolder.capacidad.setText(String.valueOf(alojamiento.getCapacidad()));
         alojamientoHolder.precio.setText(alojamiento.getPrecioBase().toString());
     }
 
