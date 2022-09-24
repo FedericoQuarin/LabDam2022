@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mdgz.dam.labdam2022.R;
-import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
+import com.mdgz.dam.labdam2022.databinding.RecyclerViewBusquedaAlojamientosBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 
 import java.util.List;
@@ -18,17 +18,17 @@ import java.util.List;
 public class AlojamientoRecyclerAdapter
         extends RecyclerView.Adapter<AlojamientoRecyclerAdapter.AlojamientoViewHolder> {
 
-    GestorAlojamiento gA = GestorAlojamiento.getInstance();
-
     private List<Alojamiento> alojamientos;
 
-    public AlojamientoRecyclerAdapter(List<Alojamiento> aloj){
+    public AlojamientoRecyclerAdapter(List<Alojamiento> alojamientos){
 
         Log.d("My tag", "My message");
-        this.alojamientos = gA.getListaAlojamientos();
+        this.alojamientos = alojamientos;
     }
 
     public class AlojamientoViewHolder extends RecyclerView.ViewHolder {
+        // TODO ver si se puede usar binding
+        // private RecyclerViewBusquedaAlojamientosBinding binding;
 
         TextView nombre;
         TextView descripcion;
@@ -46,11 +46,14 @@ public class AlojamientoRecyclerAdapter
         }
     }
 
+    @NonNull
     @Override
-    public AlojamientoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AlojamientoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_detalle_alojamiento,parent,false);
+
+        // RecyclerViewBusquedaAlojamientosBinding binding = RecyclerViewBusquedaAlojamientosBinding.inflate(LayoutInflater.from(parent.getContext()));
 
         AlojamientoViewHolder aVH = new AlojamientoViewHolder(v);
 
