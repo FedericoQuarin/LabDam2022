@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mdgz.dam.labdam2022.R;
-import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
+import com.mdgz.dam.labdam2022.databinding.RecyclerViewBusquedaAlojamientosBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 
 import java.util.List;
@@ -18,41 +18,42 @@ import java.util.List;
 public class AlojamientoRecyclerAdapter
         extends RecyclerView.Adapter<AlojamientoRecyclerAdapter.AlojamientoViewHolder> {
 
-    GestorAlojamiento gA = GestorAlojamiento.getInstance();
-
     private List<Alojamiento> alojamientos;
 
-    public AlojamientoRecyclerAdapter(List<Alojamiento> aloj){
+    public AlojamientoRecyclerAdapter(List<Alojamiento> alojamientos){
 
         Log.d("My tag", "My message");
-        this.alojamientos = gA.getListaAlojamientos();
+        this.alojamientos = alojamientos;
     }
 
     public class AlojamientoViewHolder extends RecyclerView.ViewHolder {
-
         TextView nombre;
-        TextView descripcion;
-        TextView id;
+        //TextView descripcion;
+        //TextView id;
         TextView capacidad;
         TextView precio;
 
-        public AlojamientoViewHolder(View v) {
-            super(v);
-            this.nombre = v.findViewById(R.id.txtNombreRecyclerView);
-            this.descripcion = v.findViewById(R.id.txtDescripcionRecyclerView);
-            this.id = v.findViewById(R.id.txtIdRecyclerView);
-            this.capacidad = v.findViewById(R.id.txtCapacidadRecyclerView);
-            this.precio = v.findViewById(R.id.txtPrecioRecyclerView);
+        public AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding binding) {
+            super(binding.getRoot());
+            View v = binding.getRoot();
+            this.nombre = binding.txtNombreRecyclerView;
+            //this.descripcion = v.findViewById(R.id.txtDescripcionRecyclerView);
+            //this.id = v.findViewById(R.id.txtIdRecyclerView);
+            this.capacidad = binding.txtCapacidadRecyclerView;
+            this.precio = binding.txtPrecioRecyclerView;
         }
     }
 
+    @NonNull
     @Override
-    public AlojamientoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AlojamientoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_detalle_alojamiento,parent,false);
+        /*View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.fragment_detalle_alojamiento,parent,false);*/
 
-        AlojamientoViewHolder aVH = new AlojamientoViewHolder(v);
+        AlojamientoViewHolder aVH =
+                new AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding
+                        .inflate(LayoutInflater.from(parent.getContext())));
 
         return aVH;
     }
@@ -63,12 +64,11 @@ public class AlojamientoRecyclerAdapter
 
         Alojamiento alojamiento = this.alojamientos.get(position);
 
-        alojamientoHolder.id.setText(alojamiento.getId());
+        //alojamientoHolder.id.setText(alojamiento.getId());
         alojamientoHolder.nombre.setText(alojamiento.getTitulo());
-        alojamientoHolder.descripcion.setText(alojamiento.getDescripcion());
-        alojamientoHolder.capacidad.setText(alojamiento.getCapacidad());
+        //alojamientoHolder.descripcion.setText(alojamiento.getDescripcion());
+        alojamientoHolder.capacidad.setText(String.valueOf(alojamiento.getCapacidad()));
         alojamientoHolder.precio.setText(alojamiento.getPrecioBase().toString());
-
     }
 
     @Override

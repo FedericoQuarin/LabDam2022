@@ -5,15 +5,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SeekBar;
-import android.widget.TextView;
 
-import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
+import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
+import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +28,13 @@ public class ResultadoBusquedaFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private GestorAlojamiento gestorAlojamiento;
+
     private FragmentResultadoBusquedaBinding binding;
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,6 +69,8 @@ public class ResultadoBusquedaFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        gestorAlojamiento = GestorAlojamiento.getInstance();
     }
 
     @Override
@@ -75,6 +84,12 @@ public class ResultadoBusquedaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        recyclerView = binding.recyclerAlojamiento;
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(view.getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
+        adapter = new AlojamientoRecyclerAdapter(gestorAlojamiento.getListaAlojamientos());
+        recyclerView.setAdapter(adapter);
     }
 }
