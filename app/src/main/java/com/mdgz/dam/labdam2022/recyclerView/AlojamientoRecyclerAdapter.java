@@ -28,17 +28,12 @@ public class AlojamientoRecyclerAdapter
 
     public class AlojamientoViewHolder extends RecyclerView.ViewHolder {
         TextView nombre;
-        //TextView descripcion;
-        //TextView id;
         TextView capacidad;
         TextView precio;
 
         public AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding binding) {
             super(binding.getRoot());
-            View v = binding.getRoot();
             this.nombre = binding.txtNombreRecyclerView;
-            //this.descripcion = v.findViewById(R.id.txtDescripcionRecyclerView);
-            //this.id = v.findViewById(R.id.txtIdRecyclerView);
             this.capacidad = binding.txtCapacidadRecyclerView;
             this.precio = binding.txtPrecioRecyclerView;
         }
@@ -47,28 +42,18 @@ public class AlojamientoRecyclerAdapter
     @NonNull
     @Override
     public AlojamientoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-        /*View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_detalle_alojamiento,parent,false);*/
-
-        AlojamientoViewHolder aVH =
-                new AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding
-                        .inflate(LayoutInflater.from(parent.getContext())));
-
-        return aVH;
+        return new AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
 
     @Override
     public void onBindViewHolder(AlojamientoViewHolder alojamientoHolder, int position) {
-
         Alojamiento alojamiento = this.alojamientos.get(position);
 
-        //alojamientoHolder.id.setText(alojamiento.getId());
         alojamientoHolder.nombre.setText(alojamiento.getTitulo());
-        //alojamientoHolder.descripcion.setText(alojamiento.getDescripcion());
         alojamientoHolder.capacidad.setText(String.valueOf(alojamiento.getCapacidad()));
-        alojamientoHolder.precio.setText(alojamiento.getPrecioBase().toString());
+        alojamientoHolder.precio.setText(String.valueOf(alojamiento.getPrecioBase()));
     }
 
     @Override
