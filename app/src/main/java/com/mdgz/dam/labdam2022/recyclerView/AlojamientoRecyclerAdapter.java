@@ -2,12 +2,14 @@ package com.mdgz.dam.labdam2022.recyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.RecyclerViewBusquedaAlojamientosBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 
@@ -41,7 +43,7 @@ public class AlojamientoRecyclerAdapter
     @Override
     public AlojamientoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding
-                .inflate(LayoutInflater.from(parent.getContext())));
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
 
