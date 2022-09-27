@@ -2,14 +2,12 @@ package com.mdgz.dam.labdam2022.recyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.RecyclerViewBusquedaAlojamientosBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 
@@ -21,19 +19,17 @@ public class AlojamientoRecyclerAdapter
     private List<Alojamiento> alojamientos;
 
     public AlojamientoRecyclerAdapter(List<Alojamiento> alojamientos){
-
-        Log.d("My tag", "My message");
         this.alojamientos = alojamientos;
     }
 
     public class AlojamientoViewHolder extends RecyclerView.ViewHolder {
-        TextView nombre;
+        TextView titulo;
         TextView capacidad;
         TextView precio;
 
         public AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding binding) {
             super(binding.getRoot());
-            this.nombre = binding.txtNombreRecyclerView;
+            this.titulo = binding.txtNombreRecyclerView;
             this.capacidad = binding.txtCapacidadRecyclerView;
             this.precio = binding.txtPrecioRecyclerView;
         }
@@ -51,9 +47,9 @@ public class AlojamientoRecyclerAdapter
     public void onBindViewHolder(AlojamientoViewHolder alojamientoHolder, int position) {
         Alojamiento alojamiento = this.alojamientos.get(position);
 
-        alojamientoHolder.nombre.setText(alojamiento.getTitulo());
-        alojamientoHolder.capacidad.setText(String.valueOf(alojamiento.getCapacidad()));
-        alojamientoHolder.precio.setText(String.valueOf(alojamiento.getPrecioBase()));
+        alojamientoHolder.titulo.setText(alojamiento.getTitulo());
+        alojamientoHolder.capacidad.setText(String.valueOf(alojamiento.getCapacidad()) + " personas");
+        alojamientoHolder.precio.setText("$" + String.valueOf(alojamiento.getPrecioBase()));
     }
 
     @Override
