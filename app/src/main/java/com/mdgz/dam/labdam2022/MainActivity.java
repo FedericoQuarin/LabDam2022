@@ -41,12 +41,12 @@ public class MainActivity extends AppCompatActivity {
 
         Hotel hotel = new Hotel(1, "Hotel principal", 1, ubicacion);
 
-        Alojamiento d1 = new Departamento(1, "Departamento1", "", 1, 100.00, true, 200.00, 2, null);    gA.agregarAlojamiento(d1);
-        Alojamiento d2 = new Departamento(2, "Departamento2", "", 2, 200.00, true, 200.00, 2, null);    gA.agregarAlojamiento(d2);
-        Alojamiento d3 = new Departamento(3, "Departamento3", "", 3, 300.00, true, 200.00, 2, null);    gA.agregarAlojamiento(d3);
-        Alojamiento d4 = new Departamento(4, "Departamento4", "", 4, 400.00, true, 200.00, 2, null);    gA.agregarAlojamiento(d4);
-        Alojamiento d5 = new Departamento(5, "Departamento5", "", 5, 500.00, true, 200.00, 2, null);    gA.agregarAlojamiento(d5);
-        Alojamiento d6 = new Departamento(6, "Departamento6", "", 6, 600.00, true, 200.00, 2, null);    gA.agregarAlojamiento(d6);
+        Alojamiento d1 = new Departamento(1, "Departamento1", "", 1, 100.00, true, 200.00, 2, ubicacion);    gA.agregarAlojamiento(d1);
+        Alojamiento d2 = new Departamento(2, "Departamento2", "", 2, 200.00, true, 200.00, 2, ubicacion);    gA.agregarAlojamiento(d2);
+        Alojamiento d3 = new Departamento(3, "Departamento3", "", 3, 300.00, true, 200.00, 2, ubicacion);    gA.agregarAlojamiento(d3);
+        Alojamiento d4 = new Departamento(4, "Departamento4", "", 4, 400.00, true, 200.00, 2, ubicacion);    gA.agregarAlojamiento(d4);
+        Alojamiento d5 = new Departamento(5, "Departamento5", "", 5, 500.00, true, 200.00, 2, ubicacion);    gA.agregarAlojamiento(d5);
+        Alojamiento d6 = new Departamento(6, "Departamento6", "", 6, 600.00, true, 200.00, 2, ubicacion);    gA.agregarAlojamiento(d6);
 
         Alojamiento h1 = new Habitacion(1, "Habitacion1", "", 1, 100.0, 1, 1, true, hotel);     gA.agregarAlojamiento(h1);
         Alojamiento h2 = new Habitacion(2, "Habitacion2", "", 2, 200.0, 2, 2, false, hotel);    gA.agregarAlojamiento(h2);
