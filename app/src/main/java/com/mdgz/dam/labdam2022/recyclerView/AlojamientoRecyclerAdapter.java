@@ -31,7 +31,6 @@ public class AlojamientoRecyclerAdapter
         TextView ubicacion;
         ImageView imagen;
         ImageButton botonFavorito;
-        Boolean esFavorito = false;
 
         public AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding binding) {
             super(binding.getRoot());
@@ -65,15 +64,15 @@ public class AlojamientoRecyclerAdapter
         alojamientoHolder.precio.setText("$" + String.valueOf(alojamiento.getPrecioBase()));
         alojamientoHolder.imagen.setImageResource(R.drawable.depto_prueba);
 
-        //if(alojamientoHolder.esFavorito) alojamientoHolder.botonCorazon.setImageResource(R.drawable.corazon_vacio);
-        //else alojamientoHolder.botonCorazon.setImageResource(R.drawable.corazon_lleno);
+        if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setImageResource(R.drawable.corazon_lleno);
+        else alojamientoHolder.botonFavorito.setImageResource(R.drawable.corazon_vacio);
 
         alojamientoHolder.botonFavorito.setOnClickListener((v) -> {
 
-            if(alojamientoHolder.esFavorito) alojamientoHolder.botonFavorito.setImageResource(R.drawable.corazon_vacio);
+            if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setImageResource(R.drawable.corazon_vacio);
             else alojamientoHolder.botonFavorito.setImageResource(R.drawable.corazon_lleno);
 
-            alojamientoHolder.esFavorito = !alojamientoHolder.esFavorito;
+            alojamiento.turnFavorito();
 
         });
     }

@@ -47,4 +47,7 @@ public abstract class Alojamiento {
         return this.precioBase;
     }
 
+    public Boolean getEsFavorito() { return esFavorito; }
+
+    public void turnFavorito() { this.esFavorito = !this.esFavorito; }
 }
