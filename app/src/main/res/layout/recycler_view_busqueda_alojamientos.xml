@@ -10,7 +10,8 @@
         android:id="@+id/card_resultados"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="15dp"
+        app:cardBackgroundColor="?attr/colorSurface"
+        app:cardCornerRadius="5dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
 
@@ -63,8 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Ubicacion1"
-                        android:textColor="@color/gray_letters" />
+                        android:text="Ubicacion1" />
                 </LinearLayout>
 
                 <LinearLayout
