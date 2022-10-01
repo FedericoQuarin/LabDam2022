@@ -89,7 +89,7 @@ public class ResultadoBusquedaFragment extends Fragment {
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new AlojamientoRecyclerAdapter(gestorAlojamiento.getListaAlojamientos());
+        adapter = new AlojamientoRecyclerAdapter(gestorAlojamiento.getAlojamientos());
         recyclerView.setAdapter(adapter);
     }
 }

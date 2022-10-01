@@ -4,10 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/bar_search"
-        android:icon="@drawable/baseline_search_black_24dp"
+        android:id="@+id/boton_buscar"
+        android:icon="@drawable/baseline_search_white_24"
         android:title="Buscar"
-        app:actionViewClass="android.widget.SearchView"
         android:orderInCategory="1" app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/mis_reservas"

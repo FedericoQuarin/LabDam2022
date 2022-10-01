@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.mdgz.dam.labdam2022.databinding.ActivityMainBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
+import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.model.Departamento;
@@ -33,27 +34,33 @@ public class MainActivity extends AppCompatActivity {
 
     public void testing(){
 
-        GestorAlojamiento gA = GestorAlojamiento.getInstance();
+        GestorAlojamiento gestorAlojamiento = GestorAlojamiento.getInstance();
+        GestorCiudad gestorCiudad = GestorCiudad.getInstance();
 
-        Ciudad ciudad = new Ciudad(1, "Ciudad principal", "C.P.");
+        Ciudad ciudad1 = new Ciudad(1, "Santa Fe", "SF");
+        Ciudad ciudad2 = new Ciudad(2, "Paraná", "PA");
+        Ciudad ciudad3 = new Ciudad(3, "Rosario", "RS");
+        gestorCiudad.agregarCiudad(ciudad1);
+        gestorCiudad.agregarCiudad(ciudad2);
+        gestorCiudad.agregarCiudad(ciudad3);
 
-        Ubicacion ubicacion = new Ubicacion(50.0, 30.0, "Calle principal", "1", ciudad);
+        Ubicacion ubicacion = new Ubicacion(50.0, 30.0, "Calle principal", "1", ciudad1);
 
         Hotel hotel = new Hotel(1, "Hotel principal", 1, ubicacion);
 
-        Alojamiento d1 = new Departamento(1, "Departamento1", "", 1, 100.00, true, 200.00, 2, ubicacion, false);    gA.agregarAlojamiento(d1);
-        Alojamiento d2 = new Departamento(2, "Departamento2", "", 2, 200.00, true, 200.00, 2, ubicacion, false);    gA.agregarAlojamiento(d2);
-        Alojamiento d3 = new Departamento(3, "Departamento3", "", 3, 300.00, true, 200.00, 2, ubicacion, false);    gA.agregarAlojamiento(d3);
-        Alojamiento d4 = new Departamento(4, "Departamento4", "", 4, 400.00, true, 200.00, 2, ubicacion, false);    gA.agregarAlojamiento(d4);
-        Alojamiento d5 = new Departamento(5, "Departamento5", "", 5, 500.00, true, 200.00, 2, ubicacion, false);    gA.agregarAlojamiento(d5);
-        Alojamiento d6 = new Departamento(6, "Departamento6", "", 6, 600.00, true, 200.00, 2, ubicacion, false);    gA.agregarAlojamiento(d6);
+        Alojamiento d1 = new Departamento(1, "Departamento1", "", 1, 100.00, true, 200.00, 2, ubicacion, false);    gestorAlojamiento.agregarAlojamiento(d1);
+        Alojamiento d2 = new Departamento(2, "Departamento2", "", 2, 200.00, true, 200.00, 2, ubicacion, false);    gestorAlojamiento.agregarAlojamiento(d2);
+        Alojamiento d3 = new Departamento(3, "Departamento3", "", 3, 300.00, true, 200.00, 2, ubicacion, false);    gestorAlojamiento.agregarAlojamiento(d3);
+        Alojamiento d4 = new Departamento(4, "Departamento4", "", 4, 400.00, true, 200.00, 2, ubicacion, false);    gestorAlojamiento.agregarAlojamiento(d4);
+        Alojamiento d5 = new Departamento(5, "Departamento5", "", 5, 500.00, true, 200.00, 2, ubicacion, false);    gestorAlojamiento.agregarAlojamiento(d5);
+        Alojamiento d6 = new Departamento(6, "Departamento6", "", 6, 600.00, true, 200.00, 2, ubicacion, false);    gestorAlojamiento.agregarAlojamiento(d6);
 
-        Alojamiento h1 = new Habitacion(1, "Habitacion1", "", 1, 100.0, 1, 1, true, hotel, false);     gA.agregarAlojamiento(h1);
-        Alojamiento h2 = new Habitacion(2, "Habitacion2", "", 2, 200.0, 2, 2, false, hotel, false);    gA.agregarAlojamiento(h2);
-        Alojamiento h3 = new Habitacion(3, "Habitacion3", "", 3, 300.0, 3, 3, true, hotel, false);     gA.agregarAlojamiento(h3);
-        Alojamiento h4 = new Habitacion(4, "Habitacion4", "", 4, 400.0, 4, 4, false, hotel, false);    gA.agregarAlojamiento(h4);
-        Alojamiento h5 = new Habitacion(5, "Habitacion5", "", 5, 500.0, 5, 5, true, hotel, false);     gA.agregarAlojamiento(h5);
-        Alojamiento h6 = new Habitacion(6, "Habitacion6", "", 6, 600.0, 6, 6, false, hotel, false);    gA.agregarAlojamiento(h6);
+        Alojamiento h1 = new Habitacion(1, "Habitacion1", "", 1, 100.0, 1, 1, true, hotel, false);     gestorAlojamiento.agregarAlojamiento(h1);
+        Alojamiento h2 = new Habitacion(2, "Habitacion2", "", 2, 200.0, 2, 2, false, hotel, false);    gestorAlojamiento.agregarAlojamiento(h2);
+        Alojamiento h3 = new Habitacion(3, "Habitacion3", "", 3, 300.0, 3, 3, true, hotel, false);     gestorAlojamiento.agregarAlojamiento(h3);
+        Alojamiento h4 = new Habitacion(4, "Habitacion4", "", 4, 400.0, 4, 4, false, hotel, false);    gestorAlojamiento.agregarAlojamiento(h4);
+        Alojamiento h5 = new Habitacion(5, "Habitacion5", "", 5, 500.0, 5, 5, true, hotel, false);     gestorAlojamiento.agregarAlojamiento(h5);
+        Alojamiento h6 = new Habitacion(6, "Habitacion6", "", 6, 600.0, 6, 6, false, hotel, false);    gestorAlojamiento.agregarAlojamiento(h6);
 
     }
 }
