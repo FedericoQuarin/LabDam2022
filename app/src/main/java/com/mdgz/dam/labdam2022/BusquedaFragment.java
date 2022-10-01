@@ -7,14 +7,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
+import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
+import com.mdgz.dam.labdam2022.model.Ciudad;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +43,16 @@ public class BusquedaFragment extends Fragment {
     private SeekBar seekBarCapacidad;
     private TextView txtViewCapacidad;
     private Button buttonBuscar;
+    private Button buttonLimpiar;
+    private Spinner spinner_ciudades;
+    private CheckBox checkBoxHoteles;
+    private CheckBox checkBoxDeptos;
+    private CheckBox checkBoxHotelesWifi;
+    private EditText editTxtPrecioMaximo;
+    private EditText editTxtPrecioMinimo;
+
+
+    private GestorCiudad gestorCiudad;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -43,15 +62,6 @@ public class BusquedaFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BusquedaFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static BusquedaFragment newInstance(String param1, String param2) {
         BusquedaFragment fragment = new BusquedaFragment();
         Bundle args = new Bundle();
@@ -79,13 +89,25 @@ public class BusquedaFragment extends Fragment {
     }
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         super.onViewCreated(view, savedInstanceState);
 
         seekBarCapacidad = binding.seekBarCapacidad;
         txtViewCapacidad = binding.txtViewCapacidad;
         buttonBuscar = binding.buttonBuscar;
+        buttonLimpiar = binding.buttonLimpiar;
+        spinner_ciudades = binding.spinnerCiudades;
 
+        checkBoxHoteles = binding.checkBoxHoteles;
+        checkBoxDeptos = binding.checkBoxDeptos;
+        checkBoxHotelesWifi = binding.checkBoxWifi;
+        editTxtPrecioMaximo = binding.editTxtPrecioMaximo;
+        editTxtPrecioMinimo = binding.editTxtPrecioMinimo;
+
+
+        gestorCiudad = GestorCiudad.getInstance();
+
+        // Se setea el numero de personas inicial en el correspondiente TextView
+        // y se coloca un listener para mantenerlo actualizado
         txtViewCapacidad.setText(seekBarCapacidad.getProgress() + " personas");
         seekBarCapacidad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -104,8 +126,30 @@ public class BusquedaFragment extends Fragment {
             }
         });
 
-        buttonBuscar.setOnClickListener(view1 -> {NavHostFragment.findNavController(BusquedaFragment.this)
-                .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);});
+        // TODO validaciones y filtrado de alojamientos
+        buttonBuscar.setOnClickListener(v -> {
+            NavHostFragment.findNavController(BusquedaFragment.this)
+                .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
+        });
+
+        // Se buscan las ciudades existentes y se crea el adapter para el spinner
+        List<String> ciudades = gestorCiudad.getNombresCiudades();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
+                android.R.layout.simple_spinner_item,
+                ciudades);
+        spinner_ciudades.setAdapter(adapter);
+
+        // Se setea el listener del boton "Limpiar", que limpia todos los campos cargados
+        buttonLimpiar.setOnClickListener(v -> {
+            seekBarCapacidad.setProgress(getContext()
+                    .getResources()
+                    .getInteger(R.integer.seekbar_capacidad_def_value));
+            checkBoxHoteles.setChecked(false);
+            checkBoxDeptos.setChecked(false);
+            checkBoxHotelesWifi.setChecked(false);
+            editTxtPrecioMaximo.setText("");
+            editTxtPrecioMinimo.setText("");
+        });
     }
 
 

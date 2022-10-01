@@ -5,6 +5,7 @@ import com.mdgz.dam.labdam2022.model.Ciudad;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Clase encargada de gestionar las ciudades a nivel lógico
 public class GestorCiudad {
@@ -30,5 +31,11 @@ public class GestorCiudad {
 
     public List<Ciudad> getCiudades() {
         return listaCiudades;
+    }
+
+    public List<String> getNombresCiudades() {
+        return listaCiudades.stream()
+                .map(c -> c.getNombre())
+                .collect(Collectors.toList());
     }
 }
