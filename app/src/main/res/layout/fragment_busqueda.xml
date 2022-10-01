@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingHorizontal="10dp"
+    android:paddingVertical="2dp"
     tools:context=".BusquedaFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,13 +15,12 @@
         android:id="@+id/labelSeleccion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="4dp"
         android:text="¿Qué desea buscar?" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
         android:orientation="horizontal">
 
         <CheckBox
@@ -42,13 +43,12 @@
         android:id="@+id/labelCapacidad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="5dp"
         android:text="Capacidad" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
         android:orientation="horizontal">
 
         <SeekBar
@@ -73,33 +73,32 @@
         android:id="@+id/labelCiudad"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="5dp"
         android:text="Ciudad" />
 
     <Spinner
         android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/labelPrecio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="5dp"
         android:text="@string/precio_por_dia" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="4dp">
 
         <EditText
             android:id="@+id/editTxtPrecioMinimo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="1"
             android:hint="Mínimo"
             android:inputType="textPersonName" />
 
@@ -113,7 +112,7 @@
             android:id="@+id/editTxtPrecioMaximo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
+            android:layout_weight="1"
             android:hint="Máximo"
             android:inputType="textPersonName" />
 
@@ -123,15 +122,15 @@
         android:id="@+id/checkBoxWifi"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="5dp"
         android:layout_weight="0"
-        android:autoText="false"
+        android:includeFontPadding="false"
         android:text="Con WIFI" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="10dp">
 
         <Button
             android:id="@+id/buttonLimpiar"
