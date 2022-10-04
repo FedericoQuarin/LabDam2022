@@ -147,6 +147,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_weight="1"
             android:text="Buscar" />
+
     </LinearLayout>
 
 </LinearLayout>

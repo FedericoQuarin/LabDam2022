@@ -37,7 +37,7 @@ public class AlojamientoRecyclerAdapter
             this.titulo = binding.txtNombreRecyclerView;
             this.capacidad = binding.txtCapacidadRecyclerView;
             this.precio = binding.txtPrecioRecyclerView;
-            this.ubicacion = binding.txtUbicacionRecyclerView;
+            this.ubicacion = binding.txtUbicacionRVBusquedaAlojamiento;
             this.imagen = binding.imagenAlojamiento;
             this.botonFavorito = binding.imageButtonFavorito;
         }

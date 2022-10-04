@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="?attr/colorSurface"
-        app:cardCornerRadius="5dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
         app:cardUseCompatPadding="true">
 
@@ -51,7 +51,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:background="@null"
-                        app:srcCompat="@drawable/corazon_vacio" />
+                        app:srcCompat="@drawable/corazon_vacio"
+                        app:tint="@color/red" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -60,7 +61,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/txtUbicacionRecyclerView"
+                        android:id="@+id/txtUbicacionRVBusquedaAlojamiento"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
