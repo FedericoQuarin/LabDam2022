@@ -2,6 +2,7 @@ package com.mdgz.dam.labdam2022.recyclerView;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class AlojamientoRecyclerAdapter
         TextView precio;
         TextView ubicacion;
         ImageView imagen;
-        ImageButton botonFavorito;
+        CheckBox botonFavorito;
 
         public AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding binding) {
             super(binding.getRoot());
@@ -39,7 +40,7 @@ public class AlojamientoRecyclerAdapter
             this.precio = binding.txtPrecioRecyclerView;
             this.ubicacion = binding.txtUbicacionRVBusquedaAlojamiento;
             this.imagen = binding.imagenAlojamiento;
-            this.botonFavorito = binding.imageButtonFavorito;
+            this.botonFavorito = binding.buttonFavorito;
         }
     }
 
@@ -64,13 +65,13 @@ public class AlojamientoRecyclerAdapter
         alojamientoHolder.precio.setText("$" + String.valueOf(alojamiento.getPrecioBase()));
         alojamientoHolder.imagen.setImageResource(R.drawable.depto_prueba);
 
-        if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setImageResource(R.drawable.corazon_lleno);
-        else alojamientoHolder.botonFavorito.setImageResource(R.drawable.corazon_vacio);
+        if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
+        else alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_vacio);
 
         alojamientoHolder.botonFavorito.setOnClickListener((v) -> {
 
-            if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setImageResource(R.drawable.corazon_vacio);
-            else alojamientoHolder.botonFavorito.setImageResource(R.drawable.corazon_lleno);
+            if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_vacio);
+            else alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
 
             alojamiento.turnFavorito();
 
