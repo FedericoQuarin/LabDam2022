@@ -40,7 +40,6 @@ public class BusquedaFragment extends Fragment {
 
     private FragmentBusquedaBinding binding;
 
-
     private SeekBar seekBarCapacidad;
     private TextView txtViewCapacidad;
     private Button buttonBuscar;

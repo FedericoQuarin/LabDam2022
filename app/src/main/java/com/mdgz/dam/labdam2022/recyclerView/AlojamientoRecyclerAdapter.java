@@ -1,6 +1,7 @@
 package com.mdgz.dam.labdam2022.recyclerView;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -8,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mdgz.dam.labdam2022.BusquedaFragment;
 import com.mdgz.dam.labdam2022.R;
 import com.mdgz.dam.labdam2022.databinding.RecyclerViewBusquedaAlojamientosBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
@@ -21,11 +24,14 @@ public class AlojamientoRecyclerAdapter
 
     private List<Alojamiento> alojamientos;
 
-    public AlojamientoRecyclerAdapter(List<Alojamiento> alojamientos){
+    private OnNoteListener onNoteListener;
+
+    public AlojamientoRecyclerAdapter(List<Alojamiento> alojamientos, OnNoteListener onNoteListener){
         this.alojamientos = alojamientos;
+        this.onNoteListener = onNoteListener;
     }
 
-    public class AlojamientoViewHolder extends RecyclerView.ViewHolder {
+    public class AlojamientoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView titulo;
         TextView capacidad;
         TextView precio;
@@ -33,7 +39,9 @@ public class AlojamientoRecyclerAdapter
         ImageView imagen;
         CheckBox botonFavorito;
 
-        public AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding binding) {
+        OnNoteListener onNoteListener;
+
+        public AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding binding, OnNoteListener onNoteListener) {
             super(binding.getRoot());
             this.titulo = binding.txtNombreRecyclerView;
             this.capacidad = binding.txtCapacidadRecyclerView;
@@ -41,6 +49,14 @@ public class AlojamientoRecyclerAdapter
             this.ubicacion = binding.txtUbicacionRVBusquedaAlojamiento;
             this.imagen = binding.imagenAlojamiento;
             this.botonFavorito = binding.buttonFavorito;
+
+            this.imagen.setOnClickListener(this);   //TODO: Por ahora sólo aprentando en la imagen
+            this.onNoteListener = onNoteListener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            this.onNoteListener.onNoteClick(getAdapterPosition());
         }
     }
 
@@ -48,7 +64,7 @@ public class AlojamientoRecyclerAdapter
     @Override
     public AlojamientoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding
-                .inflate(LayoutInflater.from(parent.getContext()), parent, false));
+                .inflate(LayoutInflater.from(parent.getContext()), parent, false), this.onNoteListener);
     }
 
 
@@ -61,8 +77,8 @@ public class AlojamientoRecyclerAdapter
 
         alojamientoHolder.titulo.setText(alojamiento.getTitulo());
         alojamientoHolder.ubicacion.setText(ubicacion);
-        alojamientoHolder.capacidad.setText(String.valueOf(alojamiento.getCapacidad()) + " personas");
-        alojamientoHolder.precio.setText("$" + String.valueOf(alojamiento.getPrecioBase()));
+        alojamientoHolder.capacidad.setText(alojamiento.getCapacidad() + " personas");
+        alojamientoHolder.precio.setText("$" + alojamiento.getPrecioBase());
         alojamientoHolder.imagen.setImageResource(R.drawable.depto_prueba);
 
         if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
@@ -76,6 +92,7 @@ public class AlojamientoRecyclerAdapter
             alojamiento.turnFavorito();
 
         });
+
     }
 
     @Override
@@ -83,4 +100,7 @@ public class AlojamientoRecyclerAdapter
         return this.alojamientos.size();
     }
 
+    public interface OnNoteListener{
+        void onNoteClick(int position);
+    }
 }
