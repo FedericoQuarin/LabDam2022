@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ public class AlojamientoRecyclerAdapter
     }
 
     public class AlojamientoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        CardView card;
         TextView titulo;
         TextView capacidad;
         TextView precio;
@@ -43,6 +45,7 @@ public class AlojamientoRecyclerAdapter
 
         public AlojamientoViewHolder(RecyclerViewBusquedaAlojamientosBinding binding, OnNoteListener onNoteListener) {
             super(binding.getRoot());
+            this.card = binding.cardResultados;
             this.titulo = binding.txtNombreRecyclerView;
             this.capacidad = binding.txtCapacidadRecyclerView;
             this.precio = binding.txtPrecioRecyclerView;
@@ -50,7 +53,9 @@ public class AlojamientoRecyclerAdapter
             this.imagen = binding.imagenAlojamiento;
             this.botonFavorito = binding.buttonFavorito;
 
-            this.imagen.setOnClickListener(this);   //TODO: Por ahora sólo aprentando en la imagen
+            //this.itemView.setOnClickListener(this);
+            //this.imagen.setOnClickListener(this);   //TODO: Por ahora sólo aprentando en la imagen
+            this.card.setOnClickListener(this);
             this.onNoteListener = onNoteListener;
         }
 
