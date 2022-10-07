@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,8 +39,13 @@ public class BusquedaFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // Gestores
+    private GestorCiudad gestorCiudad;
+
+    // Binding
     private FragmentBusquedaBinding binding;
 
+    // Componentes
     private SeekBar seekBarCapacidad;
     private TextView txtViewCapacidad;
     private Button buttonBuscar;
@@ -51,8 +57,11 @@ public class BusquedaFragment extends Fragment {
     private EditText editTxtPrecioMaximo;
     private EditText editTxtPrecioMinimo;
 
-
-    private GestorCiudad gestorCiudad;
+    // Variables
+    String stringMinimo;
+    String stringMaximo;
+    Float minimo;
+    Float maximo;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -112,7 +121,8 @@ public class BusquedaFragment extends Fragment {
         seekBarCapacidad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                txtViewCapacidad.setText(i + " personas");
+                if(i == 1) txtViewCapacidad.setText(i + " persona");
+                else txtViewCapacidad.setText(i + " personas");
             }
 
             @Override
@@ -128,8 +138,12 @@ public class BusquedaFragment extends Fragment {
 
         // TODO validaciones y filtrado de alojamientos
         buttonBuscar.setOnClickListener(v -> {
-            NavHostFragment.findNavController(BusquedaFragment.this)
+
+            if(validarEditTexts()) {
+                NavHostFragment.findNavController(BusquedaFragment.this)
                 .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
+            }
+
         });
 
         // Se buscan las ciudades existentes y se crea el adapter para el spinner
@@ -150,6 +164,37 @@ public class BusquedaFragment extends Fragment {
             editTxtPrecioMaximo.setText("");
             editTxtPrecioMinimo.setText("");
         });
+    }
+
+    public Boolean validarEditTexts(){
+
+        stringMinimo = editTxtPrecioMinimo.getText().toString();
+        stringMaximo = editTxtPrecioMaximo.getText().toString();
+
+        /* Depende de como se implemente el filtro, estaba pensando en que sea un unico metodo
+        que busque entre los dos valores, cuando no se setea el minimo que busque desde 0,
+        cuando no se setea el maximo que busque desde un valor alto (lo cual me parece raro pero bueno)*/
+        // TODO: VER (quizas la peor forma de validar dos campos que hice en mi vida)
+        if(TextUtils.isEmpty(stringMinimo) && TextUtils.isEmpty(stringMaximo)){
+            minimo = 0.0f;
+            maximo = Float.MAX_VALUE;
+        } else if (TextUtils.isEmpty(stringMinimo)) {
+            minimo = 0.0f;
+            maximo = Float.valueOf(stringMaximo);
+        } else if (TextUtils.isEmpty(stringMaximo)) {
+            minimo = Float.valueOf(stringMinimo);
+            maximo = Float.MAX_VALUE; ;
+        } else {
+            minimo = Float.valueOf(stringMinimo);
+            maximo = Float.valueOf(stringMaximo);
+
+            if(minimo >= maximo){
+                editTxtPrecioMaximo.setError("Debe ser mayor al precio mínimo");
+                return false;
+            }
+        }
+
+        return true;
     }
 
 

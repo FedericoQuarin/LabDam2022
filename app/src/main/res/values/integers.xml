@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="seekbar_capacidad_def_value">1</integer>
+    <integer name="seekbar_capacidad_def_value">2</integer>
 </resources>
