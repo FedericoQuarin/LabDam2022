@@ -12,7 +12,11 @@
         tools:layout="@layout/fragment_busqueda" >
         <action
             android:id="@+id/action_busquedaFragment_to_resultadoBusquedaFragment"
-            app:destination="@id/resultadoBusquedaFragment" />
+            app:destination="@id/resultadoBusquedaFragment"
+            app:enterAnim="@anim/desde_derecha"
+            app:exitAnim="@anim/hacia_izquierda"
+            app:popEnterAnim="@anim/desde_izquierda"
+            app:popExitAnim="@anim/hacia_derecha" />
     </fragment>
     <fragment
         android:id="@+id/resultadoBusquedaFragment"
@@ -28,7 +32,9 @@
             app:popExitAnim="@anim/hacia_derecha" />
         <action
             android:id="@+id/action_resultadoBusquedaFragment_to_busquedaFragment"
-            app:destination="@id/busquedaFragment" />
+            app:destination="@id/busquedaFragment"
+            app:popEnterAnim="@anim/desde_izquierda"
+            app:popExitAnim="@anim/hacia_derecha" />
     </fragment>
     <fragment
         android:id="@+id/detalleAlojamientoFragment"
@@ -37,7 +43,9 @@
         tools:layout="@layout/fragment_detalle_alojamiento" >
         <action
             android:id="@+id/action_detalleAlojamientoFragment_to_busquedaFragment"
-            app:destination="@id/busquedaFragment" />
+            app:destination="@id/busquedaFragment"
+            app:popEnterAnim="@anim/desde_izquierda"
+            app:popExitAnim="@anim/hacia_derecha" />
         <action
             android:id="@+id/action_detalleAlojamientoFragment_to_resultadoBusquedaFragment"
             app:destination="@id/resultadoBusquedaFragment"
