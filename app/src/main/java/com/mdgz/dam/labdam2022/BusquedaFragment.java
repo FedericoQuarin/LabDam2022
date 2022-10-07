@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
@@ -45,9 +46,9 @@ public class BusquedaFragment extends Fragment {
     private Button buttonBuscar;
     private Button buttonLimpiar;
     private Spinner spinner_ciudades;
-    private CheckBox checkBoxHoteles;
-    private CheckBox checkBoxDeptos;
-    private CheckBox checkBoxHotelesWifi;
+    private Switch switchHoteles;
+    private Switch switchDeptos;
+    private Switch switchWifi;
     private EditText editTxtPrecioMaximo;
     private EditText editTxtPrecioMinimo;
 
@@ -97,9 +98,9 @@ public class BusquedaFragment extends Fragment {
         buttonLimpiar = binding.buttonLimpiar;
         spinner_ciudades = binding.spinnerCiudades;
 
-        checkBoxHoteles = binding.checkBoxHoteles;
-        checkBoxDeptos = binding.checkBoxDeptos;
-        checkBoxHotelesWifi = binding.checkBoxWifi;
+        switchHoteles = binding.switchHoteles;
+        switchDeptos = binding.switchDepartamentos;
+        switchWifi = binding.switchWiFi;
         editTxtPrecioMaximo = binding.editTxtPrecioMaximo;
         editTxtPrecioMinimo = binding.editTxtPrecioMinimo;
 
@@ -144,9 +145,9 @@ public class BusquedaFragment extends Fragment {
             seekBarCapacidad.setProgress(getContext()
                     .getResources()
                     .getInteger(R.integer.seekbar_capacidad_def_value));
-            checkBoxHoteles.setChecked(false);
-            checkBoxDeptos.setChecked(false);
-            checkBoxHotelesWifi.setChecked(false);
+            switchHoteles.setChecked(false);
+            switchDeptos.setChecked(false);
+            switchWifi.setChecked(false);
             editTxtPrecioMaximo.setText("");
             editTxtPrecioMinimo.setText("");
         });
