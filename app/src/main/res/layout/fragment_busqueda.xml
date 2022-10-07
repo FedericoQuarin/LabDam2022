@@ -117,11 +117,11 @@
 
                 <TextView
                     android:id="@+id/txtViewCapacidad"
-                    android:layout_width="wrap_content"
+                    android:layout_width="70dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="0.1"
-                    android:text="1 personas" />
+                    android:layout_weight="0"
+                    android:text="1 persona" />
 
             </LinearLayout>
 
@@ -181,7 +181,9 @@
                     android:layout_weight="1"
                     android:hint="Mínimo ($)"
                     android:inputType="numberDecimal"
+                    android:maxWidth="80dp"
                     android:minHeight="48dp"
+                    android:singleLine="true"
                     android:textSize="14sp" />
 
                 <TextView
@@ -201,6 +203,7 @@
                     android:layout_weight="1"
                     android:hint="Máximo ($)"
                     android:inputType="numberDecimal"
+                    android:maxWidth="80dp"
                     android:minHeight="48dp"
                     android:textSize="14sp" />
 
