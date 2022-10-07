@@ -20,6 +20,7 @@
     <color name="gray_letters_darkmode">#656565</color>
     <color name="white_alpha90">#E6FFFFFF</color>
     <color name="white_alpha60">#99FFFFFF</color>
+    <color name="white_alpha75">#BFFFFFFF</color>
 
 
 </resources>

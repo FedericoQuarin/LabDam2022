@@ -20,5 +20,16 @@
         <item name="android:editTextColor">?android:textColor</item>
 
         <item name="android:windowBackground">@color/white_red</item>
+
+        <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
+    </style>
+
+    <style name="Widget.LabDam2022.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.LabDam2022.ImageView" parent="">
+        <item name="tint">?attr/colorOnSurface</item>
     </style>
 </resources>
