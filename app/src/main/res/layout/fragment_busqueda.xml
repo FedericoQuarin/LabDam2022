@@ -1,153 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="10dp"
-    android:paddingVertical="2dp"
+    android:paddingVertical="10dp"
+    android:paddingTop="0dp"
     tools:context=".BusquedaFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
 
-    <TextView
-        android:id="@+id/labelSeleccion"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="4dp"
-        android:text="¿Qué desea buscar?" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/checkBoxHoteles"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Hoteles" />
-
-        <CheckBox
-            android:id="@+id/checkBoxDeptos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Departamentos" />
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/labelCapacidad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
         android:layout_marginVertical="5dp"
-        android:text="Capacidad" />
+        android:layout_marginTop="0dp"
+        android:paddingVertical="0dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <SeekBar
-            android:id="@+id/seekBarCapacidad"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:max="8"
-            android:min="1"
-            android:progress="@integer/seekbar_capacidad_def_value" />
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:clipToPadding="false"
+            android:elevation="5dp"
+            android:fadingEdgeLength="5dp"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtViewCapacidad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:text="1 personas" />
+            <TextView
+                android:id="@+id/labelSeleccion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp"
+                android:text="¿Qué desea buscar?"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <View
+                android:id="@+id/divider6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
 
-    <TextView
-        android:id="@+id/labelCiudad"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:text="Ciudad" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:orientation="horizontal"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp">
 
-    <Spinner
-        android:id="@+id/spinner_ciudades"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+                <Switch
+                    android:id="@+id/switchHoteles"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_weight="0"
+                    android:minHeight="48dp"
+                    android:paddingHorizontal="0dp"
+                    android:text="Hoteles" />
 
-    <TextView
-        android:id="@+id/labelPrecio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="5dp"
-        android:text="@string/precio_por_dia" />
+                <Switch
+                    android:id="@+id/switchDepartamentos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:minHeight="48dp"
+                    android:paddingHorizontal="0dp"
+                    android:text="Departamentos" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="4dp">
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/editTxtPrecioMinimo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Mínimo"
-            android:inputType="textPersonName" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:orientation="horizontal"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp">
 
-        <TextView
-            android:id="@+id/labelGuion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="---" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/outline_person_outline_black_24" />
 
-        <EditText
-            android:id="@+id/editTxtPrecioMaximo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Máximo"
-            android:inputType="textPersonName" />
+                <SeekBar
+                    android:id="@+id/seekBarCapacidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:max="8"
+                    android:min="1"
+                    android:progress="@integer/seekbar_capacidad_def_value" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/txtViewCapacidad"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="0.1"
+                    android:text="1 personas" />
 
-    <CheckBox
-        android:id="@+id/checkBoxWifi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:includeFontPadding="false"
-        android:text="Con WIFI" />
+            </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:paddingHorizontal="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:minHeight="48dp"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/buttonLimpiar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_weight="1"
-            android:text="Limpiar" />
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/outline_place_black_24" />
 
-        <Button
-            android:id="@+id/buttonBuscar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_weight="1"
-            android:text="Buscar" />
+                <Spinner
+                    android:id="@+id/spinner_ciudades"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:contentDescription="Elija una ciudad"
+                    android:minHeight="48dp"
+                    android:paddingLeft="0dp"
+                    android:paddingTop="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="0dp" />
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:orientation="horizontal"
+                android:paddingHorizontal="0dp"
+                android:paddingLeft="0dp"
+                android:paddingTop="0dp"
+                android:paddingRight="0dp"
+                android:paddingBottom="0dp">
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/outline_sell_black_24" />
+
+                <EditText
+                    android:id="@+id/editTxtPrecioMinimo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:hint="Mínimo ($)"
+                    android:inputType="numberDecimal"
+                    android:minHeight="48dp"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/labelGuion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginHorizontal="5dp"
+                    android:scaleX="2"
+                    android:text="-" />
+
+                <EditText
+                    android:id="@+id/editTxtPrecioMaximo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:hint="Máximo ($)"
+                    android:inputType="numberDecimal"
+                    android:minHeight="48dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/switchWiFi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:minHeight="48dp"
+                android:text="Con WiFi" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="10dp">
+
+                <Button
+                    android:id="@+id/buttonLimpiar"
+                    style="?attr/materialButtonOutlinedStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="Limpiar"
+                    android:textColor="@color/red"
+                    app:strokeColor="@color/red" />
+
+                <Button
+                    android:id="@+id/buttonBuscar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_weight="1"
+                    android:text="Buscar" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>
