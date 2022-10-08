@@ -20,6 +20,8 @@
         <item name="android:editTextColor">?android:textColor</item>
 
         <item name="android:windowBackground">@color/white_red</item>
+        
+        <item name="fontFamily">@font/nunito_regular</item>
 
         <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
     </style>
