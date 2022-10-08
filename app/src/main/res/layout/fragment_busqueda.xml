@@ -98,6 +98,7 @@
 
                 <ImageView
                     android:id="@+id/imageView"
+                    style="@style/Widget.LabDam2022.ImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -133,6 +134,7 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
+                    style="@style/Widget.LabDam2022.ImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -166,6 +168,7 @@
 
                 <ImageView
                     android:id="@+id/imageView3"
+                    style="@style/Widget.LabDam2022.ImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -230,10 +233,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/white"
-                    android:text="Limpiar"
-                    android:textColor="@color/red"
-                    app:strokeColor="@color/red" />
+                    android:text="Limpiar" />
 
                 <Button
                     android:id="@+id/buttonBuscar"

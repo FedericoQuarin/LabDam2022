@@ -16,9 +16,21 @@
         <!-- Customize your theme here. -->
         <item name="android:colorBackground">@color/gray_darkmode</item>
         <item name="colorSurface">@color/gray_surface_darkmode</item>
+        <item name="colorOnSurface">@color/white_alpha90</item>
 
         <item name="android:textColor">@color/white_alpha90</item>
 
+        <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
 
+    </style>
+
+    <style name="Widget.LabDam2022.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="strokeColor">?android:textColorPrimary</item>
+        <item name="rippleColor">@color/white_alpha15</item>
+    </style>
+
+    <style name="Widget.LabDam2022.ImageView" parent="">
+        <item name="tint">@color/white_alpha75</item>
     </style>
 </resources>
