@@ -22,6 +22,7 @@
 
         <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
 
+        <item name="fontFamily">@font/nunito_regular</item>
     </style>
 
     <style name="Widget.LabDam2022.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
