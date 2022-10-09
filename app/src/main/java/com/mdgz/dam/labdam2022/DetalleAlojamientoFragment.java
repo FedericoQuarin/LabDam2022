@@ -2,14 +2,22 @@ package com.mdgz.dam.labdam2022;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoDeptoBinding;
+import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoHotelBinding;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.databinding.FragmentDetalleAlojamientoBinding;
+import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
+import com.mdgz.dam.labdam2022.model.Alojamiento;
+import com.mdgz.dam.labdam2022.model.Departamento;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +35,12 @@ public class DetalleAlojamientoFragment extends Fragment {
     private String mParam2;
 
     private FragmentDetalleAlojamientoBinding binding;
+
+    private GestorAlojamiento gestorAlojamiento;
+
+    // TODO pasar id a este fragmento
+    private int idAlojamiento = 7;
+    private Alojamiento alojamiento;
 
     public DetalleAlojamientoFragment() {
         // Required empty public constructor
@@ -64,6 +78,27 @@ public class DetalleAlojamientoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentDetalleAlojamientoBinding.inflate(inflater, container, false);
+        FrameLayout frameLayout = binding.frameLayout;
+
+        gestorAlojamiento = GestorAlojamiento.getInstance();
+        alojamiento = gestorAlojamiento.getAlojamiento(idAlojamiento);
+
+        if (alojamiento instanceof Departamento) {
+            DetalleAlojamientoHotelBinding bindingHotel = DetalleAlojamientoHotelBinding.inflate(inflater, frameLayout, false);
+            frameLayout.addView(bindingHotel.getRoot());
+        }
+        else {
+            DetalleAlojamientoDeptoBinding bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayout, false);
+            frameLayout.addView(bindingDepto.getRoot());
+        }
+
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
     }
 }
