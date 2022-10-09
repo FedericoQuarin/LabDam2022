@@ -39,7 +39,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     private GestorAlojamiento gestorAlojamiento;
 
     // TODO pasar id a este fragmento
-    private int idAlojamiento = 7;
+    private int idAlojamiento = 1;
     private Alojamiento alojamiento;
 
     public DetalleAlojamientoFragment() {
@@ -84,12 +84,12 @@ public class DetalleAlojamientoFragment extends Fragment {
         alojamiento = gestorAlojamiento.getAlojamiento(idAlojamiento);
 
         if (alojamiento instanceof Departamento) {
-            DetalleAlojamientoHotelBinding bindingHotel = DetalleAlojamientoHotelBinding.inflate(inflater, frameLayout, false);
-            frameLayout.addView(bindingHotel.getRoot());
-        }
-        else {
             DetalleAlojamientoDeptoBinding bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayout, false);
             frameLayout.addView(bindingDepto.getRoot());
+        }
+        else {
+            DetalleAlojamientoHotelBinding bindingHotel = DetalleAlojamientoHotelBinding.inflate(inflater, frameLayout, false);
+            frameLayout.addView(bindingHotel.getRoot());
         }
 
         return binding.getRoot();
