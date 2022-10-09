@@ -82,8 +82,10 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
     @Override
     public void onNoteClick(int position) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("idAlojamiento", (int) adapter.getItemId(position));
         NavHostFragment.findNavController(ResultadoBusquedaFragment.this)
-                .navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment); //TODO: Faltaría la animación
+                .navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment, bundle); //TODO: Faltaría la animación
     }
 
 }
