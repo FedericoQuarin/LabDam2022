@@ -47,15 +47,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:gravity="center_vertical"
                         android:text="{titulo_alojamiento}"
                         android:textSize="28sp" />
 
-                    <ImageButton
-                        android:id="@+id/imageButtonDetalleFavorito"
+                    <CheckBox
+                        android:id="@+id/buttonDetalleFavorito"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@null"
-                        android:src="@drawable/corazon_vacio" />
+                        android:button="@drawable/corazon_vacio"
+                        app:buttonTint="?attr/colorPrimary"/>
 
                 </LinearLayout>
 
