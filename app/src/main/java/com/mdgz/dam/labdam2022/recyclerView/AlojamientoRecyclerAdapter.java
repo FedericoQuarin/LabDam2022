@@ -58,7 +58,7 @@ public class AlojamientoRecyclerAdapter
 
         @Override
         public void onClick(View v) {
-            this.onNoteListener.onNoteClick(getAdapterPosition());
+            this.onNoteListener.onNoteClick(alojamientos.get(getAdapterPosition()).getId());
         }
     }
 
@@ -103,6 +103,6 @@ public class AlojamientoRecyclerAdapter
     }
 
     public interface OnNoteListener{
-        void onNoteClick(int position);
+        void onNoteClick(int idAlojamiento);
     }
 }

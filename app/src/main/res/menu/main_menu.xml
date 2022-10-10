@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/boton_buscar"
-        android:icon="@drawable/baseline_search_white_24"
+        android:icon="@drawable/search_white_24"
         android:title="Buscar"
         android:orderInCategory="1" app:showAsAction="ifRoom"/>
     <item

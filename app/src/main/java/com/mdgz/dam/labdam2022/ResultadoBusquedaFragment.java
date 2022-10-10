@@ -80,10 +80,12 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         binding.labelResultadoBusqueda.setText("Existen " + adapter.getItemCount() + " alojamientos que cumplen los filtros seleccionados.");
     }
 
+    // Se implementa el metodo de la interfaz OnNoteListener, que se
+    // ejecuta cuando se hace click en un elemento del Recycler
     @Override
-    public void onNoteClick(int position) {
+    public void onNoteClick(int idAlojamiento) {
         Bundle bundle = new Bundle();
-        bundle.putInt("idAlojamiento", (int) adapter.getItemId(position));
+        bundle.putInt("idAlojamiento", idAlojamiento);
         NavHostFragment.findNavController(ResultadoBusquedaFragment.this)
                 .navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment, bundle); //TODO: Faltaría la animación
     }
