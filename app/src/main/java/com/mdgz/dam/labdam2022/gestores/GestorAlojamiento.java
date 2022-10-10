@@ -30,4 +30,12 @@ public class GestorAlojamiento {
     public List<Alojamiento> getAlojamientos(){
         return this.listaAlojamientos;
     }
+
+    public Alojamiento getAlojamiento(int idAlojamiento) {
+        for(Alojamiento a : listaAlojamientos) {
+            if (a.getId() == idAlojamiento) return a;
+        }
+
+        return null;
+    }
 }
