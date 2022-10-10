@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         Alojamiento d5 = new Departamento(5, "Departamento5", "", 5, 500.00, true, 200.00, 2, ubicacion, false);    gestorAlojamiento.agregarAlojamiento(d5);
         Alojamiento d6 = new Departamento(6, "Departamento6", "", 6, 600.00, true, 200.00, 2, ubicacion, false);    gestorAlojamiento.agregarAlojamiento(d6);
 
-        Alojamiento h1 = new Habitacion(7, "Habitacion1", "", 1, 100.0, 1, 1, true, hotel, false);     gestorAlojamiento.agregarAlojamiento(h1);
-        Alojamiento h2 = new Habitacion(8, "Habitacion2", "", 2, 200.0, 2, 2, false, hotel, false);    gestorAlojamiento.agregarAlojamiento(h2);
+        Alojamiento h1 = new Habitacion(7, "Habitacion1", "", 1, 100.0, 1, 0, true, hotel, false);     gestorAlojamiento.agregarAlojamiento(h1);
+        Alojamiento h2 = new Habitacion(8, "Habitacion2", "", 4, 200.0, 0, 2, false, hotel, false);    gestorAlojamiento.agregarAlojamiento(h2);
         Alojamiento h3 = new Habitacion(9, "Habitacion3", "", 3, 300.0, 3, 3, true, hotel, false);     gestorAlojamiento.agregarAlojamiento(h3);
         Alojamiento h4 = new Habitacion(10, "Habitacion4", "", 4, 400.0, 4, 4, false, hotel, false);    gestorAlojamiento.agregarAlojamiento(h4);
         Alojamiento h5 = new Habitacion(11, "Habitacion5", "", 5, 500.0, 5, 5, true, hotel, false);     gestorAlojamiento.agregarAlojamiento(h5);

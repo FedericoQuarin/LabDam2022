@@ -13,11 +13,11 @@ import android.widget.FrameLayout;
 
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoDeptoBinding;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoHotelBinding;
-import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.databinding.FragmentDetalleAlojamientoBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
+import com.mdgz.dam.labdam2022.model.Habitacion;
 
 public class DetalleAlojamientoFragment extends Fragment {
     private FragmentDetalleAlojamientoBinding binding;
@@ -41,14 +41,16 @@ public class DetalleAlojamientoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Infla el layout de este fragmento
         binding = FragmentDetalleAlojamientoBinding.inflate(inflater, container, false);
         FrameLayout frameLayout = binding.frameLayout;
 
-        idAlojamiento = 1;
+        // Busca el alojamiento a mostrar
+        idAlojamiento = getArguments().getInt("idAlojamiento");
         gestorAlojamiento = GestorAlojamiento.getInstance();
         alojamiento = gestorAlojamiento.getAlojamiento(idAlojamiento);
 
+        // Infla parte de la interfaz que es especifica del tipo de alojamiento
         if (alojamiento instanceof Departamento) {
             bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayout, false);
             frameLayout.addView(bindingDepto.getRoot());
@@ -98,10 +100,34 @@ public class DetalleAlojamientoFragment extends Fragment {
                 bindingDepto.txtViewHabitaciones.setText(depto.getCantidadHabitaciones() + " habitaciones");
 
             if (!depto.getTieneWifi())
-                bindingDepto.imageViewWifi.setImageResource(R.drawable.baseline_wifi_off_white_24);
+                bindingDepto.imageViewWifi.setImageResource(R.drawable.wifi_off_white_24);
         }
         else {
+            Habitacion habitacion = (Habitacion) alojamiento;
 
+            if (habitacion.getCamasMatrimoniales() == 0) {
+                bindingHotel.layoutCamasDobles.setVisibility(View.GONE);
+            }
+            else if (habitacion.getCamasMatrimoniales() == 1) {
+                bindingHotel.txtViewCamasDobles.setText("1 cama doble");
+            }
+            else {
+                bindingHotel.txtViewCamasDobles.setText(habitacion.getCamasMatrimoniales() + " camas dobles");
+            }
+
+            if (habitacion.getCamasIndividuales() == 0) {
+                bindingHotel.layoutCamasSimples.setVisibility(View.GONE);
+            }
+            else if (habitacion.getCamasIndividuales() == 1) {
+                bindingHotel.txtViewCamasSimples.setText("1 cama simple");
+            }
+            else {
+                bindingHotel.txtViewCamasSimples.setText(habitacion.getCamasIndividuales() + " camas simples");
+            }
+
+            if (!habitacion.getTieneEstacionamiento()) {
+                bindingHotel.layoutEstacionamiento.setVisibility(View.GONE);
+            }
         }
     }
 }
