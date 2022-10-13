@@ -12,9 +12,9 @@
     <color name="salmon">#FF6666</color>
     <color name="gray_letters">#656565</color>
 
-    <!--dark theme colors -->
+    <!-- colores tema oscuro -->
     <color name="gray_darkmode">#121212</color>
-    <color name="gray_surface_darkmode">#2A2A2A</color>
+    <color name="gray_surface_darkmode">#2F2F2F</color>
     <color name="gray_letters_darkmode">#656565</color>
 
     <!-- blancos -->

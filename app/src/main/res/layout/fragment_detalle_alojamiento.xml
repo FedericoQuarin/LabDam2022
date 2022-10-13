@@ -12,6 +12,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="?attr/colorSurface"
         app:cardCornerRadius="5dp"
         app:cardElevation="1dp"
         app:cardUseCompatPadding="true">
@@ -99,12 +100,12 @@
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </FrameLayout>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="?attr/colorSurface"
         app:cardCornerRadius="5dp"
         app:cardElevation="1dp"
         app:cardUseCompatPadding="true">
