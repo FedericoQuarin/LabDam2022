@@ -13,8 +13,9 @@
         android:clickable="true"
         android:focusable="true"
         app:cardBackgroundColor="?attr/colorSurface"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
+        app:cardElevation="1dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -53,7 +54,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:minHeight="0dp"
-                        style="@style/Widget.LabDam2022.ButtonFavorito"/>
+                        style="@style/Widget.LabDam2022.ButtonFavorito" />
                 </LinearLayout>
 
                 <LinearLayout
