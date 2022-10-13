@@ -84,10 +84,8 @@ public class AlojamientoRecyclerAdapter
         alojamientoHolder.imagen.setImageResource(R.drawable.depto_prueba);
 
         if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
-        else alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_vacio);
 
         alojamientoHolder.botonFavorito.setOnClickListener((v) -> {
-
             if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_vacio);
             else alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
 

@@ -34,4 +34,10 @@
     <style name="Widget.LabDam2022.ImageView" parent="">
         <item name="tint">@color/white_alpha75</item>
     </style>
+
+    <style name="Widget.LabDam2022.ButtonFavorito" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/red</item>
+        <item name="android:button">@drawable/corazon_vacio</item>
+        <item name="rippleColor">@color/white_alpha15</item>
+    </style>
 </resources>

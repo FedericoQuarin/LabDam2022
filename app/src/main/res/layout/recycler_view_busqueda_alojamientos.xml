@@ -52,9 +52,8 @@
                         android:id="@+id/buttonFavorito"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:button="@drawable/corazon_vacio"
                         android:minHeight="0dp"
-                        app:buttonTint="?attr/colorPrimary" />
+                        style="@style/Widget.LabDam2022.ButtonFavorito"/>
                 </LinearLayout>
 
                 <LinearLayout

@@ -80,7 +80,6 @@ public class DetalleAlojamientoFragment extends Fragment {
         else binding.txtCapacidadDetalleAlojamiento.setText(alojamiento.getCapacidad() + " persona");
 
         if(alojamiento.getEsFavorito()) binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_lleno);
-        else binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_vacio);
 
         binding.buttonDetalleFavorito.setOnClickListener((v) -> {
             if(alojamiento.getEsFavorito()) binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_vacio);

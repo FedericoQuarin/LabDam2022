@@ -1,5 +1,6 @@
 package com.mdgz.dam.labdam2022.gestores;
 
+import com.mdgz.dam.labdam2022.exceptions.EntidadNoEncontradaException;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 
 import java.util.ArrayList;
@@ -36,6 +37,6 @@ public class GestorAlojamiento {
             if (a.getId() == idAlojamiento) return a;
         }
 
-        return null;
+        throw new EntidadNoEncontradaException("Alojamiento", idAlojamiento);
     }
 }
