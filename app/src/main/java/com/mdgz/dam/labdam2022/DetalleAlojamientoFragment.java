@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
@@ -26,9 +27,17 @@ import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
 
+import org.w3c.dom.Text;
+
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
 import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class DetalleAlojamientoFragment extends Fragment {
     private FragmentDetalleAlojamientoBinding binding;
@@ -41,6 +50,11 @@ public class DetalleAlojamientoFragment extends Fragment {
     private Alojamiento alojamiento;
 
     private Button botonFecha;
+    private TextView precioFinal;
+    private TextView precioPorNoche;
+
+    private Calendar calendar;
+    private MaterialDatePicker materialDatePicker;
 
     public DetalleAlojamientoFragment() {
         // Required empty public constructor
@@ -59,10 +73,13 @@ public class DetalleAlojamientoFragment extends Fragment {
         FrameLayout frameLayout = binding.frameLayout;
 
 
-        // Variables para la selección de una fecha
+        // Variables
         botonFecha = binding.buttonFecha;
+        precioFinal = binding.txtPrecioFinalDetalleAlojamiento;
+        precioPorNoche = binding.labelPrecioFinalDetalleAlojamiento;
 
-        Calendar calendar = Calendar.getInstance();
+        // Gestion del DateRangePicker
+        calendar = Calendar.getInstance();
 
         // Dia de hoy
         long today = calendar.getTimeInMillis();
@@ -78,7 +95,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         // Restricciones de calendario
         CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
 
-        constraintBuilder.setStart(mes); // Que no pueda moverme mas atras del mes actua
+        constraintBuilder.setStart(mes); // Que no pueda moverme mas atras del mes actual
         constraintBuilder.setValidator(DateValidatorPointForward.now()); // Que solo pueda seleccionar desde hoy en adelante
 
         // Date picker
@@ -89,41 +106,13 @@ public class DetalleAlojamientoFragment extends Fragment {
         builder.setCalendarConstraints(constraintBuilder.build());
         builder.setPositiveButtonText("Guardar");
 
-
-        MaterialDatePicker materialDatePicker = builder.build();
+        materialDatePicker = builder.build();
 
         botonFecha.setOnClickListener(v -> {
             materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker");
         });
 
-        materialDatePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener() {
-            @Override
-            public void onPositiveButtonClick(Object selection) {
-
-                //getSavedStateRegistry().performSave(new Bundle());
-
-                calendar.setTimeInMillis(((Pair<Long, Long>) selection).first);
-                String fechaIngreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
-
-                calendar.setTimeInMillis(((Pair<Long, Long>) selection).second);
-                String fechaEgreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
-                botonFecha.setText(fechaIngreso + " - " + fechaEgreso);
-            }
-        });
-
-        materialDatePicker.addOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-
-                System.out.println("Cancelled");
-                System.out.println(savedInstanceState);
-                System.out.println(getSavedStateRegistry());
-            }
-        });
-
-        materialDatePicker.addOnNegativeButtonClickListener((p) -> {
-            System.out.println("NegativeButton");
-        });
+        materialDatePicker.addOnDismissListener(p ->  { actualizarBotonesYLabel(); });
 
         // Busca el alojamiento a mostrar
         idAlojamiento = getArguments().getInt("idAlojamiento");
@@ -208,5 +197,24 @@ public class DetalleAlojamientoFragment extends Fragment {
                 bindingHotel.layoutEstacionamiento.setVisibility(View.GONE);
             }
         }
+    }
+
+    private void actualizarBotonesYLabel(){
+        // Obtener la selecion del range picker
+        Object selection = materialDatePicker.getSelection();
+
+        Long longFechaIngreso = ((Pair<Long, Long>) selection).first;
+        calendar.setTimeInMillis(longFechaIngreso);
+        String fechaIngreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
+
+        Long longFechaEgreso = ((Pair<Long, Long>) selection).second;
+        calendar.setTimeInMillis(longFechaEgreso);
+        String fechaEgreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
+
+        botonFecha.setText(fechaIngreso + " - " + fechaEgreso);
+
+        Long diferenciaEntreFechas = longFechaEgreso - longFechaIngreso;
+        Long cantidadNoches = TimeUnit.DAYS.convert(diferenciaEntreFechas, TimeUnit.MILLISECONDS);
+        precioFinal.setText("$ " + (cantidadNoches*alojamiento.getPrecioBase()));
     }
 }
