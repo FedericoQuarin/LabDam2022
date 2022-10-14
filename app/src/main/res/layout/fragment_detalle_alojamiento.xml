@@ -117,30 +117,26 @@
             android:elevation="5dp"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/buttonFecha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/outline_calendar_month_white_24"
+                android:gravity="left|center_vertical"
+                android:text="Fecha de reserva" />
+
+            <Button
+                android:id="@+id/buttonCantidadPersonas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/outline_person_white_24"
+                android:gravity="left|center_vertical"
+                android:text="Cantidad" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/editTextFechaInicio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Ingreso"
-                    android:inputType="date" />
-
-                <EditText
-                    android:id="@+id/editTextFechaFin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:hint="Egreso"
-                    android:inputType="date" />
-
-            </LinearLayout>
+                android:orientation="horizontal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
