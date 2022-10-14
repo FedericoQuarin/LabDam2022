@@ -60,7 +60,7 @@
                 android:paddingRight="0dp"
                 android:paddingBottom="0dp">
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switchHoteles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -68,16 +68,18 @@
                     android:layout_weight="0"
                     android:minHeight="48dp"
                     android:paddingHorizontal="0dp"
-                    android:text="Hoteles" />
+                    android:text="Hoteles"
+                    app:useMaterialThemeColors="false"/>
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switchDepartamentos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0"
                     android:minHeight="48dp"
                     android:paddingHorizontal="0dp"
-                    android:text="Departamentos" />
+                    android:text="Departamentos"
+                    app:useMaterialThemeColors="false" />
 
             </LinearLayout>
 
@@ -207,13 +209,14 @@
 
             </LinearLayout>
 
-            <Switch
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/switchWiFi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:minHeight="48dp"
-                android:text="Con WiFi" />
+                android:text="Con WiFi"
+                app:useMaterialThemeColors="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"
