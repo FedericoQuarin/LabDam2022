@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
 import com.mdgz.dam.labdam2022.model.Ciudad;
@@ -51,9 +52,9 @@ public class BusquedaFragment extends Fragment {
     private Button buttonBuscar;
     private Button buttonLimpiar;
     private Spinner spinner_ciudades;
-    private Switch switchHoteles;
-    private Switch switchDeptos;
-    private Switch switchWifi;
+    private SwitchMaterial switchHoteles;
+    private SwitchMaterial switchDeptos;
+    private SwitchMaterial switchWifi;
     private EditText editTxtPrecioMaximo;
     private EditText editTxtPrecioMinimo;
 
@@ -109,8 +110,8 @@ public class BusquedaFragment extends Fragment {
         switchHoteles = binding.switchHoteles;
         switchDeptos = binding.switchDepartamentos;
         switchWifi = binding.switchWiFi;
-        editTxtPrecioMaximo = binding.editTxtPrecioMaximo;
-        editTxtPrecioMinimo = binding.editTxtPrecioMinimo;
+        editTxtPrecioMaximo = binding.txtInputLayoutMaximo.getEditText();
+        editTxtPrecioMinimo = binding.txtInputLayoutMinimo.getEditText();
 
 
         gestorCiudad = GestorCiudad.getInstance();
