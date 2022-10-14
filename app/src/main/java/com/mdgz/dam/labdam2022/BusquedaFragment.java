@@ -110,8 +110,8 @@ public class BusquedaFragment extends Fragment {
         switchHoteles = binding.switchHoteles;
         switchDeptos = binding.switchDepartamentos;
         switchWifi = binding.switchWiFi;
-        editTxtPrecioMaximo = binding.editTxtPrecioMaximo;
-        editTxtPrecioMinimo = binding.editTxtPrecioMinimo;
+        editTxtPrecioMaximo = binding.txtInputLayoutMaximo.getEditText();
+        editTxtPrecioMinimo = binding.txtInputLayoutMinimo.getEditText();
 
 
         gestorCiudad = GestorCiudad.getInstance();
