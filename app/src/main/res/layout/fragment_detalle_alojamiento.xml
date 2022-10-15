@@ -125,13 +125,32 @@
                 android:gravity="left|center_vertical"
                 android:text="Fecha de reserva" />
 
-            <Button
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtInputCantidadPersonas"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconDrawable="@drawable/baseline_add_black_24"
+                app:endIconMode="custom"
+                app:startIconDrawable="@drawable/baseline_remove_black_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:singleLine="true"
+                    android:text="0" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--Button
                 android:id="@+id/buttonCantidadPersonas"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/outline_person_white_24"
                 android:gravity="left|center_vertical"
-                android:text="Cantidad" />
+                android:text="Cantidad" /-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -163,6 +182,7 @@
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 
     <Button
         android:id="@+id/buttonReservar"

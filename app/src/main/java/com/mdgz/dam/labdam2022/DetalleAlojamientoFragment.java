@@ -53,6 +53,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     private Button botonFecha;
     private TextView precioFinal;
     private TextView precioPorNoche;
+    private Button botonCantidadPersonas;
 
     private Calendar calendar;
     private MaterialDatePicker materialDatePicker;
@@ -73,9 +74,24 @@ public class DetalleAlojamientoFragment extends Fragment {
         binding = FragmentDetalleAlojamientoBinding.inflate(inflater, container, false);
         FrameLayout frameLayout = binding.frameLayout;
 
+        // Busca el alojamiento a mostrar
+        idAlojamiento = getArguments().getInt("idAlojamiento");
+        gestorAlojamiento = GestorAlojamiento.getInstance();
+        alojamiento = gestorAlojamiento.getAlojamiento(idAlojamiento);
+
+        // Infla parte de la interfaz que es especifica del tipo de alojamiento
+        if (alojamiento instanceof Departamento) {
+            bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayout, false);
+            frameLayout.addView(bindingDepto.getRoot());
+        }
+        else {
+            bindingHotel = DetalleAlojamientoHotelBinding.inflate(inflater, frameLayout, false);
+            frameLayout.addView(bindingHotel.getRoot());
+        }
 
         // Variables
         botonFecha = binding.buttonFecha;
+        //botonCantidadPersonas = binding.buttonCantidadPersonas;
         precioFinal = binding.txtPrecioFinalDetalleAlojamiento;
         precioPorNoche = binding.labelPrecioFinalDetalleAlojamiento;
 
@@ -115,20 +131,9 @@ public class DetalleAlojamientoFragment extends Fragment {
 
         materialDatePicker.addOnDismissListener(p ->  { actualizarBotonesYLabel(); });
 
-        // Busca el alojamiento a mostrar
-        idAlojamiento = getArguments().getInt("idAlojamiento");
-        gestorAlojamiento = GestorAlojamiento.getInstance();
-        alojamiento = gestorAlojamiento.getAlojamiento(idAlojamiento);
+        botonCantidadPersonas.setOnClickListener((v) -> {
 
-        // Infla parte de la interfaz que es especifica del tipo de alojamiento
-        if (alojamiento instanceof Departamento) {
-            bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayout, false);
-            frameLayout.addView(bindingDepto.getRoot());
-        }
-        else {
-            bindingHotel = DetalleAlojamientoHotelBinding.inflate(inflater, frameLayout, false);
-            frameLayout.addView(bindingHotel.getRoot());
-        }
+        });
 
         return binding.getRoot();
     }
