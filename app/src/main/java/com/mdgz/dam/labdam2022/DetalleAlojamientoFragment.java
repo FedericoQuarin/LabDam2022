@@ -146,7 +146,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         binding.txtPrecioDetalleAlojamiento.setText("$" + alojamiento.getPrecioBase());
 
         if (alojamiento.getCapacidad() == 1) binding.txtCapacidadDetalleAlojamiento.setText("1 persona");
-        else binding.txtCapacidadDetalleAlojamiento.setText(alojamiento.getCapacidad() + " persona");
+        else binding.txtCapacidadDetalleAlojamiento.setText(alojamiento.getCapacidad() + " personas");
 
         if(alojamiento.getEsFavorito()) binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_lleno);
 

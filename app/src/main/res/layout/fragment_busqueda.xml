@@ -176,7 +176,7 @@
                     android:hint="Mínimo"
                     android:paddingRight="7dp"
                     android:paddingLeft="4dp"
-                    app:prefixText="$">>
+                    app:prefixText="$">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
@@ -194,7 +194,7 @@
                     android:hint="Máximo"
                     android:paddingLeft="7dp"
                     android:paddingRight="5dp"
-                    app:prefixText="$">>
+                    app:prefixText="$">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"

@@ -79,7 +79,8 @@ public class AlojamientoRecyclerAdapter
 
         alojamientoHolder.titulo.setText(alojamiento.getTitulo());
         alojamientoHolder.ubicacion.setText(ubicacion);
-        alojamientoHolder.capacidad.setText(alojamiento.getCapacidad() + " personas");
+        if (alojamiento.getCapacidad() == 1) alojamientoHolder.capacidad.setText("1 persona");
+        else alojamientoHolder.capacidad.setText(alojamiento.getCapacidad() + " personas");
         alojamientoHolder.precio.setText("$" + alojamiento.getPrecioBase());
         alojamientoHolder.imagen.setImageResource(R.drawable.depto_prueba);
 
