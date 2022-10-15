@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
+import com.google.android.material.textfield.TextInputLayout;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
 import com.mdgz.dam.labdam2022.model.Ciudad;
@@ -51,7 +53,7 @@ public class BusquedaFragment extends Fragment {
     private TextView txtViewCapacidad;
     private Button buttonBuscar;
     private Button buttonLimpiar;
-    private Spinner spinner_ciudades;
+    private TextInputLayout list_ciudades;
     private SwitchMaterial switchHoteles;
     private SwitchMaterial switchDeptos;
     private SwitchMaterial switchWifi;
@@ -105,7 +107,7 @@ public class BusquedaFragment extends Fragment {
         txtViewCapacidad = binding.txtViewCapacidad;
         buttonBuscar = binding.buttonBuscar;
         buttonLimpiar = binding.buttonLimpiar;
-        spinner_ciudades = binding.spinnerCiudades;
+        list_ciudades = binding.listCiudades;
 
         switchHoteles = binding.switchHoteles;
         switchDeptos = binding.switchDepartamentos;
@@ -150,9 +152,13 @@ public class BusquedaFragment extends Fragment {
         // Se buscan las ciudades existentes y se crea el adapter para el spinner
         List<String> ciudades = gestorCiudad.getNombresCiudades();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
+                R.layout.list_item_layout,
+                ciudades);
+        ((AutoCompleteTextView) list_ciudades.getEditText()).setAdapter(adapter);
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
                 android.R.layout.simple_spinner_item,
                 ciudades);
-        spinner_ciudades.setAdapter(adapter);
+        spinner_ciudades.setAdapter(adapter);*/
 
         // Se setea el listener del boton "Limpiar", que limpia todos los campos cargados
         buttonLimpiar.setOnClickListener(v -> {
