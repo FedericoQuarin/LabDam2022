@@ -34,7 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:gravity="center"
-                android:minHeight="60dp"
+                android:minHeight="50dp"
                 android:paddingLeft="0dp"
                 android:paddingTop="0dp"
                 android:paddingRight="0dp"
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:minHeight="60dp"
+                android:minHeight="55dp"
                 android:orientation="horizontal">
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
@@ -61,8 +61,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_weight="0"
-                    android:minHeight="48dp"
                     android:paddingHorizontal="0dp"
                     android:text="Hoteles"
                     app:useMaterialThemeColors="false" />
@@ -71,8 +69,6 @@
                     android:id="@+id/switchDepartamentos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0"
-                    android:minHeight="48dp"
                     android:paddingHorizontal="0dp"
                     android:text="Departamentos"
                     app:useMaterialThemeColors="false" />
@@ -82,7 +78,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="60dp"
+                android:minHeight="55dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -110,7 +106,6 @@
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="0"
                     android:text="1 persona" />
 
             </LinearLayout>
@@ -119,6 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="60dp"
+                android:paddingEnd="15dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -131,26 +127,35 @@
                     android:layout_weight="0"
                     android:src="@drawable/outline_place_black_24" />
 
-                <Spinner
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/list_ciudades"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="4dp"
+                    android:hint="Ciudad">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--Spinner
                     android:id="@+id/spinner_ciudades"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:contentDescription="Elija una ciudad"
-                    android:minHeight="48dp"
-                    android:paddingLeft="0dp"
-                    android:paddingTop="0dp"
-                    android:paddingRight="0dp"
-                    android:paddingBottom="0dp" />
+                    android:minHeight="48dp"/-->
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="60dp"
+                android:minHeight="55dp"
                 android:orientation="horizontal"
-                android:paddingVertical="5dp"
-                android:paddingEnd="35dp">
+                android:paddingEnd="15dp">
 
                 <ImageView
                     android:id="@+id/imageViewPrecio"
@@ -158,77 +163,45 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="5dp"
                     android:layout_weight="0"
                     android:src="@drawable/outline_sell_black_24" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtInputLayoutMinimo"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Mínimo"
-                    app:prefixText="$">>
+                    android:paddingRight="7dp"
+                    android:paddingLeft="4dp"
+                    app:prefixText="$">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
-                        android:singleLine="true" />
-
+                        android:singleLine="true"/>
                 </com.google.android.material.textfield.TextInputLayout>
-                <!--EditText
-                    android:id="@+id/editTxtPrecioMinimo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:hint="Mínimo ($)"
-                    android:inputType="numberDecimal"
-                    android:maxWidth="80dp"
-                    android:minHeight="48dp"
-                    android:singleLine="true"
-                    android:textSize="14sp"
-                    app:prefixText="$" /-->
-
-                <TextView
-                    android:id="@+id/labelGuion"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginHorizontal="7dp"
-                    android:scaleX="2"
-                    android:text="-" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/txtInputLayoutMaximo"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Máximo"
-                    app:prefixText="$">>
+                    android:paddingLeft="7dp"
+                    android:paddingRight="5dp"
+                    app:prefixText="$">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
                         android:singleLine="true" />
-
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <!--EditText
-                    android:id="@+id/editTxtPrecioMaximo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:hint="Máximo ($)"
-                    android:inputType="numberDecimal"
-                    android:maxWidth="80dp"
-                    android:minHeight="48dp"
-                    android:textSize="14sp" /-->
 
             </LinearLayout>
 
@@ -237,13 +210,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:minHeight="60dp"
+                android:minHeight="45dp"
                 android:text="Con WiFi"
                 app:useMaterialThemeColors="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="55dp"
                 android:orientation="horizontal"
                 android:paddingHorizontal="10dp">
 
