@@ -48,6 +48,7 @@ public class DetalleAlojamientoFragment extends Fragment {
 
     private int idAlojamiento;
     private Alojamiento alojamiento;
+    private Boolean fechaValida = false;
 
     private Button botonFecha;
     private TextView precioFinal;
@@ -203,18 +204,26 @@ public class DetalleAlojamientoFragment extends Fragment {
         // Obtener la selecion del range picker
         Object selection = materialDatePicker.getSelection();
 
-        Long longFechaIngreso = ((Pair<Long, Long>) selection).first;
-        calendar.setTimeInMillis(longFechaIngreso);
-        String fechaIngreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
+        try {
+            Long longFechaIngreso = ((Pair<Long, Long>) selection).first;
+            calendar.setTimeInMillis(longFechaIngreso);
+            String fechaIngreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
 
-        Long longFechaEgreso = ((Pair<Long, Long>) selection).second;
-        calendar.setTimeInMillis(longFechaEgreso);
-        String fechaEgreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
+            Long longFechaEgreso = ((Pair<Long, Long>) selection).second;
+            calendar.setTimeInMillis(longFechaEgreso);
+            String fechaEgreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
 
-        botonFecha.setText(fechaIngreso + " - " + fechaEgreso);
+            botonFecha.setText(fechaIngreso + " - " + fechaEgreso);
 
-        Long diferenciaEntreFechas = longFechaEgreso - longFechaIngreso;
-        Long cantidadNoches = TimeUnit.DAYS.convert(diferenciaEntreFechas, TimeUnit.MILLISECONDS);
-        precioFinal.setText("$ " + (cantidadNoches*alojamiento.getPrecioBase()));
+            Long diferenciaEntreFechas = longFechaEgreso - longFechaIngreso;
+            Long cantidadNoches = TimeUnit.DAYS.convert(diferenciaEntreFechas, TimeUnit.MILLISECONDS);
+            precioFinal.setText("$ " + (cantidadNoches*alojamiento.getPrecioBase()));
+            fechaValida = true;
+        }
+        catch (NullPointerException npe) {
+            botonFecha.setText("Fecha de reserva");
+            fechaValida = false;
+        }
+
     }
 }
