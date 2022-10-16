@@ -103,31 +103,8 @@ public class DetalleAlojamientoFragment extends Fragment {
             frameLayout.addView(bindingHotel.getRoot());
         }
 
-        // Variables
-        botonFecha = binding.buttonFecha;
-        precioFinal = binding.txtPrecioFinalDetalleAlojamiento;
-        precioPorNoche = binding.labelPrecioFinalDetalleAlojamiento;
-        botonMenos = binding.imageButtonMenos;
-        botonMas = binding.imageButtonMas;
-        txtViewCantidadPersonas = binding.textViewCantidadPersonasEnReserva;
-        txtViewCapacidadAlojamiento = binding.textViewCapacidadAlojamiento;
-        botonReservar = binding.buttonReservar;
-
         configurarDateRangePicker();
 
-        botonFecha.setOnClickListener(v -> { materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker"); });
-
-        materialDatePicker.addOnDismissListener( p -> actualizarBotonesYLabel());
-
-        txtViewCantidadPersonas.setText(String.valueOf(cantidadPersonas));
-        txtViewCapacidadAlojamiento.setText(" / " + alojamiento.getCapacidad());
-
-        botonMenos.setEnabled(false);
-        botonMenos.setOnClickListener( view -> restarCantidadPersonas());
-
-        botonMas.setOnClickListener( view -> sumarCantidadPersonas());
-
-        botonReservar.setOnClickListener( view -> logicaReservar(view));
         return binding.getRoot();
     }
 
@@ -139,6 +116,16 @@ public class DetalleAlojamientoFragment extends Fragment {
         String ubicacion = alojamiento.getUbicacion().getCalle() + " "
                 + alojamiento.getUbicacion().getNumero() + ", "
                 + alojamiento.getUbicacion().getCiudad().getNombre();
+
+        // Variables
+        botonFecha = binding.buttonFecha;
+        precioFinal = binding.txtPrecioFinalDetalleAlojamiento;
+        precioPorNoche = binding.labelPrecioFinalDetalleAlojamiento;
+        botonMenos = binding.imageButtonMenos;
+        botonMas = binding.imageButtonMas;
+        txtViewCantidadPersonas = binding.textViewCantidadPersonasEnReserva;
+        txtViewCapacidadAlojamiento = binding.textViewCapacidadAlojamiento;
+        botonReservar = binding.buttonReservar;
 
         binding.txtTituloDetalleAlojamiento.setText(alojamiento.getTitulo());
         binding.txtUbicacionDetalleAlojamiento.setText(ubicacion);
@@ -196,6 +183,20 @@ public class DetalleAlojamientoFragment extends Fragment {
                 bindingHotel.layoutEstacionamiento.setVisibility(View.GONE);
             }
         }
+
+        botonFecha.setOnClickListener(v -> { materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker"); });
+
+        materialDatePicker.addOnDismissListener( p -> actualizarBotonesYLabel());
+
+        txtViewCantidadPersonas.setText(String.valueOf(cantidadPersonas));
+        txtViewCapacidadAlojamiento.setText(" / " + alojamiento.getCapacidad());
+
+        botonMenos.setEnabled(false);
+        botonMenos.setOnClickListener(v -> restarCantidadPersonas());
+
+        botonMas.setOnClickListener(v -> sumarCantidadPersonas());
+
+        botonReservar.setOnClickListener(v -> logicaReservar(v));
     }
 
     private void actualizarBotonesYLabel(){

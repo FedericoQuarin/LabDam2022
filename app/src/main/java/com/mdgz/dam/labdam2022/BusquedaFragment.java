@@ -115,6 +115,13 @@ public class BusquedaFragment extends Fragment {
         editTxtPrecioMaximo = binding.txtInputLayoutMaximo.getEditText();
         editTxtPrecioMinimo = binding.txtInputLayoutMinimo.getEditText();
 
+        // Si existe estado previo del fragmento, se restaura
+        if (savedInstanceState != null) {
+            editTxtPrecioMinimo.setText(savedInstanceState.getString("minimo"));
+            editTxtPrecioMaximo.setText(savedInstanceState.getString("maximo"));
+            list_ciudades.getEditText().setText(savedInstanceState.getString("ciudad"));
+        }
+
 
         gestorCiudad = GestorCiudad.getInstance();
 
@@ -155,10 +162,6 @@ public class BusquedaFragment extends Fragment {
                 R.layout.list_item_layout,
                 ciudades);
         ((AutoCompleteTextView) list_ciudades.getEditText()).setAdapter(adapter);
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
-                android.R.layout.simple_spinner_item,
-                ciudades);
-        spinner_ciudades.setAdapter(adapter);*/
 
         // Se setea el listener del boton "Limpiar", que limpia todos los campos cargados
         buttonLimpiar.setOnClickListener(v -> {
@@ -205,4 +208,11 @@ public class BusquedaFragment extends Fragment {
     }
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("minimo", editTxtPrecioMinimo.getText().toString());
+        outState.putString("maximo", editTxtPrecioMaximo.getText().toString());
+        outState.putString("ciudad", list_ciudades.getEditText().getText().toString());
+    }
 }
