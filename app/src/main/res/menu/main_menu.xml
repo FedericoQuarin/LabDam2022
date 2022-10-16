@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/boton_buscar"
+        android:icon="@drawable/search_white_24"
+        android:title="Buscar"
+        android:orderInCategory="1" app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/mis_reservas"
+        android:orderInCategory="2"
+        android:title="Mis reservas"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/mis_favoritos"
+        android:title="Mis favoritos"
+        android:orderInCategory="3" app:showAsAction="never"/>
+    <item
+        android:id="@+id/opciones"
+        android:title="Opciones"
+        android:orderInCategory="4" app:showAsAction="never"/>
+</menu>

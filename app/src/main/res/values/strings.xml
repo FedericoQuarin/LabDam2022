@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">LabDam2022</string>
+    <string name="app_name">AirBooking</string>
     <string name="resultado_busqueda">Resultado busqueda fragment</string>
     <string name="form_busqueda">FORMULARIO busqueda fragment</string>
     <string name="detalle_alojamiento">DETALLE alojamiento fragment</string>
+    <string name="precio_por_dia">Precio por día</string>
 </resources>
