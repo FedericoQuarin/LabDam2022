@@ -121,7 +121,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/outline_calendar_month_white_24"
-                android:gravity="left|center_vertical"
                 android:text="Fecha de reserva"
                 android:textAlignment="center" />
 
@@ -230,6 +229,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="1dp"
         android:elevation="10dp"
-        android:text="Reservar" />
+        android:text="Reservar"
+        android:enabled="false"/>
 
 </LinearLayout>
