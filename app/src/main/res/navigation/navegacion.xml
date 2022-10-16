@@ -45,7 +45,9 @@
             android:id="@+id/action_detalleAlojamientoFragment_to_busquedaFragment"
             app:destination="@id/busquedaFragment"
             app:popEnterAnim="@anim/desde_izquierda"
-            app:popExitAnim="@anim/hacia_derecha" />
+            app:popExitAnim="@anim/hacia_derecha"
+            app:popUpTo="@id/busquedaFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_detalleAlojamientoFragment_to_resultadoBusquedaFragment"
             app:destination="@id/resultadoBusquedaFragment"
