@@ -103,6 +103,21 @@ public class DetalleAlojamientoFragment extends Fragment {
             frameLayout.addView(bindingHotel.getRoot());
         }
 
+        configurarDateRangePicker();
+
+        return binding.getRoot();
+    }
+
+    // TODO: guardar estado
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Seteo de elemento del fragmento
+        String ubicacion = alojamiento.getUbicacion().getCalle() + " "
+                + alojamiento.getUbicacion().getNumero() + ", "
+                + alojamiento.getUbicacion().getCiudad().getNombre();
+
         // Variables
         botonFecha = binding.buttonFecha;
         precioFinal = binding.txtPrecioFinalDetalleAlojamiento;
@@ -112,33 +127,6 @@ public class DetalleAlojamientoFragment extends Fragment {
         txtViewCantidadPersonas = binding.textViewCantidadPersonasEnReserva;
         txtViewCapacidadAlojamiento = binding.textViewCapacidadAlojamiento;
         botonReservar = binding.buttonReservar;
-
-        configurarDateRangePicker();
-
-        botonFecha.setOnClickListener(v -> { materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker"); });
-
-        materialDatePicker.addOnDismissListener( p -> actualizarBotonesYLabel());
-
-        txtViewCantidadPersonas.setText(String.valueOf(cantidadPersonas));
-        txtViewCapacidadAlojamiento.setText(" / " + alojamiento.getCapacidad());
-
-        botonMenos.setEnabled(false);
-        botonMenos.setOnClickListener( view -> restarCantidadPersonas());
-
-        botonMas.setOnClickListener( view -> sumarCantidadPersonas());
-
-        botonReservar.setOnClickListener( view -> logicaReservar(view));
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        // Seteo de elemento del fragmento
-        String ubicacion = alojamiento.getUbicacion().getCalle() + " "
-                + alojamiento.getUbicacion().getNumero() + ", "
-                + alojamiento.getUbicacion().getCiudad().getNombre();
 
         binding.txtTituloDetalleAlojamiento.setText(alojamiento.getTitulo());
         binding.txtUbicacionDetalleAlojamiento.setText(ubicacion);
@@ -196,6 +184,21 @@ public class DetalleAlojamientoFragment extends Fragment {
                 bindingHotel.layoutEstacionamiento.setVisibility(View.GONE);
             }
         }
+
+        // TODO: corregir - si se clickea el boton antes de que se abra el datePicker crashea
+        botonFecha.setOnClickListener(v -> { materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker"); });
+
+        materialDatePicker.addOnDismissListener( p -> actualizarBotonesYLabel());
+
+        txtViewCantidadPersonas.setText(String.valueOf(cantidadPersonas));
+        txtViewCapacidadAlojamiento.setText(" / " + alojamiento.getCapacidad());
+
+        botonMenos.setEnabled(false);
+        botonMenos.setOnClickListener(v -> restarCantidadPersonas());
+
+        botonMas.setOnClickListener(v -> sumarCantidadPersonas());
+
+        botonReservar.setOnClickListener(v -> logicaReservar(v));
     }
 
     private void actualizarBotonesYLabel(){
@@ -218,10 +221,14 @@ public class DetalleAlojamientoFragment extends Fragment {
             montoTotal = (cantidadNoches*alojamiento.getPrecioBase());
             precioFinal.setText("$ " + montoTotal);
             fechaValida = true;
+
+            if(cantidadPersonas > 0) botonReservar.setEnabled(true);
         }
         catch (NullPointerException npe) {
             botonFecha.setText("Fecha de reserva");
             fechaValida = false;
+
+            botonReservar.setEnabled(false);
         }
 
     }
@@ -268,6 +275,7 @@ public class DetalleAlojamientoFragment extends Fragment {
 
         if(cantidadPersonas == 0) {
             botonMenos.setEnabled(false);
+            botonReservar.setEnabled(false);
         }
     }
 
@@ -283,49 +291,50 @@ public class DetalleAlojamientoFragment extends Fragment {
             botonMas.setEnabled(false);
         }
 
+        if(fechaValida) {
+            botonReservar.setEnabled(true);
+        }
+
     }
 
     private void logicaReservar(View view){
-        if(fechaValida && cantidadPersonas > 0) {
+        AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
+        alerta.setTitle("Confirmar reserva")
+                .setMessage("¿Desea confirmar la reserva del alojamiento seleccionado?")
+                .setCancelable(false)
+                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-            AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
-            alerta.setTitle("Confirmar reserva")
-                    .setMessage("¿Desea confirmar la reserva del alojamiento seleccionado?")
-                  .setCancelable(false)
-                  .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                      @Override
-                      public void onClick(DialogInterface dialogInterface, int i) {
+                        gestorReserva = GestorReserva.getInstance();
 
-                          gestorReserva = GestorReserva.getInstance();
+                        Object selection = materialDatePicker.getSelection();
 
-                          Object selection = materialDatePicker.getSelection();
+                        gestorReserva.crearReserva(Instant.ofEpochMilli(((Pair<Long, Long>) selection).first),
+                                Instant.ofEpochMilli(((Pair<Long, Long>) selection).second),
+                                cantidadPersonas, montoTotal, alojamiento);
 
-                          gestorReserva.crearReserva(Instant.ofEpochMilli(((Pair<Long, Long>) selection).first),
-                                  Instant.ofEpochMilli(((Pair<Long, Long>) selection).second),
-                                  cantidadPersonas, montoTotal, alojamiento);
+                        NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
+                                .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment);
 
-                          NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
-                                  .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment);
+                        Snackbar snackbar = Snackbar.make(view,"La reserva se realizó correctamente", Snackbar.LENGTH_LONG)
+                                .setDuration(5000)
+                                .setAction("Ver", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        // TODO: Te tendria que llevar a la seccion de reservas
+                                    }
+                                });
+                        snackbar.show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
 
-                          Snackbar snackbar = Snackbar.make(view,"La reserva se realizó correctamente", Snackbar.LENGTH_LONG)
-                                  .setDuration(5000)
-                                  .setAction("Ver", new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View view) {
-                                          // Te tendria que llevar a la seccion de reservas
-                                      }
-                                  });
-                          snackbar.show();
-                      }
-                  })
-                  .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                      @Override
-                      public void onClick(DialogInterface dialogInterface, int i) {
-                          dialogInterface.cancel();
-                      }
-                  });
-
-            alerta.create().show();
-        }
+        alerta.create().show();
     }
 }
