@@ -14,7 +14,7 @@
 
     <!-- colores tema oscuro -->
     <color name="gray_darkmode">#121212</color>
-    <color name="gray_surface_darkmode">#2F2F2F</color>
+    <color name="gray_surface_darkmode">#262626</color>
     <color name="gray_letters_darkmode">#656565</color>
 
     <!-- blancos -->

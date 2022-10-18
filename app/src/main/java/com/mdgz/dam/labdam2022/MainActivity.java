@@ -47,30 +47,32 @@ public class MainActivity extends AppCompatActivity {
 
             Hotel hotel = new Hotel(1, "Hotel principal", 1, ubicacion);
 
-            Alojamiento d1 = new Departamento(1, "Departamento1", "", 1, 100.00, true, 200.00, 2, ubicacion, false);
+            String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum suscipit mauris. Praesent imperdiet ultrices euismod.";
+
+            Alojamiento d1 = new Departamento(1, "Departamento1", "Departamento1 - " + loremIpsum, 1, 100.00, true, 200.00, 2, ubicacion, false);
             gestorAlojamiento.agregarAlojamiento(d1);
-            Alojamiento d2 = new Departamento(2, "Departamento2", "", 2, 200.00, true, 200.00, 2, ubicacion, false);
+            Alojamiento d2 = new Departamento(2, "Departamento2", "Departamento2 - " + loremIpsum, 2, 200.00, true, 200.00, 2, ubicacion, false);
             gestorAlojamiento.agregarAlojamiento(d2);
-            Alojamiento d3 = new Departamento(3, "Departamento3", "", 3, 300.00, true, 200.00, 2, ubicacion, false);
+            Alojamiento d3 = new Departamento(3, "Departamento3", "Departamento3 - " + loremIpsum, 3, 300.00, true, 200.00, 2, ubicacion, false);
             gestorAlojamiento.agregarAlojamiento(d3);
-            Alojamiento d4 = new Departamento(4, "Departamento4", "", 4, 400.00, true, 200.00, 2, ubicacion, false);
+            Alojamiento d4 = new Departamento(4, "Departamento4", "Departamento4 - " + loremIpsum, 4, 400.00, true, 200.00, 2, ubicacion, false);
             gestorAlojamiento.agregarAlojamiento(d4);
-            Alojamiento d5 = new Departamento(5, "Departamento5", "", 5, 500.00, true, 200.00, 2, ubicacion, false);
+            Alojamiento d5 = new Departamento(5, "Departamento5", "Departamento5 - " + loremIpsum, 5, 500.00, true, 200.00, 2, ubicacion, false);
             gestorAlojamiento.agregarAlojamiento(d5);
-            Alojamiento d6 = new Departamento(6, "Departamento6", "", 6, 600.00, true, 200.00, 2, ubicacion, false);
+            Alojamiento d6 = new Departamento(6, "Departamento6", "Departamento6 - " + loremIpsum, 6, 600.00, true, 200.00, 2, ubicacion, false);
             gestorAlojamiento.agregarAlojamiento(d6);
 
-            Alojamiento h1 = new Habitacion(7, "Habitacion1", "", 1, 100.0, 1, 0, true, hotel, false);
+            Alojamiento h1 = new Habitacion(7, "Habitacion1", "Habitacion1 - " + loremIpsum, 1, 100.0, 1, 0, true, hotel, false);
             gestorAlojamiento.agregarAlojamiento(h1);
-            Alojamiento h2 = new Habitacion(8, "Habitacion2", "", 4, 200.0, 0, 2, false, hotel, false);
+            Alojamiento h2 = new Habitacion(8, "Habitacion2", "Habitacion2 - " + loremIpsum, 4, 200.0, 0, 2, false, hotel, false);
             gestorAlojamiento.agregarAlojamiento(h2);
-            Alojamiento h3 = new Habitacion(9, "Habitacion3", "", 3, 300.0, 3, 3, true, hotel, false);
+            Alojamiento h3 = new Habitacion(9, "Habitacion3", "Habitacion3 - " + loremIpsum, 3, 300.0, 3, 3, true, hotel, false);
             gestorAlojamiento.agregarAlojamiento(h3);
-            Alojamiento h4 = new Habitacion(10, "Habitacion4", "", 4, 400.0, 4, 4, false, hotel, false);
+            Alojamiento h4 = new Habitacion(10, "Habitacion4", "Habitacion4 - " + loremIpsum, 4, 400.0, 4, 4, false, hotel, false);
             gestorAlojamiento.agregarAlojamiento(h4);
-            Alojamiento h5 = new Habitacion(11, "Habitacion5", "", 5, 500.0, 5, 5, true, hotel, false);
+            Alojamiento h5 = new Habitacion(11, "Habitacion5", "Habitacion5 - " + loremIpsum, 5, 500.0, 5, 5, true, hotel, false);
             gestorAlojamiento.agregarAlojamiento(h5);
-            Alojamiento h6 = new Habitacion(12, "Habitacion6", "", 6, 600.0, 6, 6, false, hotel, false);
+            Alojamiento h6 = new Habitacion(12, "Habitacion6", "Habitacion6 - " + loremIpsum, 6, 600.0, 6, 6, false, hotel, false);
             gestorAlojamiento.agregarAlojamiento(h6);
         }
     }

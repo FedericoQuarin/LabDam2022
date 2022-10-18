@@ -68,6 +68,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     private TextView txtViewCantidadPersonas;
     private TextView txtViewCapacidadAlojamiento;
     private Button botonReservar;
+    private TextView descripcion;
 
     private Calendar calendar;
     private MaterialDatePicker materialDatePicker;
@@ -127,6 +128,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         txtViewCantidadPersonas = binding.textViewCantidadPersonasEnReserva;
         txtViewCapacidadAlojamiento = binding.textViewCapacidadAlojamiento;
         botonReservar = binding.buttonReservar;
+        descripcion = binding.txtViewDescripcion;
 
         binding.txtTituloDetalleAlojamiento.setText(alojamiento.getTitulo());
         binding.txtUbicacionDetalleAlojamiento.setText(ubicacion);
@@ -187,6 +189,8 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
         }
 
+        descripcion.setText(alojamiento.getDescripcion());
+
         // TODO: corregir - si se clickea el boton antes de que se abra el datePicker crashea
         botonFecha.setOnClickListener(v -> { materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker"); });
 
@@ -231,6 +235,7 @@ public class DetalleAlojamientoFragment extends Fragment {
             fechaValida = false;
 
             botonReservar.setEnabled(false);
+            precioFinal.setText("$0");
         }
 
     }
@@ -300,6 +305,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     }
 
     private void logicaReservar(View view){
+        System.out.println("view " + view.toString());
         AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
         alerta.setTitle("Confirmar reserva")
                 .setMessage("¿Desea confirmar la reserva del alojamiento seleccionado?")
@@ -316,18 +322,13 @@ public class DetalleAlojamientoFragment extends Fragment {
                                 Instant.ofEpochMilli(((Pair<Long, Long>) selection).second),
                                 cantidadPersonas, montoTotal, alojamiento);
 
-                        NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
-                                .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID
 
-                        Snackbar snackbar = Snackbar.make(view,"La reserva se realizó correctamente", Snackbar.LENGTH_LONG)
-                                .setDuration(5000)
-                                .setAction("Ver", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        // TODO: Te tendria que llevar a la seccion de reservas
-                                    }
-                                });
-                        snackbar.show();
+                        NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
+                                .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment, bundle);
+
+
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {

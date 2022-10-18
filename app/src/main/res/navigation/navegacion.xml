@@ -44,6 +44,7 @@
         <action
             android:id="@+id/action_detalleAlojamientoFragment_to_busquedaFragment"
             app:destination="@id/busquedaFragment"
+            app:launchSingleTop="true"
             app:popEnterAnim="@anim/desde_izquierda"
             app:popExitAnim="@anim/hacia_derecha"
             app:popUpTo="@id/busquedaFragment"
