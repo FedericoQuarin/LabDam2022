@@ -68,6 +68,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     private TextView txtViewCantidadPersonas;
     private TextView txtViewCapacidadAlojamiento;
     private Button botonReservar;
+    private TextView descripcion;
 
     private Calendar calendar;
     private MaterialDatePicker materialDatePicker;
@@ -127,6 +128,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         txtViewCantidadPersonas = binding.textViewCantidadPersonasEnReserva;
         txtViewCapacidadAlojamiento = binding.textViewCapacidadAlojamiento;
         botonReservar = binding.buttonReservar;
+        descripcion = binding.txtViewDescripcion;
 
         binding.txtTituloDetalleAlojamiento.setText(alojamiento.getTitulo());
         binding.txtUbicacionDetalleAlojamiento.setText(ubicacion);
@@ -186,6 +188,8 @@ public class DetalleAlojamientoFragment extends Fragment {
                 bindingHotel.layoutEstacionamiento.setVisibility(View.GONE);
             }
         }
+
+        descripcion.setText(alojamiento.getDescripcion());
 
         // TODO: corregir - si se clickea el boton antes de que se abra el datePicker crashea
         botonFecha.setOnClickListener(v -> { materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker"); });

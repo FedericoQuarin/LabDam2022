@@ -18,4 +18,7 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <!-- misc -->
+    <string name="lorem_ipsum_250b">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum suscipit mauris. Praesent imperdiet ultrices euismod. Morbi purus enim, fringilla eget luctus sit amet, suscipit a est. Mauris at egestas risus. Vestibulum porttitor mi id odio cras.</string>
 </resources>
