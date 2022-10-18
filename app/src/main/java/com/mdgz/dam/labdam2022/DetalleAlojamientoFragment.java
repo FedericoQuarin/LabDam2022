@@ -154,8 +154,10 @@ public class DetalleAlojamientoFragment extends Fragment {
             else
                 bindingDepto.txtViewHabitaciones.setText(depto.getCantidadHabitaciones() + " habitaciones");
 
-            if (!depto.getTieneWifi())
+            if (!depto.getTieneWifi()) {
+                bindingDepto.txtViewWifi.setText("No tiene WIFI");
                 bindingDepto.imageViewWifi.setImageResource(R.drawable.wifi_off_white_24);
+            }
         }
         else {
             Habitacion habitacion = (Habitacion) alojamiento;
