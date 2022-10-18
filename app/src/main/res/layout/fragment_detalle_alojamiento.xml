@@ -165,12 +165,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/outline_calendar_month_white_24"
+                        android:insetTop="6dp"
+                        android:insetBottom="6dp"
                         android:text="Fecha de reserva"
                         android:textAlignment="center" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="6dp"
                         android:background="@drawable/roundcorner"
                         android:gravity="center_vertical"
                         android:minHeight="35dp"
@@ -186,7 +189,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:layout_weight="0"
                             android:gravity="center"
                             android:orientation="horizontal">
@@ -244,7 +247,8 @@
         style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        app:elevation="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"

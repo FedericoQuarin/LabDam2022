@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
@@ -32,6 +33,7 @@ import java.util.List;
 
 
 public class BusquedaFragment extends Fragment {
+    static final int VENTANA_DETALLE = 1;
 
     // Gestores
     private GestorCiudad gestorCiudad;
@@ -94,6 +96,14 @@ public class BusquedaFragment extends Fragment {
             editTxtPrecioMinimo.setText(savedInstanceState.getString("minimo"));
             editTxtPrecioMaximo.setText(savedInstanceState.getString("maximo"));
             list_ciudades.getEditText().setText(savedInstanceState.getString("ciudad"));
+        }
+
+        // Ver si se volvio de la ventana reservas, en cuyo caso se muestra un snackBar
+        if (getArguments() != null) {
+            int tipoBundle = getArguments().getInt("tipo");
+            if (tipoBundle == VENTANA_DETALLE) {
+                snackbarReservaExitosa(view);
+            }
         }
 
 
@@ -179,6 +189,20 @@ public class BusquedaFragment extends Fragment {
         }
 
         return true;
+    }
+
+    // Muestra un snackbar informando al usuario de que su reserva fue realizada exitosamente
+    // TODO: Muestra un boton para ver su reserva
+    private void snackbarReservaExitosa(View view) {
+        Snackbar snackbar = Snackbar.make(view,"La reserva se realizó correctamente", Snackbar.LENGTH_LONG)
+                .setDuration(5000)
+                .setAction("Ver", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO: Te tendria que llevar a la seccion de reservas
+                    }
+                });
+        snackbar.show();
     }
 
 
