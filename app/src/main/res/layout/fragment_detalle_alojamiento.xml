@@ -157,7 +157,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="5dp"
+                    android:layout_marginVertical="10dp"
                     android:orientation="vertical">
 
                     <Button
@@ -241,10 +241,10 @@
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
+        style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        style="@style/Widget.MaterialComponents.BottomAppBar">
+        android:layout_gravity="bottom">
 
         <LinearLayout
             android:layout_width="match_parent"
