@@ -30,17 +30,8 @@ import com.mdgz.dam.labdam2022.model.Ciudad;
 
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link BusquedaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class BusquedaFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+public class BusquedaFragment extends Fragment {
 
     // Gestores
     private GestorCiudad gestorCiudad;
@@ -66,30 +57,13 @@ public class BusquedaFragment extends Fragment {
     Float minimo;
     Float maximo;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public BusquedaFragment() {
         // Required empty public constructor
-    }
-
-    public static BusquedaFragment newInstance(String param1, String param2) {
-        BusquedaFragment fragment = new BusquedaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -114,6 +88,13 @@ public class BusquedaFragment extends Fragment {
         switchWifi = binding.switchWiFi;
         editTxtPrecioMaximo = binding.txtInputLayoutMaximo.getEditText();
         editTxtPrecioMinimo = binding.txtInputLayoutMinimo.getEditText();
+
+        // Si existe estado previo del fragmento, se restaura
+        if (savedInstanceState != null) {
+            editTxtPrecioMinimo.setText(savedInstanceState.getString("minimo"));
+            editTxtPrecioMaximo.setText(savedInstanceState.getString("maximo"));
+            list_ciudades.getEditText().setText(savedInstanceState.getString("ciudad"));
+        }
 
 
         gestorCiudad = GestorCiudad.getInstance();
@@ -155,10 +136,6 @@ public class BusquedaFragment extends Fragment {
                 R.layout.list_item_layout,
                 ciudades);
         ((AutoCompleteTextView) list_ciudades.getEditText()).setAdapter(adapter);
-        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
-                android.R.layout.simple_spinner_item,
-                ciudades);
-        spinner_ciudades.setAdapter(adapter);*/
 
         // Se setea el listener del boton "Limpiar", que limpia todos los campos cargados
         buttonLimpiar.setOnClickListener(v -> {
@@ -205,4 +182,11 @@ public class BusquedaFragment extends Fragment {
     }
 
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("minimo", editTxtPrecioMinimo.getText().toString());
+        outState.putString("maximo", editTxtPrecioMaximo.getText().toString());
+        outState.putString("ciudad", list_ciudades.getEditText().getText().toString());
+    }
 }
