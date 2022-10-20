@@ -185,7 +185,8 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
 
             if (!habitacion.getTieneEstacionamiento()) {
-                bindingHotel.layoutEstacionamiento.setVisibility(View.GONE);
+                bindingHotel.imageViewEstacionamiento.setImageResource(R.drawable.not_parking_24);
+                bindingHotel.txtViewEstacionamiento.setText("Sin estacionamiento");
             }
 
             bindingHotel.txtViewNombreHotel.setText(habitacion.getHotel().getNombre());
