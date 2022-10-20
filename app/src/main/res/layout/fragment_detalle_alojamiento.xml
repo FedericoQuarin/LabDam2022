@@ -31,7 +31,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
                     android:layout_marginBottom="10dp"
                     android:elevation="5dp"
                     android:fadingEdgeLength="5dp"
@@ -40,13 +39,15 @@
                     <ImageView
                         android:id="@+id/imageViewFoto"
                         android:layout_width="wrap_content"
-                        android:layout_height="179dp"
-                        android:cropToPadding="false"
-                        android:src="@drawable/depto_prueba" />
+                        android:layout_height="180dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/hotel_lp_012_1200x498" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginHorizontal="10dp"
+                        android:layout_marginTop="4dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -168,16 +169,17 @@
                         android:insetTop="6dp"
                         android:insetBottom="6dp"
                         android:text="Fecha de reserva"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        style="@style/Widget.LabDam2022.Button.OutlinedButton"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="6dp"
-                        android:background="@drawable/roundcorner"
                         android:gravity="center_vertical"
                         android:minHeight="35dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        style="@style/Widget.LabDam2022.RoundCorner">
 
                         <ImageView
                             android:id="@+id/imageView"
@@ -185,7 +187,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="15dp"
                             android:layout_weight="0"
-                            android:src="@drawable/outline_person_white_24" />
+                            android:src="@drawable/outline_person_white_24"
+                            style="@style/Widget.LabDam2022.TextOnOutlinedButton"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -202,7 +205,8 @@
                                 android:layout_weight="0"
                                 android:background="@null"
                                 android:backgroundTint="@color/gray_letters"
-                                android:src="@drawable/baseline_remove_circle_outline_white_24" />
+                                android:src="@drawable/baseline_remove_circle_outline_white_24"
+                                style="@style/Widget.LabDam2022.TextOnOutlinedButton"/>
 
                             <TextView
                                 android:id="@+id/textViewCantidadPersonasEnReserva"
@@ -211,7 +215,7 @@
                                 android:layout_weight="0"
                                 android:text="0"
                                 android:textAlignment="textEnd"
-                                android:textColor="@color/white" />
+                                style="@style/Widget.LabDam2022.TextOnOutlinedButton"/>
 
                             <TextView
                                 android:id="@+id/textViewCapacidadAlojamiento"
@@ -220,7 +224,7 @@
                                 android:layout_weight="0"
                                 android:text=" / 1"
                                 android:textAlignment="textStart"
-                                android:textColor="@color/white" />
+                                style="@style/Widget.LabDam2022.TextOnOutlinedButton"/>
 
                             <ImageButton
                                 android:id="@+id/imageButtonMas"
@@ -229,8 +233,8 @@
                                 android:layout_marginLeft="15dp"
                                 android:layout_weight="0"
                                 android:background="@null"
-                                android:backgroundTint="@color/white"
-                                android:src="@drawable/baseline_add_circle_outline_white_24" />
+                                android:src="@drawable/baseline_add_circle_outline_white_24"
+                                style="@style/Widget.LabDam2022.TextOnOutlinedButton" />
                         </LinearLayout>
 
                     </LinearLayout>

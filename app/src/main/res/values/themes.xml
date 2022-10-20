@@ -30,6 +30,7 @@
     <style name="Widget.LabDam2022.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="drawableTint">?attr/colorPrimary</item>
     </style>
 
     <style name="Widget.LabDam2022.ImageView" parent="">
@@ -39,5 +40,14 @@
     <style name="Widget.LabDam2022.ButtonFavorito" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="buttonTint">@color/red</item>
         <item name="android:button">@drawable/corazon_vacio</item>
+    </style>
+
+    <style name="Widget.LabDam2022.TextOnOutlinedButton" parent="">
+        <item name="android:tint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.LabDam2022.RoundCorner" parent="">
+        <item name="android:background">@drawable/roundcorner_red</item>
     </style>
 </resources>
