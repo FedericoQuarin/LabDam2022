@@ -39,7 +39,7 @@
                     android:id="@+id/txtViewHabitaciones"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="{habitaciones} habitaciones" />
@@ -62,7 +62,7 @@
                     android:id="@+id/txtViewWifi"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="Tiene WIFI" />

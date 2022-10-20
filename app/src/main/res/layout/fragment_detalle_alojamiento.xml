@@ -129,13 +129,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Descripción"
-                        android:textSize="18sp"></TextView>
+                        android:textSize="18sp"/>
 
                     <TextView
                         android:id="@+id/txtViewDescripcion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/lorem_ipsum_250b"></TextView>
+                        android:text="@string/lorem_ipsum_250b"/>
 
                 </LinearLayout>
 
@@ -144,7 +144,7 @@
             <FrameLayout
                 android:id="@+id/frameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></FrameLayout>
+                android:layout_height="wrap_content"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -204,7 +204,6 @@
                                 android:layout_marginRight="15dp"
                                 android:layout_weight="0"
                                 android:background="@null"
-                                android:backgroundTint="@color/gray_letters"
                                 android:src="@drawable/baseline_remove_circle_outline_white_24"
                                 style="@style/Widget.LabDam2022.TextOnOutlinedButton"/>
 

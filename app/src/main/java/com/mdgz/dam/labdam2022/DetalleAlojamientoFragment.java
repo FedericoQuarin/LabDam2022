@@ -187,6 +187,9 @@ public class DetalleAlojamientoFragment extends Fragment {
             if (!habitacion.getTieneEstacionamiento()) {
                 bindingHotel.layoutEstacionamiento.setVisibility(View.GONE);
             }
+
+            bindingHotel.txtViewNombreHotel.setText(habitacion.getHotel().getNombre());
+            bindingHotel.ratingBarHotel.setRating(habitacion.getHotel().getCategoria());
         }
 
         descripcion.setText(alojamiento.getDescripcion());

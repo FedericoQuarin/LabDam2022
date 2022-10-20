@@ -40,7 +40,7 @@
                     android:id="@+id/txtViewCamasDobles"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="{cantidad} camas dobles" />
@@ -64,7 +64,7 @@
                     android:id="@+id/txtViewCamasSimples"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="{cantidad} camas simples" />
@@ -88,7 +88,7 @@
                     android:id="@+id/txtViewEstacionamiento"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="4dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="Con estacionamiento" />
@@ -111,11 +111,33 @@
                     android:id="@+id/txtViewWifi"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="6dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="Tiene WIFI" />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/txtViewNombreHotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:paddingVertical="4dp"
+                android:text="Hotel {nombreHotel}"
+                android:textSize="16sp" />
+
+            <RatingBar
+                android:id="@+id/ratingBarHotel"
+                style="@android:style/Widget.Material.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:indeterminate="false"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:rating="1"
+                android:stepSize="1" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
