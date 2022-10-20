@@ -132,7 +132,7 @@ public class DetalleAlojamientoFragment extends Fragment {
 
         binding.txtTituloDetalleAlojamiento.setText(alojamiento.getTitulo());
         binding.txtUbicacionDetalleAlojamiento.setText(ubicacion);
-        binding.txtPrecioDetalleAlojamiento.setText("$" + alojamiento.getPrecioBase());
+        binding.txtPrecioDetalleAlojamiento.setText("$" + alojamiento.getPrecioBase() + " por noche");
 
         if (alojamiento.getCapacidad() == 1) binding.txtCapacidadDetalleAlojamiento.setText("1 persona");
         else binding.txtCapacidadDetalleAlojamiento.setText(alojamiento.getCapacidad() + " personas");
@@ -207,6 +207,8 @@ public class DetalleAlojamientoFragment extends Fragment {
         botonReservar.setOnClickListener(v -> logicaReservar(v));
     }
 
+    // Actualiza el texto del boton "Fecha de reserva" cuando se selecciona una fecha
+    // en el DatePicker
     private void actualizarBotonesYLabel(){
         // Obtener la selecion del range picker
         Object selection = materialDatePicker.getSelection();
@@ -310,33 +312,24 @@ public class DetalleAlojamientoFragment extends Fragment {
         alerta.setTitle("Confirmar reserva")
                 .setMessage("¿Desea confirmar la reserva del alojamiento seleccionado?")
                 .setCancelable(false)
-                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                // Si se clickea "Confirmar" se crea la reserva y se vuelve a pantalla de busqueda
+                .setPositiveButton("Confirmar", (dialogInterface, i) -> {
+                    gestorReserva = GestorReserva.getInstance();
 
-                        gestorReserva = GestorReserva.getInstance();
+                    Object selection = materialDatePicker.getSelection();
 
-                        Object selection = materialDatePicker.getSelection();
+                    gestorReserva.crearReserva(Instant.ofEpochMilli(((Pair<Long, Long>) selection).first),
+                            Instant.ofEpochMilli(((Pair<Long, Long>) selection).second),
+                            cantidadPersonas, montoTotal, alojamiento);
 
-                        gestorReserva.crearReserva(Instant.ofEpochMilli(((Pair<Long, Long>) selection).first),
-                                Instant.ofEpochMilli(((Pair<Long, Long>) selection).second),
-                                cantidadPersonas, montoTotal, alojamiento);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID
 
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID
-
-                        NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
-                                .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment, bundle);
-
-
-                    }
+                    NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
+                            .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment, bundle);
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
+                // Si se clickea "No" se queda en la pantalla actual
+                .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.cancel());
 
         alerta.create().show();
     }
