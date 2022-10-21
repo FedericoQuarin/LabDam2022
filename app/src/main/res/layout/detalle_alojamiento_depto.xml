@@ -22,51 +22,27 @@
             android:fadingEdgeLength="5dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/txtViewHabitaciones"
+                style="@style/Widget.LabDam2022.LabelWithDrawable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="4dp">
+                android:paddingVertical="4dp"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:text="{habitaciones} habitaciones"
+                app:drawableStartCompat="@drawable/door_white_24" />
 
-                <ImageView
-                    android:id="@+id/imageViewHabitaciones"
-                    style="@style/Widget.LabDam2022.ImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/door_white_24" />
-
-                <TextView
-                    android:id="@+id/txtViewHabitaciones"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="{habitaciones} habitaciones" />
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/txtViewWifi"
+                style="@style/Widget.LabDam2022.LabelWithDrawable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="4dp">
-
-                <ImageView
-                    android:id="@+id/imageViewWifi"
-                    style="@style/Widget.LabDam2022.ImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/wifi_white_24" />
-
-                <TextView
-                    android:id="@+id/txtViewWifi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Tiene WIFI" />
-            </LinearLayout>
+                android:paddingVertical="4dp"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:text="Tiene WIFI"
+                app:drawableStartCompat="@drawable/wifi_white_24" />
 
         </LinearLayout>
 

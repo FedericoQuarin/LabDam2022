@@ -22,100 +22,49 @@
             android:fadingEdgeLength="5dp"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layoutCamasDobles"
+            <TextView
+                android:id="@+id/txtViewCamasDobles"
+                style="@style/Widget.LabDam2022.LabelWithDrawable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="4dp">
+                android:paddingVertical="4dp"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:text="{cantidad} camas dobles"
+                app:drawableStartCompat="@drawable/king_bed_white_24" />
 
-                <ImageView
-                    android:id="@+id/imageViewCamasDobles"
-                    style="@style/Widget.LabDam2022.ImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/king_bed_white_24" />
-
-                <TextView
-                    android:id="@+id/txtViewCamasDobles"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="{cantidad} camas dobles" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutCamasSimples"
+            <TextView
+                android:id="@+id/txtViewCamasSimples"
+                style="@style/Widget.LabDam2022.LabelWithDrawable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="4dp">
+                android:paddingVertical="4dp"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:text="{cantidad} camas simples"
+                app:drawableStartCompat="@drawable/single_bed_white_24" />
 
-                <ImageView
-                    android:id="@+id/imageViewCamasSimples"
-                    style="@style/Widget.LabDam2022.ImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/single_bed_white_24" />
-
-                <TextView
-                    android:id="@+id/txtViewCamasSimples"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="{cantidad} camas simples" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutEstacionamiento"
+            <TextView
+                android:id="@+id/txtViewEstacionamiento"
+                style="@style/Widget.LabDam2022.LabelWithDrawable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="4dp">
+                android:paddingVertical="4dp"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:text="Con estacionamiento"
+                app:drawableStartCompat="@drawable/local_parking_white_24" />
 
-                <ImageView
-                    android:id="@+id/imageViewEstacionamiento"
-                    style="@style/Widget.LabDam2022.ImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/local_parking_white_24" />
-
-                <TextView
-                    android:id="@+id/txtViewEstacionamiento"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Con estacionamiento" />
-            </LinearLayout>
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/txtViewWifi"
+                style="@style/Widget.LabDam2022.LabelWithDrawable"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingVertical="4dp">
-
-                <ImageView
-                    android:id="@+id/imageViewWifi"
-                    style="@style/Widget.LabDam2022.ImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/wifi_white_24" />
-
-                <TextView
-                    android:id="@+id/txtViewWifi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Tiene WIFI" />
-            </LinearLayout>
+                android:paddingVertical="4dp"
+                android:drawablePadding="6dp"
+                android:gravity="center_vertical"
+                android:text="Tiene WIFI"
+                app:drawableStartCompat="@drawable/wifi_white_24" />
 
             <TextView
                 android:id="@+id/txtViewNombreHotel"

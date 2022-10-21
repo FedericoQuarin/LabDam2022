@@ -158,14 +158,14 @@ public class DetalleAlojamientoFragment extends Fragment {
 
             if (!depto.getTieneWifi()) {
                 bindingDepto.txtViewWifi.setText("No tiene WIFI");
-                bindingDepto.imageViewWifi.setImageResource(R.drawable.wifi_off_white_24);
+                bindingDepto.txtViewWifi.setCompoundDrawablesWithIntrinsicBounds(R.drawable.wifi_off_white_24, 0, 0, 0);
             }
         }
         else {
             Habitacion habitacion = (Habitacion) alojamiento;
 
             if (habitacion.getCamasMatrimoniales() == 0) {
-                bindingHotel.layoutCamasDobles.setVisibility(View.GONE);
+                bindingHotel.txtViewCamasDobles.setVisibility(View.GONE);
             }
             else if (habitacion.getCamasMatrimoniales() == 1) {
                 bindingHotel.txtViewCamasDobles.setText("1 cama doble");
@@ -175,7 +175,7 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
 
             if (habitacion.getCamasIndividuales() == 0) {
-                bindingHotel.layoutCamasSimples.setVisibility(View.GONE);
+                bindingHotel.txtViewCamasSimples.setVisibility(View.GONE);
             }
             else if (habitacion.getCamasIndividuales() == 1) {
                 bindingHotel.txtViewCamasSimples.setText("1 cama simple");
@@ -185,7 +185,7 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
 
             if (!habitacion.getTieneEstacionamiento()) {
-                bindingHotel.imageViewEstacionamiento.setImageResource(R.drawable.not_parking_24);
+                bindingHotel.txtViewEstacionamiento.setCompoundDrawablesWithIntrinsicBounds(R.drawable.not_parking_24, 0, 0, 0);
                 bindingHotel.txtViewEstacionamiento.setText("Sin estacionamiento");
             }
 
