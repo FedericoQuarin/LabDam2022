@@ -59,10 +59,10 @@ public class DetalleAlojamientoFragment extends Fragment {
     private Boolean fechaValida = false;
     private Integer cantidadPersonas = 0;
     private Double montoTotal;
+    private Pair<Long, Long> periodoSeleccionado;
 
     private Button botonFecha;
     private TextView precioFinal;
-    private TextView precioPorNoche;
     private ImageButton botonMas;
     private ImageButton botonMenos;
     private TextView txtViewCantidadPersonas;
@@ -113,6 +113,8 @@ public class DetalleAlojamientoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Gestores restantes
+        gestorReserva = GestorReserva.getInstance();
 
         // Seteo de elemento del fragmento
         String ubicacion = alojamiento.getUbicacion().getCalle() + " "
@@ -122,7 +124,6 @@ public class DetalleAlojamientoFragment extends Fragment {
         // Variables
         botonFecha = binding.buttonFecha;
         precioFinal = binding.txtPrecioFinalDetalleAlojamiento;
-        precioPorNoche = binding.labelPrecioFinalDetalleAlojamiento;
         botonMenos = binding.imageButtonMenos;
         botonMas = binding.imageButtonMas;
         txtViewCantidadPersonas = binding.textViewCantidadPersonasEnReserva;
@@ -150,6 +151,9 @@ public class DetalleAlojamientoFragment extends Fragment {
         // Sino se setean los del detalleHotel
         if (alojamiento instanceof Departamento) {
             Departamento depto = (Departamento) alojamiento;
+
+            binding.txtViewPrecioLimpieza.setVisibility(View.VISIBLE);
+            binding.txtViewPrecioLimpieza.setText("+$" + depto.getCostoLimpieza() + " de limpieza");
 
             if (depto.getCantidadHabitaciones() == 1)
                 bindingDepto.txtViewHabitaciones.setText("1 habitación");
@@ -208,22 +212,22 @@ public class DetalleAlojamientoFragment extends Fragment {
 
         botonMas.setOnClickListener(v -> sumarCantidadPersonas());
 
-        botonReservar.setOnClickListener(v -> logicaReservar(v));
+        botonReservar.setOnClickListener(v -> logicaReservar());
     }
 
     // Actualiza el texto del boton "Fecha de reserva" cuando se selecciona una fecha
     // en el DatePicker
     private void actualizarBotonesYLabel(){
         // Obtener la selecion del range picker
-        Pair<Long, Long> selection = (Pair<Long, Long>) materialDatePicker.getSelection();
+        periodoSeleccionado = (Pair<Long, Long>) materialDatePicker.getSelection();
 
         try {
-            Long longFechaIngreso = selection.first;
+            Long longFechaIngreso = periodoSeleccionado.first;
             calendar.setTimeInMillis(longFechaIngreso);
             String fechaIngreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
             int añoIngreso = calendar.get(Calendar.YEAR);
 
-            Long longFechaEgreso = selection.second;
+            Long longFechaEgreso = periodoSeleccionado.second;
             calendar.setTimeInMillis(longFechaEgreso);
             String fechaEgreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
             int añoEgreso = calendar.get(Calendar.YEAR);
@@ -239,8 +243,7 @@ public class DetalleAlojamientoFragment extends Fragment {
 
             Long diferenciaEntreFechas = longFechaEgreso - longFechaIngreso;
             Long cantidadNoches = TimeUnit.DAYS.convert(diferenciaEntreFechas, TimeUnit.MILLISECONDS);
-            montoTotal = (cantidadNoches*alojamiento.getPrecioBase());
-            precioFinal.setText("$ " + montoTotal);
+            montoTotal = alojamiento.costoTotal(cantidadNoches);
             fechaValida = true;
 
             if(cantidadPersonas > 0) botonReservar.setEnabled(true);
@@ -250,9 +253,10 @@ public class DetalleAlojamientoFragment extends Fragment {
             fechaValida = false;
 
             botonReservar.setEnabled(false);
-            precioFinal.setText("$0");
+            montoTotal = 0.0;
         }
 
+        precioFinal.setText("$ " + montoTotal);
     }
 
     private void configurarDateRangePicker(){
@@ -319,20 +323,16 @@ public class DetalleAlojamientoFragment extends Fragment {
 
     }
 
-    private void logicaReservar(View view){
-        System.out.println("view " + view.toString());
+    // Genera un AlertDialog para confirmar la reserva
+    private void logicaReservar(){
         AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
         alerta.setTitle("Confirmar reserva")
                 .setMessage("¿Desea confirmar la reserva del alojamiento seleccionado?")
                 .setCancelable(false)
                 // Si se clickea "Confirmar" se crea la reserva y se vuelve a pantalla de busqueda
                 .setPositiveButton("Confirmar", (dialogInterface, i) -> {
-                    gestorReserva = GestorReserva.getInstance();
-
-                    Object selection = materialDatePicker.getSelection();
-
-                    gestorReserva.crearReserva(Instant.ofEpochMilli(((Pair<Long, Long>) selection).first),
-                            Instant.ofEpochMilli(((Pair<Long, Long>) selection).second),
+                    gestorReserva.crearReserva(Instant.ofEpochMilli(periodoSeleccionado.first),
+                            Instant.ofEpochMilli(periodoSeleccionado.second),
                             cantidadPersonas, montoTotal, alojamiento);
 
                     Bundle bundle = new Bundle();
