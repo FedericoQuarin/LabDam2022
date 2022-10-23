@@ -221,10 +221,19 @@ public class DetalleAlojamientoFragment extends Fragment {
             Long longFechaIngreso = selection.first;
             calendar.setTimeInMillis(longFechaIngreso);
             String fechaIngreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
+            int añoIngreso = calendar.get(Calendar.YEAR);
 
             Long longFechaEgreso = selection.second;
             calendar.setTimeInMillis(longFechaEgreso);
             String fechaEgreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
+            int añoEgreso = calendar.get(Calendar.YEAR);
+
+            // Si el periodo seleccionado empieza o termina en otro año que no sea el actual
+            // se agrega el año de reserva a cada fecha
+            if (añoIngreso != LocalDate.now().getYear() || añoEgreso != LocalDate.now().getYear()) {
+                fechaIngreso += "/" + añoIngreso;
+                fechaEgreso += "/" + añoEgreso;
+            }
 
             botonFecha.setText(fechaIngreso + " - " + fechaEgreso);
 
