@@ -33,7 +33,7 @@
     </style>
 
     <style name="Widget.LabDam2022.ImageView" parent="">
-        <item name="tint">@color/white_alpha75</item>
+        <item name="tint">?attr/colorOnSurface</item>
     </style>
 
     <style name="Widget.LabDam2022.labelWithDrawable" parent="Widget.AppCompat.TextView">
