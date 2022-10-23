@@ -98,7 +98,8 @@
                                 android:layout_weight="1"
                                 android:text="$ 0.00 por noche"
                                 android:textAlignment="textEnd"
-                                android:textSize="16sp" />
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
 
                         </LinearLayout>
 

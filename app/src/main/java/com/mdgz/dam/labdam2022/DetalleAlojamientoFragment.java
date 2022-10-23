@@ -1,7 +1,6 @@
 package com.mdgz.dam.labdam2022;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,8 +20,6 @@ import android.widget.TextView;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoDeptoBinding;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoHotelBinding;
 import com.mdgz.dam.labdam2022.databinding.FragmentDetalleAlojamientoBinding;
@@ -32,17 +29,9 @@ import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
 
-import org.w3c.dom.Text;
-
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.temporal.ChronoField;
-import java.time.temporal.TemporalField;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -54,10 +43,9 @@ public class DetalleAlojamientoFragment extends Fragment {
     private GestorAlojamiento gestorAlojamiento;
     private GestorReserva gestorReserva;
 
-    private int idAlojamiento;
     private Alojamiento alojamiento;
     private Boolean fechaValida = false;
-    private Integer cantidadPersonas = 0;
+    private int cantidadPersonas = 0;
     private Double montoTotal;
     private Pair<Long, Long> periodoSeleccionado;
 
@@ -71,7 +59,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     private TextView descripcion;
 
     private Calendar calendar;
-    private MaterialDatePicker materialDatePicker;
+    private MaterialDatePicker<Pair<Long, Long>> materialDatePicker;
 
     public DetalleAlojamientoFragment() {
         // Required empty public constructor
@@ -83,25 +71,27 @@ public class DetalleAlojamientoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Infla el layout de este fragmento
         binding = FragmentDetalleAlojamientoBinding.inflate(inflater, container, false);
         FrameLayout frameLayout = binding.frameLayout;
 
-        // Busca el alojamiento a mostrar
-        idAlojamiento = getArguments().getInt("idAlojamiento");
-        gestorAlojamiento = GestorAlojamiento.getInstance();
-        alojamiento = gestorAlojamiento.getAlojamiento(idAlojamiento);
+        if (getArguments() != null) {
+            // Busca el alojamiento a mostrar
+            int idAlojamiento = getArguments().getInt("idAlojamiento");
+            gestorAlojamiento = GestorAlojamiento.getInstance();
+            alojamiento = gestorAlojamiento.getAlojamiento(idAlojamiento);
 
-        // Infla parte de la interfaz que es especifica del tipo de alojamiento
-        if (alojamiento instanceof Departamento) {
-            bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayout, false);
-            frameLayout.addView(bindingDepto.getRoot());
-        }
-        else {
-            bindingHotel = DetalleAlojamientoHotelBinding.inflate(inflater, frameLayout, false);
-            frameLayout.addView(bindingHotel.getRoot());
+            // Infla parte de la interfaz que es especifica del tipo de alojamiento
+            if (alojamiento instanceof Departamento) {
+                bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayout, false);
+                frameLayout.addView(bindingDepto.getRoot());
+            }
+            else {
+                bindingHotel = DetalleAlojamientoHotelBinding.inflate(inflater, frameLayout, false);
+                frameLayout.addView(bindingHotel.getRoot());
+            }
         }
 
         configurarDateRangePicker();
@@ -200,7 +190,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         descripcion.setText(alojamiento.getDescripcion());
 
         // TODO: corregir - si se clickea el boton antes de que se abra el datePicker crashea
-        botonFecha.setOnClickListener(v -> { materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker"); });
+        botonFecha.setOnClickListener(v -> materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker"));
 
         materialDatePicker.addOnDismissListener( p -> actualizarBotonesYLabel());
 
@@ -225,24 +215,24 @@ public class DetalleAlojamientoFragment extends Fragment {
             Long longFechaIngreso = periodoSeleccionado.first;
             calendar.setTimeInMillis(longFechaIngreso);
             String fechaIngreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
-            int añoIngreso = calendar.get(Calendar.YEAR);
+            int anioIngreso = calendar.get(Calendar.YEAR);
 
             Long longFechaEgreso = periodoSeleccionado.second;
             calendar.setTimeInMillis(longFechaEgreso);
             String fechaEgreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
-            int añoEgreso = calendar.get(Calendar.YEAR);
+            int anioEgreso = calendar.get(Calendar.YEAR);
 
             // Si el periodo seleccionado empieza o termina en otro año que no sea el actual
             // se agrega el año de reserva a cada fecha
-            if (añoIngreso != LocalDate.now().getYear() || añoEgreso != LocalDate.now().getYear()) {
-                fechaIngreso += "/" + añoIngreso;
-                fechaEgreso += "/" + añoEgreso;
+            if (anioIngreso != LocalDate.now().getYear() || anioEgreso != LocalDate.now().getYear()) {
+                fechaIngreso += "/" + anioIngreso;
+                fechaEgreso += "/" + anioEgreso;
             }
 
             botonFecha.setText(fechaIngreso + " - " + fechaEgreso);
 
-            Long diferenciaEntreFechas = longFechaEgreso - longFechaIngreso;
-            Long cantidadNoches = TimeUnit.DAYS.convert(diferenciaEntreFechas, TimeUnit.MILLISECONDS);
+            long diferenciaEntreFechas = longFechaEgreso - longFechaIngreso;
+            long cantidadNoches = TimeUnit.DAYS.convert(diferenciaEntreFechas, TimeUnit.MILLISECONDS);
             montoTotal = alojamiento.costoTotal(cantidadNoches);
             fechaValida = true;
 
@@ -284,7 +274,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
 
         builder.setTitleText("Seleccione el rango de fecha");
-        builder.setSelection(new Pair<Long, Long>(today,tomorrow));
+        builder.setSelection(new Pair<>(today,tomorrow));
         builder.setCalendarConstraints(constraintBuilder.build());
         builder.setPositiveButtonText("Guardar");
 
