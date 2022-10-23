@@ -215,14 +215,14 @@ public class DetalleAlojamientoFragment extends Fragment {
     // en el DatePicker
     private void actualizarBotonesYLabel(){
         // Obtener la selecion del range picker
-        Object selection = materialDatePicker.getSelection();
+        Pair<Long, Long> selection = (Pair<Long, Long>) materialDatePicker.getSelection();
 
         try {
-            Long longFechaIngreso = ((Pair<Long, Long>) selection).first;
+            Long longFechaIngreso = selection.first;
             calendar.setTimeInMillis(longFechaIngreso);
             String fechaIngreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
 
-            Long longFechaEgreso = ((Pair<Long, Long>) selection).second;
+            Long longFechaEgreso = selection.second;
             calendar.setTimeInMillis(longFechaEgreso);
             String fechaEgreso = calendar.get(Calendar.DATE) + "/" + (calendar.get(Calendar.MONTH) + 1);
 
@@ -248,7 +248,7 @@ public class DetalleAlojamientoFragment extends Fragment {
 
     private void configurarDateRangePicker(){
         // Gestion del DateRangePicker
-        calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
 
         // Dia de hoy
         long today = calendar.getTimeInMillis();
