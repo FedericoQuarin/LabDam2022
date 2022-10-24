@@ -21,4 +21,6 @@
 
     <!-- misc -->
     <string name="lorem_ipsum_250b">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum suscipit mauris. Praesent imperdiet ultrices euismod. Morbi purus enim, fringilla eget luctus sit amet, suscipit a est. Mauris at egestas risus. Vestibulum porttitor mi id odio cras.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
