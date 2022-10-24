@@ -25,8 +25,13 @@
         <item name="fontFamily">@font/nunito_regular</item>
 
         <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
+
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.LabDam2022.BottomSheetDialog</item>
     </style>
 
+
+
+    <!-- Estilos -->
     <style name="Widget.LabDam2022.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="strokeColor">?attr/colorPrimary</item>
@@ -54,4 +59,10 @@
     <style name="Widget.LabDam2022.RoundCorner" parent="">
         <item name="android:background">@drawable/roundcorner_red</item>
     </style>
+
+    <style name="ThemeOverlay.LabDam2022.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
+
 </resources>

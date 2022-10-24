@@ -149,6 +149,12 @@
                         android:layout_height="wrap_content"
                         android:text="@string/lorem_ipsum_250b"/>
 
+                    <Button
+                        android:id="@+id/buttonMasDescripcion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ver mas" />
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
