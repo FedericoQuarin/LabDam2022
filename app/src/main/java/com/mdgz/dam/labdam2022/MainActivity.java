@@ -1,9 +1,12 @@
 package com.mdgz.dam.labdam2022;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavHostController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.preference.PreferenceManager;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,14 +27,24 @@ import com.mdgz.dam.labdam2022.model.Ubicacion;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
+
         View view = binding.getRoot();
         setContentView(view);
         setSupportActionBar(binding.materialToolbar);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("temaOscuro", false)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         testing();
     }
 
