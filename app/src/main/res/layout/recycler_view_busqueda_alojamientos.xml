@@ -27,7 +27,8 @@
                 android:id="@+id/imagenAlojamiento"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                tools:srcCompat="@drawable/depto_prueba" />
+                android:scaleType="centerCrop"
+                tools:srcCompat="@drawable/hotel_lp_012_1200x498" />
 
             <LinearLayout
                 android:layout_width="match_parent"

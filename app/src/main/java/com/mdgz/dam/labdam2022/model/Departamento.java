@@ -51,4 +51,9 @@ public class Departamento extends Alojamiento{
     public Ubicacion getUbicacion() {
         return ubicacion;
     }
+
+    @Override
+    public Double costoTotal(Long diasEstadia){
+        return precioBase * diasEstadia + costoLimpieza;
+    }
 }
