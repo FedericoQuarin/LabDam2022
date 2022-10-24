@@ -55,4 +55,27 @@
             app:popEnterAnim="@anim/desde_izquierda"
             app:popExitAnim="@anim/hacia_derecha" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.mdgz.dam.labdam2022.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_logBusquedaFragment"
+            app:destination="@id/logBusquedaFragment" />
+    </fragment>
+    <action
+        android:id="@+id/action_global_settingsFragment"
+        app:destination="@id/settingsFragment"
+        app:launchSingleTop="true"/>
+    <action
+        android:id="@+id/action_global_busquedaFragment"
+        app:destination="@id/busquedaFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/busquedaFragment"
+        app:popUpToInclusive="true"/>
+    <fragment
+        android:id="@+id/logBusquedaFragment"
+        android:name="com.mdgz.dam.labdam2022.LogBusquedaFragment"
+        android:label="fragment_log_busqueda"
+        tools:layout="@layout/fragment_log_busqueda" />
 </navigation>

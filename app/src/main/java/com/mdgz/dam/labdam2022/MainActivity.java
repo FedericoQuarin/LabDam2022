@@ -5,8 +5,12 @@ import androidx.navigation.NavHostController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mdgz.dam.labdam2022.databinding.ActivityMainBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
@@ -27,8 +31,38 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-
+        setSupportActionBar(binding.materialToolbar);
         testing();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.boton_buscar:
+                NavHostFragment.findNavController(binding.fragmentContainerView.getFragment())
+                        .navigate(R.id.action_global_busquedaFragment);
+                return true;
+            case R.id.mis_reservas:
+                Toast.makeText(this, "Reserva", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.mis_favoritos:
+                Toast.makeText(this, "Favoritos", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.opciones:
+                NavHostFragment.findNavController(binding.fragmentContainerView.getFragment())
+                        .navigate(R.id.action_global_settingsFragment);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void testing() {

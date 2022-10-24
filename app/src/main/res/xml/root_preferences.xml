@@ -1,34 +1,66 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <PreferenceCategory app:title="@string/messages_header">
+    <PreferenceCategory app:title="General">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="temaOscuro"
+            android:title="Tema oscuro" />
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="notificaciones"
+            android:title="Notificaciones" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Cuenta">
 
         <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
+            android:key="email"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Dirección de correo"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="cuit"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="CUIT"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
+            app:defaultValue="efectivo"
+            app:entries="@array/formasPagos_entries"
+            app:entryValues="@array/formasPagos_values"
+            app:key="pagoPreferido"
+            app:title="Metodo de pago preferido"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="pesos"
+            app:entries="@array/monedaPreferida_entries"
+            app:entryValues="@array/monedaPreferida_values"
+            app:key="monedaPreferida"
+            app:title="Moneda preferida"
+            app:summary=""
             app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="Privacidad">
 
         <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
+            android:defaultValue="false"
+            android:key="guardarInformacion"
+            android:title="Guardar información"
+            android:summary="Autorizar guardado de información sobre el uso de la aplicación"/>
 
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
+        <Preference
+            android:key="logs"
+            android:title="Ver información guardada"
+            app:dependency="guardarInformacion" />
 
     </PreferenceCategory>
 
