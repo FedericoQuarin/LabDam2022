@@ -209,8 +209,10 @@ public class BusquedaFragment extends Fragment {
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("minimo", editTxtPrecioMinimo.getText().toString());
-        outState.putString("maximo", editTxtPrecioMaximo.getText().toString());
-        outState.putString("ciudad", list_ciudades.getEditText().getText().toString());
+        if (editTxtPrecioMinimo != null) {
+            outState.putString("minimo", editTxtPrecioMinimo.getText().toString());
+            outState.putString("maximo", editTxtPrecioMaximo.getText().toString());
+            outState.putString("ciudad", list_ciudades.getEditText().getText().toString());
+        }
     }
 }

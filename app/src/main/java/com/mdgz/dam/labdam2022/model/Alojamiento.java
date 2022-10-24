@@ -10,8 +10,8 @@ public abstract class Alojamiento {
     protected Boolean esFavorito;
 
     public abstract Ubicacion getUbicacion();
-    public Double costoDia(){
-        return precioBase;
+    public Double costoTotal(Long diasEstadia){
+        return precioBase * diasEstadia;
     }
 
     public Alojamiento(){

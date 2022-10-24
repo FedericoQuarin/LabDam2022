@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
             String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum suscipit mauris. Praesent imperdiet ultrices euismod.";
 
-            Alojamiento d1 = new Departamento(1, "Departamento1", "Departamento1 - " + loremIpsum, 1, 100.00, true, 200.00, 2, ubicacion, false);
+            Alojamiento d1 = new Departamento(1, "Departamento1", "Departamento1 - " + loremIpsum, 1, 100.00, false, 200.00, 2, ubicacion, false);
             gestorAlojamiento.agregarAlojamiento(d1);
             Alojamiento d2 = new Departamento(2, "Departamento2", "Departamento2 - " + loremIpsum, 2, 200.00, true, 200.00, 2, ubicacion, false);
             gestorAlojamiento.agregarAlojamiento(d2);
