@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/busquedaFragment"
         android:name="com.mdgz.dam.labdam2022.BusquedaFragment"
-        android:label="fragment_busqueda"
+        android:label="AirBooking"
         tools:layout="@layout/fragment_busqueda" >
         <action
             android:id="@+id/action_busquedaFragment_to_resultadoBusquedaFragment"
@@ -21,7 +21,7 @@
     <fragment
         android:id="@+id/resultadoBusquedaFragment"
         android:name="com.mdgz.dam.labdam2022.ResultadoBusquedaFragment"
-        android:label="fragment_resultado_busqueda"
+        android:label="AirBooking"
         tools:layout="@layout/fragment_resultado_busqueda" >
         <action
             android:id="@+id/action_resultadoBusquedaFragment_to_detalleAlojamientoFragment"
@@ -39,7 +39,7 @@
     <fragment
         android:id="@+id/detalleAlojamientoFragment"
         android:name="com.mdgz.dam.labdam2022.DetalleAlojamientoFragment"
-        android:label="fragment_detalle_alojamiento"
+        android:label="AirBooking"
         tools:layout="@layout/fragment_detalle_alojamiento" >
         <action
             android:id="@+id/action_detalleAlojamientoFragment_to_busquedaFragment"
@@ -61,7 +61,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.mdgz.dam.labdam2022.SettingsFragment"
-        android:label="SettingsFragment" >
+        android:label="AirBooking" >
         <action
             android:id="@+id/action_settingsFragment_to_logBusquedaFragment"
             app:destination="@id/logBusquedaFragment" />
@@ -79,7 +79,7 @@
     <fragment
         android:id="@+id/logBusquedaFragment"
         android:name="com.mdgz.dam.labdam2022.LogBusquedaFragment"
-        android:label="fragment_log_busqueda"
+        android:label="AirBooking"
         tools:layout="@layout/fragment_log_busqueda" />
     <dialog
         android:id="@+id/descripcionFragment"

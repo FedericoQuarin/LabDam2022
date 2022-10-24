@@ -2,8 +2,12 @@ package com.mdgz.dam.labdam2022;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.navigation.NavController;
 import androidx.navigation.NavHostController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
@@ -14,7 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.mdgz.dam.labdam2022.databinding.ActivityMainBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
@@ -34,9 +40,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
+        MaterialToolbar toolbar = binding.materialToolbar;
+
         View view = binding.getRoot();
         setContentView(view);
-        setSupportActionBar(binding.materialToolbar);
+        setSupportActionBar(toolbar);
+
+
+        NavController navController = NavHostFragment.findNavController(binding.fragmentContainerView.getFragment());
+        AppBarConfiguration appBarConfiguration =
+                new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+        NavigationUI.setupWithNavController(
+                toolbar, navController, appBarConfiguration);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (sharedPreferences.getBoolean("temaOscuro", false)) {
