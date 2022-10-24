@@ -21,6 +21,7 @@
         <item name="android:textColor">@color/white_alpha90</item>
 
         <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
+        <item name="borderlessButtonStyle">@style/Widget.LabDam2022.Button.TextButton</item>
 
         <item name="fontFamily">@font/nunito_regular</item>
 
@@ -61,6 +62,11 @@
 
     <style name="ThemeOverlay.LabDam2022.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
+    <style name="Widget.LabDam2022.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="rippleColor">@color/white_alpha15</item>
     </style>
 
 </resources>
