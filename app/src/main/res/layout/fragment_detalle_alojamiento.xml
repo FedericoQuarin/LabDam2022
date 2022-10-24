@@ -131,9 +131,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
-                    android:layout_marginVertical="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
                     android:elevation="5dp"
-                    android:fadingEdgeLength="5dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -151,8 +151,10 @@
 
                     <Button
                         android:id="@+id/buttonMasDescripcion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        style="?attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:gravity="left|center_vertical"
                         android:text="Ver mas" />
 
                 </LinearLayout>
