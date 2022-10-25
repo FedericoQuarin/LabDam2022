@@ -54,9 +54,6 @@
             app:destination="@id/resultadoBusquedaFragment"
             app:popEnterAnim="@anim/desde_izquierda"
             app:popExitAnim="@anim/hacia_derecha" />
-        <action
-            android:id="@+id/action_detalleAlojamientoFragment_to_descripcionFragment"
-            app:destination="@id/descripcionFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -81,10 +78,5 @@
         android:name="com.mdgz.dam.labdam2022.LogBusquedaFragment"
         android:label="AirBooking"
         tools:layout="@layout/fragment_log_busqueda" />
-    <dialog
-        android:id="@+id/descripcionFragment"
-        android:name="com.mdgz.dam.labdam2022.DescripcionFragment"
-        android:label="fragment_descripcion"
-        tools:layout="@layout/fragment_descripcion" />
 
 </navigation>
