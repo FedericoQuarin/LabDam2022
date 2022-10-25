@@ -190,10 +190,6 @@ public class DetalleAlojamientoFragment extends Fragment {
         }
 
         descripcion.setText(alojamiento.getDescripcion());
-        buttonMasDescripcion.setOnClickListener(v -> {
-            NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
-                    .navigate(R.id.action_detalleAlojamientoFragment_to_descripcionFragment);
-        });
 
 
         // TODO: corregir - si se clickea el boton antes de que se abra el datePicker crashea
