@@ -192,7 +192,7 @@ public class DetalleAlojamientoFragment extends Fragment {
             bindingHotel.ratingBarHotel.setRating(habitacion.getHotel().getCategoria());
         }
 
-        if (descripcion.length() <= tamDescripcionAcotada) {
+        if (alojamiento.getDescripcion().length() <= tamDescripcionAcotada) {
             descripcion.setText(alojamiento.getDescripcion());
             buttonMasDescripcion.setVisibility(View.GONE);
         }
