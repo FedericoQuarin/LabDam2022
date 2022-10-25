@@ -62,6 +62,8 @@ public class DetalleAlojamientoFragment extends Fragment {
     private Calendar calendar;
     private MaterialDatePicker<Pair<Long, Long>> materialDatePicker;
 
+    private Integer tamDescripcionAcotada;
+
     public DetalleAlojamientoFragment() {
         // Required empty public constructor
     }
@@ -104,6 +106,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tamDescripcionAcotada = this.getContext().getResources().getInteger(R.integer.tam_descripcion_acotada);
         // Gestores restantes
         gestorReserva = GestorReserva.getInstance();
 
@@ -189,7 +192,14 @@ public class DetalleAlojamientoFragment extends Fragment {
             bindingHotel.ratingBarHotel.setRating(habitacion.getHotel().getCategoria());
         }
 
-        descripcion.setText(alojamiento.getDescripcion());
+        if (descripcion.length() <= tamDescripcionAcotada) {
+            descripcion.setText(alojamiento.getDescripcion());
+            buttonMasDescripcion.setVisibility(View.GONE);
+        }
+        else {
+            colocarDescripcionAcotada();
+        }
+
 
 
         // TODO: corregir - si se clickea el boton antes de que se abra el datePicker crashea
@@ -338,5 +348,17 @@ public class DetalleAlojamientoFragment extends Fragment {
                 .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.cancel());
 
         alerta.create().show();
+    }
+
+    public void colocarDescripcionAcotada() {
+        descripcion.setText(alojamiento.getDescripcion().substring(0, tamDescripcionAcotada) + "...");
+        buttonMasDescripcion.setOnClickListener(v -> colocarDescripcionExtendida());
+        buttonMasDescripcion.setText(R.string.button_ver_mas_descripcion);
+    }
+
+    public void colocarDescripcionExtendida() {
+        descripcion.setText(alojamiento.getDescripcion());
+        buttonMasDescripcion.setOnClickListener(v -> colocarDescripcionAcotada());
+        buttonMasDescripcion.setText(R.string.button_ver_menos_descripcion);
     }
 }
