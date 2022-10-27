@@ -50,8 +50,6 @@ public class AlojamientoRecyclerAdapter
             this.imagen = binding.imagenAlojamiento;
             this.botonFavorito = binding.buttonFavorito;
 
-            //this.itemView.setOnClickListener(this);
-            //this.imagen.setOnClickListener(this);   //TODO: Por ahora sólo aprentando en la imagen
             this.card.setOnClickListener(this);
             this.onNoteListener = onNoteListener;
         }
@@ -82,7 +80,7 @@ public class AlojamientoRecyclerAdapter
         if (alojamiento.getCapacidad() == 1) alojamientoHolder.capacidad.setText("1 persona");
         else alojamientoHolder.capacidad.setText(alojamiento.getCapacidad() + " personas");
         alojamientoHolder.precio.setText("$" + alojamiento.getPrecioBase());
-        alojamientoHolder.imagen.setImageResource(R.drawable.depto_prueba);
+        alojamientoHolder.imagen.setImageResource(R.drawable.imagen_loftbox);
 
         if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
 
