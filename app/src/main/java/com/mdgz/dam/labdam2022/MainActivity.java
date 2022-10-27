@@ -107,10 +107,12 @@ public class MainActivity extends AppCompatActivity {
             gestorCiudad.agregarCiudad(ciudad3);
 
             Ubicacion ubicacion = new Ubicacion(50.0, 30.0, "Calle principal", "1", ciudad1);
+            Ubicacion ubicacion1 = new Ubicacion(50, 30, "Balcarce", "1442", ciudad1);
 
             Hotel hotel = new Hotel(1, "Hotel principal", 1, ubicacion);
 
             String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum suscipit mauris. Praesent imperdiet ultrices euismod.";
+
             String descripcionCentricoStudio = "Departamento equipado para 2 a 3 personas, cercano a transporte público, comercio, servicios, parques y barrios típicos. Todo a la mano!\n" +
                     "Estacionamiento de pago en el edificio.\n" +
                     "El alojamiento\n" +
@@ -120,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
                     "Acceso a sala de eventos y plaza dura en primer piso, en último piso tienen acceso a GYM, quinchos para asados, piscina, jacuzzi y terraza panorámica. Todo sin costo!\n" +
                     "Otros aspectos para tener en cuenta\n" +
                     "Posibilidad de emitir factura";
+                    
+            String descripcionDepto1 = "El Departamento Santa Fe Boulevard ofrece alojamiento con wifi gratis y vistas al jardín en Santa Fe, a solo 1,7 km de la Universidad Nacional del Litoral y a 700 metros de la Plazoleta. El alojamiento se encuentra a 27 km de la terminal de micros de Paraná y a 28 km de la plaza de Mayo.\n" +
+                    "Departamento con aire acondicionado, 2 dormitorios, TV de pantalla plana y cocina.\n" +
+                    "Cerca del departamento hay varios lugares de interés, como la plaza de las Banderas, Emilio Zola y la plaza Francia. El aeropuerto más cercano es el de Sauce Viejo, ubicado a 21 km del Departamento Santa Fe Boulevard.";
 
             String descripcionCalidadPremium = "En el corazon de Puerto Norte, enfrente de Shoping Alto Rosario. Seguridad 24 hs, facil acceso, transportes publicos, excelente zona. Cochera cubierta en el edificio. Precio en dolares.\n" +
                     "El alojamiento\n" +
@@ -133,7 +139,10 @@ public class MainActivity extends AppCompatActivity {
                     "Acceso de los huéspedes\n" +
                     "La casa cuenta con un quincho full equipado.";
 
-            Alojamiento d1 = new Departamento(1, "Céntrico studio", descripcionCentricoStudio, 3, 10440.0, true, 7540.0, 2, ubicacion, false);
+            Alojamiento d0 = new Departamento(0, "Céntrico studio", descripcionCentricoStudio, 3, 10440.0, true, 7540.0, 2, ubicacion, false);
+            gestorAlojamiento.agregarAlojamiento(d0);
+            Alojamiento d1 = new Departamento(1, "Departamento Santa Fe Boulevard", descripcionDepto1, 2, 1000.00, false, 200.00, 1, ubicacion1, false);
+
             gestorAlojamiento.agregarAlojamiento(d1);
             Alojamiento d2 = new Departamento(2, "Calidad Premium", descripcionCalidadPremium, 2, 13920.0, true, 11890.0, 2, ubicacion, false);
             gestorAlojamiento.agregarAlojamiento(d2);

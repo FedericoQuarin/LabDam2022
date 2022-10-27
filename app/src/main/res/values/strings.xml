@@ -8,6 +8,10 @@
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
 
+    <!-- Texto de botones -->
+    <string name="button_ver_mas_descripcion">Ver mas</string>
+    <string name="button_ver_menos_descripcion">Ver menos</string>
+
     <!-- Messages Preferences -->
     <string name="signature_title">Your signature</string>
     <string name="reply_title">Default reply action</string>

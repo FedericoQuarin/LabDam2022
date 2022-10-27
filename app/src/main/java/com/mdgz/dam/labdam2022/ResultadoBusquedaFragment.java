@@ -69,7 +69,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = binding.recyclerAlojamiento;
-        recyclerView.setHasFixedSize(true);
+        //recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
