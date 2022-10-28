@@ -1,7 +1,9 @@
 package com.mdgz.dam.labdam2022.gestores;
 
-import com.mdgz.dam.labdam2022.model.Alojamiento;
+import android.content.Context;
+
 import com.mdgz.dam.labdam2022.model.Ciudad;
+import com.mdgz.dam.labdam2022.room.CiudadRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,20 +15,23 @@ public class GestorCiudad {
 
     private List<Ciudad> listaCiudades;
 
-    private GestorCiudad(){
-        listaCiudades = new ArrayList<Ciudad>();
+    private CiudadRepository ciudadRep;
+
+    private GestorCiudad(Context ctx){
+        ciudadRep = CiudadRepository.getInstance(ctx.getApplicationContext());
+        listaCiudades = ciudadRep.getList();
     }
 
-    public static GestorCiudad getInstance(){
+    public static GestorCiudad getInstance(Context ctx){
         if(gestorCiudad == null){
-            gestorCiudad = new GestorCiudad();
+            gestorCiudad = new GestorCiudad(ctx);
         }
 
         return gestorCiudad;
     }
 
     public void agregarCiudad(Ciudad ciudad) {
-        listaCiudades.add(ciudad);
+        ciudadRep.save(ciudad);
     }
 
     public List<Ciudad> getCiudades() {

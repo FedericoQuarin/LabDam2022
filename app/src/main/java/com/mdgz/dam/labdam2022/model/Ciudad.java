@@ -1,8 +1,18 @@
 package com.mdgz.dam.labdam2022.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "CIUDAD")
 public class Ciudad {
+    @PrimaryKey
     Integer id;
+
+    @ColumnInfo(name = "nombre")
     String nombre;
+
+    @ColumnInfo(name = "abreviatura")
     String abreviatura;
 
     public Ciudad(){}
