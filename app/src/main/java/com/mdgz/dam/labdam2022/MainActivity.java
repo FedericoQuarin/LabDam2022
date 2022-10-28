@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        testing();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         MaterialToolbar toolbar = binding.materialToolbar;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        testing();
+
     }
 
     @Override
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void testing() {
         GestorAlojamiento gestorAlojamiento = GestorAlojamiento.getInstance();
-        GestorCiudad gestorCiudad = GestorCiudad.getInstance();
+        GestorCiudad gestorCiudad = GestorCiudad.getInstance(getApplicationContext());
 
         if (gestorCiudad.getCiudades().isEmpty()) {
             Ciudad ciudad1 = new Ciudad(1, "Santa Fe", "SF");
