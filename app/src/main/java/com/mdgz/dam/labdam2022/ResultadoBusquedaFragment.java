@@ -77,7 +77,8 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         recyclerView.setAdapter(adapter);
 
         recyclerView.setClickable(true);
-        binding.labelResultadoBusqueda.setText("Existen " + adapter.getItemCount() + " alojamientos que cumplen los filtros seleccionados.");
+        //binding.labelResultadoBusqueda.setText("Existen " + adapter.getItemCount() + " alojamientos que cumplen los filtros seleccionados.");
+        binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
     }
 
     // Se implementa el metodo de la interfaz OnNoteListener, que se
