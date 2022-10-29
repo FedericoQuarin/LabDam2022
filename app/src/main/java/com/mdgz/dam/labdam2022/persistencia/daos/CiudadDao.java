@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.room;
+package com.mdgz.dam.labdam2022.persistencia.daos;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -11,8 +11,8 @@ import java.util.List;
 @Dao
 public interface CiudadDao {
     @Insert
-    public void save(Ciudad... ciudad);
+    void save(Ciudad... ciudad);
 
     @Query("SELECT * FROM CIUDAD")
-    public List<Ciudad> getList();
+    List<Ciudad> getList();
 }
