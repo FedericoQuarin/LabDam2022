@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/red</item>
         <item name="colorPrimaryVariant">@color/dark_red</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
+        <!--item name="android:textColorPrimary">@color/white</item-->
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/red</item>
         <item name="colorSecondaryVariant">@color/dark_red</item>
@@ -17,22 +17,29 @@
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
 
-        <item name="android:textColor">@color/black</item>
-        <item name="android:editTextColor">?android:textColor</item>
+        <!--item name="android:textColor">@color/black</item-->
+        <!--item name="android:editTextColor">?android:textColor</item-->
 
         <item name="android:windowBackground">@color/white_red</item>
         
         <item name="fontFamily">@font/nunito_regular</item>
 
+        <!-- Estilos personalizados seteados" -->
         <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
         <item name="borderlessButtonStyle">@style/Widget.LabDam2022.Button.TextButton</item>
 
+        <item name="android:textViewStyle">@style/Widget.LabDam2022.TextView</item>
+
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.LabDam2022.BottomSheetDialog</item>
+
+
     </style>
 
-
-
     <!-- Estilos -->
+    <style name="Widget.LabDam2022.TextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_color_lightmode</item>
+    </style>
+    
     <style name="Widget.LabDam2022.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="strokeColor">?attr/colorPrimary</item>
