@@ -17,6 +17,7 @@ import androidx.preference.SwitchPreferenceCompat;
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     private SwitchPreferenceCompat temaOscuroPreference;
+    private ListPreference listaModoOscuro;
     private EditTextPreference emailPreference;
     private EditTextPreference cuitPreference;
     private ListPreference listaPreference;
@@ -28,18 +29,21 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
         // Configuraciones de la preferencia Tema oscuro
-        temaOscuroPreference = findPreference("temaOscuro");
-        if (temaOscuroPreference != null) {
+        listaModoOscuro = findPreference("tema");
+        if (listaModoOscuro != null) {
+            listaModoOscuro.setOnPreferenceChangeListener((preference, newValue) -> {
+                // Si se selecciona el mismo valor que no se modifique nada
+                if(listaModoOscuro.getValue().equals(newValue.toString())) return true;
 
-            temaOscuroPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-
-                if ((boolean) newValue){
+                if(newValue.toString().equals("desactivado")) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+                else if(newValue.toString().equals("activado")) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 }
                 else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 }
-
                 return true;
             });
         }
@@ -74,7 +78,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         // Configuraciones de la preferencia CUIT
         cuitPreference = findPreference("cuit");
-        if(cuitPreference != null) {
+        if (cuitPreference != null) {
             // Setear que se muestre "No configurado"
             cuitPreference.setSummaryProvider(new Preference.SummaryProvider<EditTextPreference>() {
                 @Override

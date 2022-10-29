@@ -5,12 +5,15 @@
 
         <SwitchPreferenceCompat
             android:defaultValue="false"
-            android:key="temaOscuro"
-            android:title="Tema oscuro" />
-        <SwitchPreferenceCompat
-            android:defaultValue="false"
             android:key="notificaciones"
             android:title="Notificaciones" />
+        <ListPreference
+            app:defaultValue="desactivado"
+            app:entries="@array/temaOscuro_entries"
+            app:entryValues="@array/temaOscuro_values"
+            app:key="tema"
+            app:title="Modo oscuro"
+            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 

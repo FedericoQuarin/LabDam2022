@@ -56,13 +56,7 @@ public class MainActivity extends AppCompatActivity {
                 toolbar, navController, appBarConfiguration);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        if (sharedPreferences.getBoolean("temaOscuro", false)) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-
-
+        configurarTemaOscuro();
     }
 
     @Override
@@ -95,7 +89,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void testing() {
+    private void configurarTemaOscuro(){
+        String value = sharedPreferences.getString("tema", "desactivado");
+        if (value.equals("desactivado")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        else if (value.equals("activado")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+        else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
+    }
+
+    private void testing() {
         GestorAlojamiento gestorAlojamiento = GestorAlojamiento.getInstance();
         GestorCiudad gestorCiudad = GestorCiudad.getInstance(getApplicationContext());
 
