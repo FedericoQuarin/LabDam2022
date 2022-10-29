@@ -1,5 +1,6 @@
 package com.mdgz.dam.labdam2022.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "CIUDAD")
 public class Ciudad {
     @PrimaryKey
+    @NonNull
     Integer id;
 
     @ColumnInfo(name = "nombre")

@@ -4,7 +4,7 @@ import com.mdgz.dam.labdam2022.model.Ciudad;
 
 import java.util.List;
 
-public class CiudadRepository {
+public class RepoCiudadRepository {
 
     public static final List<Ciudad> _CIUDADES = List.of(
             new Ciudad(1,"Ciudad 1","ABC1"),

@@ -9,7 +9,7 @@ import com.mdgz.dam.labdam2022.model.Ciudad;
 import java.util.List;
 
 public class CiudadRepository {
-    private static CiudadRepository _REPO = null;
+    private static CiudadRepository _CIUDADREPO = null;
     private CiudadDao ciudadDao;
 
     private CiudadRepository(Context ctx){
@@ -20,8 +20,8 @@ public class CiudadRepository {
         ciudadDao= db.ciudadDao();
     }
     public static CiudadRepository getInstance(Context ctx){
-        if(_REPO==null) _REPO = new CiudadRepository(ctx);
-        return _REPO;
+        if(_CIUDADREPO==null) _CIUDADREPO = new CiudadRepository(ctx);
+        return _CIUDADREPO;
     }
 
     public void save(Ciudad... ciudad) {
