@@ -13,6 +13,18 @@
         <item>transferencia_por_CBU</item>
     </string-array>
 
+    <string-array name="temaOscuro_entries">
+        <item>Desactivado</item>
+        <item>Activado</item>
+        <item>Usar la configuración del dispositivo</item>
+    </string-array>
+
+    <string-array name="temaOscuro_values">
+        <item>desactivado</item>
+        <item>activado</item>
+        <item>configuración_dispositivo</item>
+    </string-array>
+
     <string-array name="monedaPreferida_entries">
         <item>Pesos</item>
         <item>Dólares</item>
