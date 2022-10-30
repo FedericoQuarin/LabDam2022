@@ -15,10 +15,7 @@ public class CiudadRepository {
     private CiudadDao ciudadDao;
 
     private CiudadRepository(Context ctx){
-        LabDamDatabase db = Room.databaseBuilder(ctx,
-                        LabDamDatabase.class, "dam_db").fallbackToDestructiveMigration()
-                .allowMainThreadQueries()
-                .build();
+        LabDamDatabase db = LabDamDatabase.getInstance(ctx);
         ciudadDao= db.ciudadDao();
     }
     public static CiudadRepository getInstance(Context ctx){
@@ -26,11 +23,19 @@ public class CiudadRepository {
         return _CIUDADREPO;
     }
 
-    public void save(Ciudad... ciudad) {
+    public void save(Ciudad ciudad) {
         ciudadDao.save(ciudad);
+    }
+
+    public void save(List<Ciudad> ciudades) {
+        ciudadDao.save(ciudades);
     }
 
     public List<Ciudad> getList() {
         return ciudadDao.getList();
+    }
+
+    public Ciudad getCiudad(Integer id) {
+        return ciudadDao.getCiudad(id);
     }
 }

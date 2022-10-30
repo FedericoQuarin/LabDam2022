@@ -107,14 +107,7 @@ public class MainActivity extends AppCompatActivity {
         GestorCiudad gestorCiudad = GestorCiudad.getInstance(getApplicationContext());
 
         if (gestorAlojamiento.getAlojamientos().isEmpty()) {
-            /*Ciudad ciudad1 = new Ciudad(1, "Santa Fe", "SF");
-            Ciudad ciudad2 = new Ciudad(2, "Paraná", "PA");
-            Ciudad ciudad3 = new Ciudad(3, "Rosario", "RS");
-            gestorCiudad.agregarCiudad(ciudad1);
-            gestorCiudad.agregarCiudad(ciudad2);
-            gestorCiudad.agregarCiudad(ciudad3);*/
-
-            Ciudad ciudad1 = new Ciudad(1, "Santa Fe", "SF");
+            Ciudad ciudad1 = gestorCiudad.getCiudad(1);
 
             Ubicacion ubicacion = new Ubicacion(50.0, 30.0, "Calle principal", "1", ciudad1);
             Ubicacion ubicacion1 = new Ubicacion(50, 30, "Balcarce", "1442", ciudad1);
