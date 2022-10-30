@@ -32,6 +32,7 @@ import com.mdgz.dam.labdam2022.model.Habitacion;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -334,9 +335,9 @@ public class DetalleAlojamientoFragment extends Fragment {
                 .setCancelable(false)
                 // Si se clickea "Confirmar" se crea la reserva y se vuelve a pantalla de busqueda
                 .setPositiveButton("Confirmar", (dialogInterface, i) -> {
-                    gestorReserva.crearReserva(Instant.ofEpochMilli(periodoSeleccionado.first),
-                            Instant.ofEpochMilli(periodoSeleccionado.second),
-                            cantidadPersonas, montoTotal, alojamiento);
+                    gestorReserva.crearReserva(Date.from(Instant.ofEpochMilli(periodoSeleccionado.first)),
+                                               Date.from(Instant.ofEpochMilli(periodoSeleccionado.second)),
+                                               cantidadPersonas, montoTotal, alojamiento.getId());
 
                     Bundle bundle = new Bundle();
                     bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID

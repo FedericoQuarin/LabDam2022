@@ -1,10 +1,19 @@
 package com.mdgz.dam.labdam2022.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+
+@Entity
 public class Habitacion  extends Alojamiento {
 
+    @ColumnInfo(name = "camas_individuales")
     private int camasIndividuales;
+    @ColumnInfo(name = "camas_matrimoniales")
     private int camasMatrimoniales;
+    @ColumnInfo(name = "tiene_estacionamiento")
     private Boolean tieneEstacionamiento;
+    @Ignore
     private Hotel hotel;
 
     public Habitacion() {
