@@ -2,9 +2,15 @@ package com.mdgz.dam.labdam2022.model;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.mdgz.dam.labdam2022.persistencia.DateTypeConverter;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -16,10 +22,12 @@ public class Reserva {
     private Integer id;
 
     @ColumnInfo(name = "fecha_ingreso")
-    private Instant fechaIngreso;
+    @TypeConverters({DateTypeConverter.class})
+    private Date fechaIngreso;
 
     @ColumnInfo(name = "fecha_egreso")
-    private Instant fechaEgreso;
+    @TypeConverters({DateTypeConverter.class})
+    private Date fechaEgreso;
 
     private Boolean cancelada;
 
@@ -27,18 +35,17 @@ public class Reserva {
     private Integer cantidadPersonas;
 
     private Double monto;
-    private Alojamiento alojamiento;
-    private UUID alojamientoID;
+    private Integer alojamientoID;
     private UUID usuarioID;
 
-    public Reserva(Instant fechaIngreso, Instant fechaEgreso, Integer cantidadPersonas, Double monto, Alojamiento alojamiento) {
+    public Reserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, Integer alojamientoID) {
         this.id = numeroID;
         this.fechaIngreso = fechaIngreso;
         this.fechaEgreso = fechaEgreso;
         this.cancelada = false;
         this.cantidadPersonas = cantidadPersonas;
         this.monto = monto;
-        this.alojamiento = alojamiento;
+        this.alojamientoID = alojamientoID;
         numeroID++;
     }
 
@@ -50,13 +57,13 @@ public class Reserva {
 
     public void setId(Integer id) { this.id = id; }
 
-    public Instant getFechaIngreso() { return fechaIngreso; }
+    public Date getFechaIngreso() { return fechaIngreso; }
 
-    public void setFechaIngreso(Instant fechaIngreso) { this.fechaIngreso = fechaIngreso; }
+    public void setFechaIngreso(Date fechaIngreso) { this.fechaIngreso = fechaIngreso; }
 
-    public Instant getFechaEgreso() { return fechaEgreso; }
+    public Date getFechaEgreso() { return fechaEgreso; }
 
-    public void setFechaEgreso(Instant fechaEgreso) { this.fechaEgreso = fechaEgreso; }
+    public void setFechaEgreso(Date fechaEgreso) { this.fechaEgreso = fechaEgreso; }
 
     public Boolean getCancelada() { return cancelada; }
 
@@ -70,13 +77,9 @@ public class Reserva {
 
     public void setMonto(Double monto) { this.monto = monto; }
 
-    public Alojamiento getAlojamiento() { return alojamiento; }
+    public Integer getAlojamientoID() { return alojamientoID; }
 
-    public void setAlojamiento(Alojamiento alojamiento) { this.alojamiento = alojamiento; }
-
-    public UUID getAlojamientoID() { return alojamientoID; }
-
-    public void setAlojamientoID(UUID alojamientoID) { this.alojamientoID = alojamientoID; }
+    public void setAlojamientoID(Integer alojamientoID) { this.alojamientoID = alojamientoID; }
 
     public UUID getUsuarioID() { return usuarioID; }
 
