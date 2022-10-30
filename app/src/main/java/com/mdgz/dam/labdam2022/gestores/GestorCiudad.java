@@ -5,6 +5,7 @@ import android.content.Context;
 import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.persistencia.repository.CiudadRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,5 +42,18 @@ public class GestorCiudad {
         return listaCiudades.stream()
                 .map(c -> c.getNombre())
                 .collect(Collectors.toList());
+    }
+
+    public Ciudad getCiudad(Integer id) {
+        return ciudadRep.getCiudad(id);
+    }
+
+    public static List<Ciudad> ciudadesIniciales() {
+        List<Ciudad> ciudadesIniciales = new ArrayList<>();
+        ciudadesIniciales.add(new Ciudad(1, "Santa Fe", "SF"));
+        ciudadesIniciales.add(new Ciudad(2, "Paraná", "PA"));
+        ciudadesIniciales.add(new Ciudad(3, "Rosario", "RS"));
+
+        return ciudadesIniciales;
     }
 }
