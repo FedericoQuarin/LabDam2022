@@ -20,6 +20,8 @@ import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 
+
+import java.util.UUID;
 import java.util.List;
 import java.util.Map;
 

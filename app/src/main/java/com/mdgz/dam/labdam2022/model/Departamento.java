@@ -9,10 +9,13 @@ public class Departamento extends Alojamiento{
 
     @ColumnInfo(name = "tiene_wifi")
     private Boolean tieneWifi;
+
     @ColumnInfo(name = "costo_limpieza")
     private Double costoLimpieza;
+
     @ColumnInfo(name = "cantidad_habitaciones")
     private Integer cantidadHabitaciones;
+
     @Ignore
     private Ubicacion ubicacion;
 
@@ -24,8 +27,8 @@ public class Departamento extends Alojamiento{
         super();
     }
 
-    public Departamento(Integer id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion, Boolean esFavorito) {
-        super(id, titulo, descripcion, capacidad, precioBase, esFavorito);
+    public Departamento(String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion, Boolean esFavorito) {
+        super(titulo, descripcion, capacidad, precioBase, esFavorito);
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
         this.cantidadHabitaciones = cantidadHabitaciones;

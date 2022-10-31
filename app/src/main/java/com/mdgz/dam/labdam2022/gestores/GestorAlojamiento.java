@@ -5,6 +5,7 @@ import com.mdgz.dam.labdam2022.model.Alojamiento;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 // Clase encargada de gestionar los Alojamientos a nivel lógico
 public class GestorAlojamiento {
@@ -32,9 +33,9 @@ public class GestorAlojamiento {
         return this.listaAlojamientos;
     }
 
-    public Alojamiento getAlojamiento(int idAlojamiento) {
+    public Alojamiento getAlojamiento(UUID idAlojamiento) {
         for(Alojamiento a : listaAlojamientos) {
-            if (a.getId() == idAlojamiento) return a;
+            if (a.getId().equals(idAlojamiento)) return a;
         }
 
         throw new EntidadNoEncontradaException("Alojamiento", idAlojamiento);

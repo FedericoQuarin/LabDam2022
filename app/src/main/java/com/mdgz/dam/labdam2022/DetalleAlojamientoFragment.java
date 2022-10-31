@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -90,9 +91,9 @@ public class DetalleAlojamientoFragment extends Fragment {
 
         if (getArguments() != null) {
             // Busca el alojamiento a mostrar
-            int idAlojamiento = getArguments().getInt("idAlojamiento");
+            String stringIdAlojamiento = getArguments().getString("idAlojamiento");
             gestorAlojamiento = GestorAlojamiento.getInstance();
-            alojamiento = gestorAlojamiento.getAlojamiento(idAlojamiento);
+            alojamiento = gestorAlojamiento.getAlojamiento(UUID.fromString(stringIdAlojamiento));
 
             // Infla parte de la interfaz que es especifica del tipo de alojamiento
             if (alojamiento instanceof Departamento) {
