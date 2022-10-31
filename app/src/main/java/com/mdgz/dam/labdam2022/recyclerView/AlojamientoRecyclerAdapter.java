@@ -31,7 +31,7 @@ public class AlojamientoRecyclerAdapter
     }
 
     public class AlojamientoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        CardView card;
+        public CardView card;
         TextView titulo;
         TextView capacidad;
         TextView precio;
@@ -57,7 +57,7 @@ public class AlojamientoRecyclerAdapter
 
         @Override
         public void onClick(View v) {
-            this.onNoteListener.onNoteClick(alojamientos.get(getAdapterPosition()).getId());
+            this.onNoteListener.onNoteClick(getBindingAdapterPosition(), alojamientos.get(getBindingAdapterPosition()).getId());
         }
     }
 
@@ -93,6 +93,8 @@ public class AlojamientoRecyclerAdapter
 
         });
 
+        alojamientoHolder.card.setTransitionName(alojamiento.getId().toString());
+
     }
 
     @Override
@@ -101,6 +103,6 @@ public class AlojamientoRecyclerAdapter
     }
 
     public interface OnNoteListener{
-        void onNoteClick(UUID idAlojamiento);
+        void onNoteClick(int posicion, int idAlojamiento);
     }
 }
