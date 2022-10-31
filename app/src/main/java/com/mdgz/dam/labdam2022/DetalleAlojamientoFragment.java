@@ -5,10 +5,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.transition.Transition;
+import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +37,11 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class DetalleAlojamientoFragment extends Fragment {
     private FragmentDetalleAlojamientoBinding binding;
@@ -98,9 +105,18 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
         }
 
+        View view = binding.getRoot();
+
         configurarDateRangePicker();
 
-        return binding.getRoot();
+        view.setTransitionName(alojamiento.getId().toString());
+
+        Transition transition =
+                TransitionInflater.from(getContext())
+                        .inflateTransition(R.transition.shared_container_transition);
+        setSharedElementEnterTransition(transition);
+
+        return view;
     }
 
     // TODO: guardar estado
@@ -217,6 +233,22 @@ public class DetalleAlojamientoFragment extends Fragment {
         botonMas.setOnClickListener(v -> sumarCantidadPersonas());
 
         botonReservar.setOnClickListener(v -> logicaReservar());
+
+        setEnterSharedElementCallback(
+                new SharedElementCallback() {
+                    @Override
+                    public void onMapSharedElements(
+                            List<String> names, Map<String, View> sharedElements) {
+                        // Locate the image view at the primary fragment (the ImageFragment
+                        // that is currently visible). To locate the fragment, call
+                        // instantiateItem with the selection position.
+                        // At this stage, the method will simply return the fragment at the
+                        // position and will not create a new one.
+                        // Map the first shared element name to the child ImageView.
+
+                        sharedElements.put(names.get(0), view);
+                    }
+                });
     }
 
     // Actualiza el texto del boton "Fecha de reserva" cuando se selecciona una fecha
@@ -288,7 +320,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
 
         builder.setTitleText("Seleccione el rango de fecha");
-        builder.setSelection(new Pair<>(today,tomorrow));
+        //builder.setSelection(new Pair<>(today,tomorrow));
         builder.setCalendarConstraints(constraintBuilder.build());
         builder.setPositiveButtonText("Guardar");
 
