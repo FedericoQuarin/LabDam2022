@@ -103,6 +103,6 @@ public class AlojamientoRecyclerAdapter
     }
 
     public interface OnNoteListener{
-        void onNoteClick(int posicion, int idAlojamiento);
+        void onNoteClick(int posicion, UUID idAlojamiento);
     }
 }
