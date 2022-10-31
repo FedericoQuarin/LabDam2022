@@ -92,14 +92,14 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     // Se implementa el metodo de la interfaz OnNoteListener, que se
     // ejecuta cuando se hace click en un elemento del Recycler
     @Override
-    public void onNoteClick(int posicion, int idAlojamiento) {
+    public void onNoteClick(int posicion, UUID idAlojamiento) {
         AlojamientoRecyclerAdapter.AlojamientoViewHolder selectedViewHolder =
                 (AlojamientoRecyclerAdapter.AlojamientoViewHolder) recyclerView
                 .findViewHolderForAdapterPosition(posicion);
 
         if (selectedViewHolder != null) {
             Bundle bundle = new Bundle();
-            bundle.putInt("idAlojamiento", idAlojamiento);
+            bundle.putString("idAlojamiento", idAlojamiento.toString());
 
             FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
                     .addSharedElement(selectedViewHolder.card, selectedViewHolder.card.getTransitionName())
