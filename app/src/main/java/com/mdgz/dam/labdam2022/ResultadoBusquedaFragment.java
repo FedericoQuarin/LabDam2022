@@ -17,6 +17,8 @@ import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 
+import java.util.UUID;
+
 public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRecyclerAdapter.OnNoteListener{
 
     private static final String ARG_PARAM1 = "param1";
@@ -84,9 +86,9 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     // Se implementa el metodo de la interfaz OnNoteListener, que se
     // ejecuta cuando se hace click en un elemento del Recycler
     @Override
-    public void onNoteClick(int idAlojamiento) {
+    public void onNoteClick(UUID idAlojamiento) {
         Bundle bundle = new Bundle();
-        bundle.putInt("idAlojamiento", idAlojamiento);
+        bundle.putString("idAlojamiento", idAlojamiento.toString());
         NavHostFragment.findNavController(ResultadoBusquedaFragment.this)
                 .navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment, bundle); //TODO: Faltaría la animación
     }

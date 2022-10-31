@@ -16,6 +16,7 @@ import com.mdgz.dam.labdam2022.databinding.RecyclerViewBusquedaAlojamientosBindi
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 
 import java.util.List;
+import java.util.UUID;
 
 public class AlojamientoRecyclerAdapter
         extends RecyclerView.Adapter<AlojamientoRecyclerAdapter.AlojamientoViewHolder> {
@@ -100,6 +101,6 @@ public class AlojamientoRecyclerAdapter
     }
 
     public interface OnNoteListener{
-        void onNoteClick(int idAlojamiento);
+        void onNoteClick(UUID idAlojamiento);
     }
 }

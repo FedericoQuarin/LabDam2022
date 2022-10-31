@@ -1,5 +1,6 @@
 package com.mdgz.dam.labdam2022.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -18,7 +19,8 @@ public class Reserva {
 
     private static Integer numeroID = 0;
 
-    @PrimaryKey
+    @PrimaryKey (autoGenerate = true)
+    @NonNull
     private Integer id;
 
     @ColumnInfo(name = "fecha_ingreso")
@@ -35,10 +37,14 @@ public class Reserva {
     private Integer cantidadPersonas;
 
     private Double monto;
-    private Integer alojamientoID;
+
+    @ColumnInfo(name = "alojamiento_id")
+    private UUID alojamientoID;
+
+    @ColumnInfo(name = "usuario_id")
     private UUID usuarioID;
 
-    public Reserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, Integer alojamientoID) {
+    public Reserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, UUID alojamientoID) {
         this.id = numeroID;
         this.fechaIngreso = fechaIngreso;
         this.fechaEgreso = fechaEgreso;
@@ -77,9 +83,9 @@ public class Reserva {
 
     public void setMonto(Double monto) { this.monto = monto; }
 
-    public Integer getAlojamientoID() { return alojamientoID; }
+    public UUID getAlojamientoID() { return alojamientoID; }
 
-    public void setAlojamientoID(Integer alojamientoID) { this.alojamientoID = alojamientoID; }
+    public void setAlojamientoID(UUID alojamientoID) { this.alojamientoID = alojamientoID; }
 
     public UUID getUsuarioID() { return usuarioID; }
 

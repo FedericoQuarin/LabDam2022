@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class GestorReserva {
 
@@ -27,7 +28,7 @@ public class GestorReserva {
         return gestorReserva;
     }
 
-    public void crearReserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, Integer alojamientoID) {
+    public void crearReserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, UUID alojamientoID) {
         agregarReserva(new Reserva(fechaIngreso, fechaEgreso, cantidadPersonas, monto, alojamientoID));
     }
 

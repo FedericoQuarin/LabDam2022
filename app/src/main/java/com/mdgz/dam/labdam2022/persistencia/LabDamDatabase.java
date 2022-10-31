@@ -20,13 +20,13 @@ import com.mdgz.dam.labdam2022.persistencia.daos.ReservaDao;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Ciudad.class, Alojamiento.class, Reserva.class, Favorito.class}, version = 4)
+@Database(entities = {Ciudad.class, Alojamiento.class, Reserva.class, Favorito.class}, version = 7)
 public abstract class LabDamDatabase extends RoomDatabase {
     private static LabDamDatabase instance;
 
     public abstract CiudadDao ciudadDao();
     //public abstract AlojamientoDao alojamientoDao();
-    //public abstract ReservaDao reservaDao();
+    public abstract ReservaDao reservaDao();
     //public abstract FavoritoDao favoritoDao();
 
     public synchronized static LabDamDatabase getInstance(Context context){
@@ -52,6 +52,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                         );
                     }
                 })
+                .fallbackToDestructiveMigration()
                 .allowMainThreadQueries()
                 .build();
     }
