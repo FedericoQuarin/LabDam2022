@@ -2,4 +2,5 @@
 <resources>
     <integer name="seekbar_capacidad_def_value">2</integer>
     <integer name="tam_descripcion_acotada">200</integer>
+    <integer name="transition_time_container_transform">375</integer>
 </resources>
