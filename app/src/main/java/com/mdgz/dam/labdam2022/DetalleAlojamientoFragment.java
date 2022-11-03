@@ -1,6 +1,7 @@
 package com.mdgz.dam.labdam2022;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,10 +10,11 @@ import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.transition.Transition;
 
-import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.transition.MaterialContainerTransform;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoDeptoBinding;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoHotelBinding;
 import com.mdgz.dam.labdam2022.databinding.FragmentDetalleAlojamientoBinding;
@@ -106,24 +109,33 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
         }
 
-        View view = binding.getRoot();
+        View fragmentView = binding.getRoot();
 
         configurarDateRangePicker();
 
-        view.setTransitionName(alojamiento.getId().toString());
+        // Se asigna el nombre de la transicion
+        fragmentView.setTransitionName(alojamiento.getId().toString());
 
-        Transition transition =
-                TransitionInflater.from(getContext())
-                        .inflateTransition(R.transition.shared_container_transition);
-        setSharedElementEnterTransition(transition);
+        // Se crea la transicion de entrada a este fragmento desde la pestaña resultadosBusqueda
+        MaterialContainerTransform t = new MaterialContainerTransform();
+        t.setDrawingViewId(R.id.fragmentContainerView);
+        t.setScrimColor(Color.TRANSPARENT);
+        t.setDuration(getContext().getResources().getInteger(R.integer.transition_time_container_transform));
 
-        return view;
+        TypedValue typedValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(com.google.android.material.R.attr.colorSurface, typedValue, true);
+        t.setAllContainerColors(typedValue.data);
+
+        // Se setea la transicion
+        setSharedElementEnterTransition(t);
+
+        return fragmentView;
     }
 
     // TODO: guardar estado
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onViewCreated(@NonNull View fragmentView, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(fragmentView, savedInstanceState);
         tamDescripcionAcotada = this.getContext().getResources().getInteger(R.integer.tam_descripcion_acotada);
         // Gestores restantes
         gestorReserva = GestorReserva.getInstance();
@@ -247,7 +259,7 @@ public class DetalleAlojamientoFragment extends Fragment {
                         // position and will not create a new one.
                         // Map the first shared element name to the child ImageView.
 
-                        sharedElements.put(names.get(0), view);
+                        sharedElements.put(names.get(0), fragmentView);
                     }
                 });
     }

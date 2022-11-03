@@ -81,7 +81,7 @@ public class AlojamientoRecyclerAdapter
         if (alojamiento.getCapacidad() == 1) alojamientoHolder.capacidad.setText("1 persona");
         else alojamientoHolder.capacidad.setText(alojamiento.getCapacidad() + " personas");
         alojamientoHolder.precio.setText("$" + alojamiento.getPrecioBase());
-        alojamientoHolder.imagen.setImageResource(R.drawable.imagen_loftbox);
+        alojamientoHolder.imagen.setImageResource(R.drawable.hotel_lp_012_1200x498);
 
         if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
 
