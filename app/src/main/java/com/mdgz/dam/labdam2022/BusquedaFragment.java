@@ -134,8 +134,18 @@ public class BusquedaFragment extends Fragment {
         buttonBuscar.setOnClickListener(v -> {
 
             if(validarEditTexts()) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("switchHoteles", this.switchHoteles.isActivated());
+                bundle.putBoolean("switchDepartamentos", this.switchDeptos.isActivated());
+                bundle.putInt("capacidad", this.seekBarCapacidad.getProgress());
+                bundle.putString("ciudad", this.list_ciudades.getTransitionName());
+                bundle.putString("precioMinimo", this.editTxtPrecioMinimo.getText().toString());
+                bundle.putString("precioMaximo", this.editTxtPrecioMaximo.getText().toString());
+                bundle.putBoolean("switchWiFi", this.switchWifi.isActivated());
+                bundle.putLong("tiempoPresionoBuscar", System.currentTimeMillis()/1000);
+
                 NavHostFragment.findNavController(BusquedaFragment.this)
-                .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
+                .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment, bundle);
             }
 
         });

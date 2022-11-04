@@ -1,5 +1,6 @@
 package com.mdgz.dam.labdam2022;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,14 @@ import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +46,17 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    // Nombre del archivo
+    private String FILENAME = "logs";
+    // Contexto
+    private Context ctx;
+    // IDLog
+    private Integer IDLog = 6;
+    // Cantidad de alojamientos encontrados
+    private Integer cantidadAlojamientosEncontrados;
+    // Lista de criterios de busqueda
+    private List<String> ListaCriteriosDeBusqueda = new ArrayList();
 
     private String mParam1;
     private String mParam2;
@@ -76,6 +96,9 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Me guardo el contexto para generar el archivo
+        this.ctx = view.getContext();
+
         recyclerView = binding.recyclerAlojamiento;
         //recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(view.getContext());
@@ -86,7 +109,13 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
         recyclerView.setClickable(true);
         //binding.labelResultadoBusqueda.setText("Existen " + adapter.getItemCount() + " alojamientos que cumplen los filtros seleccionados.");
-        binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
+
+        //Para el JSON
+        cantidadAlojamientosEncontrados = adapter.getItemCount();
+        binding.labelResultadoBusqueda.setText(cantidadAlojamientosEncontrados + " alojamientos encontrados.");
+
+        // Paso el bundle para generar el JSON
+        generarJSON(getArguments());
     }
 
     // Se implementa el metodo de la interfaz OnNoteListener, que se
@@ -123,4 +152,62 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         }
     }
 
+    public JSONObject generarJSON (Bundle bundle) {
+        JSONObject archivoJSON = new JSONObject();
+        this.IDLog++;
+        cargarListaCriteriosDeBusqueda();
+        try{
+            archivoJSON.put("IDLog", this.IDLog);
+            archivoJSON.put("timestampBusqueda", System.currentTimeMillis()/1000);
+            archivoJSON.put("cantidadResultados", cantidadAlojamientosEncontrados); //TODO: VER
+            archivoJSON.put("tiempoDeBusqueda", System.currentTimeMillis()/1000 - (Long) bundle.get("tiempoPresionoBuscar"));
+
+            JSONArray criteriosDeBusqueda = new JSONArray();
+
+            for(String cdb : ListaCriteriosDeBusqueda){
+
+                JSONObject CDB_JSON = new JSONObject();
+                CDB_JSON.put(cdb, bundle.get(cdb));
+                criteriosDeBusqueda.put(CDB_JSON);
+            }
+
+            archivoJSON.put("criteriosDeBusqueda", criteriosDeBusqueda);
+        }
+        catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        this.escribirEnArchivo(archivoJSON);
+
+        return archivoJSON;
+    }
+
+    private void escribirEnArchivo(JSONObject log){
+        FileOutputStream fos = null;
+
+        try{
+            fos = ctx.openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            fos.write(log.toString().getBytes());
+            fos.close();
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return;
+    }
+
+    private void cargarListaCriteriosDeBusqueda(){
+
+        ListaCriteriosDeBusqueda.add("switchHoteles");
+        ListaCriteriosDeBusqueda.add("switchDepartamentos");
+        ListaCriteriosDeBusqueda.add("capacidad");
+        ListaCriteriosDeBusqueda.add("ciudad");
+        ListaCriteriosDeBusqueda.add("precioMinimo");
+        ListaCriteriosDeBusqueda.add("precioMaximo");
+        ListaCriteriosDeBusqueda.add("switchWiFi");
+    }
 }
