@@ -32,7 +32,6 @@
 
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.LabDam2022.BottomSheetDialog</item>
 
-
     </style>
 
     <!-- Estilos -->
