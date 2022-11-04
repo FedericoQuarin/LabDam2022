@@ -1,5 +1,6 @@
 package com.mdgz.dam.labdam2022;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,16 +11,15 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -27,7 +27,6 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
-import com.mdgz.dam.labdam2022.model.Ciudad;
 
 import java.util.List;
 
@@ -52,6 +51,7 @@ public class BusquedaFragment extends Fragment {
     private SwitchMaterial switchWifi;
     private EditText editTxtPrecioMaximo;
     private EditText editTxtPrecioMinimo;
+    private AutoCompleteTextView editTxtListCiudades;
 
     // Variables
     String stringMinimo;
@@ -69,7 +69,7 @@ public class BusquedaFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentBusquedaBinding.inflate(inflater, container, false);
@@ -84,6 +84,7 @@ public class BusquedaFragment extends Fragment {
         buttonBuscar = binding.buttonBuscar;
         buttonLimpiar = binding.buttonLimpiar;
         list_ciudades = binding.listCiudades;
+        editTxtListCiudades = (AutoCompleteTextView) list_ciudades.getEditText();
 
         switchHoteles = binding.switchHoteles;
         switchDeptos = binding.switchDepartamentos;
@@ -95,7 +96,7 @@ public class BusquedaFragment extends Fragment {
         if (savedInstanceState != null) {
             editTxtPrecioMinimo.setText(savedInstanceState.getString("minimo"));
             editTxtPrecioMaximo.setText(savedInstanceState.getString("maximo"));
-            list_ciudades.getEditText().setText(savedInstanceState.getString("ciudad"));
+            editTxtListCiudades.setText(savedInstanceState.getString("ciudad"));
         }
 
         // Ver si se volvio de la ventana reservas, en cuyo caso se muestra un snackBar
@@ -105,7 +106,6 @@ public class BusquedaFragment extends Fragment {
                 snackbarReservaExitosa(view);
             }
         }
-
 
         gestorCiudad = GestorCiudad.getInstance(getContext());
 
@@ -130,9 +130,9 @@ public class BusquedaFragment extends Fragment {
             }
         });
 
+        buttonBuscar.setFocusable(true);
         // TODO validaciones y filtrado de alojamientos
         buttonBuscar.setOnClickListener(v -> {
-
             if(validarEditTexts()) {
                 NavHostFragment.findNavController(BusquedaFragment.this)
                 .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
@@ -145,7 +145,18 @@ public class BusquedaFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
                 R.layout.list_item_layout,
                 ciudades);
-        ((AutoCompleteTextView) list_ciudades.getEditText()).setAdapter(adapter);
+        editTxtListCiudades.setAdapter(adapter);
+
+        // Crea el listener para que se cierre el teclado cuando sale el editText de foco
+        View.OnFocusChangeListener focusChangeListener = (view1, hasFocus) -> {
+            if (!hasFocus) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view1.getWindowToken(), 0);
+            }
+        };
+
+        editTxtPrecioMinimo.setOnFocusChangeListener(focusChangeListener);
+        editTxtPrecioMaximo.setOnFocusChangeListener(focusChangeListener);
 
         // Se setea el listener del boton "Limpiar", que limpia todos los campos cargados
         buttonLimpiar.setOnClickListener(v -> {
@@ -157,11 +168,21 @@ public class BusquedaFragment extends Fragment {
             switchWifi.setChecked(false);
             editTxtPrecioMaximo.setText("");
             editTxtPrecioMinimo.setText("");
+            editTxtListCiudades.setText("");
+            editTxtPrecioMaximo.clearFocus();
+            editTxtPrecioMinimo.clearFocus();
+            editTxtListCiudades.clearFocus();
+
         });
+
+        /*View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }*/
     }
 
     public Boolean validarEditTexts(){
-
         stringMinimo = editTxtPrecioMinimo.getText().toString();
         stringMaximo = editTxtPrecioMaximo.getText().toString();
 
@@ -177,7 +198,7 @@ public class BusquedaFragment extends Fragment {
             maximo = Float.valueOf(stringMaximo);
         } else if (TextUtils.isEmpty(stringMaximo)) {
             minimo = Float.valueOf(stringMinimo);
-            maximo = Float.MAX_VALUE; ;
+            maximo = Float.MAX_VALUE;
         } else {
             minimo = Float.valueOf(stringMinimo);
             maximo = Float.valueOf(stringMaximo);
