@@ -1,7 +1,7 @@
 package com.mdgz.dam.labdam2022.persistencia.room;
 
 import com.mdgz.dam.labdam2022.model.Reserva;
-import com.mdgz.dam.labdam2022.persistencia.interfaces.ReservaDataSource;
+import com.mdgz.dam.labdam2022.persistencia.dataSources.ReservaDataSource;
 
 public class ReservaRoomDataSource implements ReservaDataSource {
     @Override
