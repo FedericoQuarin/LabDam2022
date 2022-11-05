@@ -3,7 +3,7 @@ package com.mdgz.dam.labdam2022.gestores;
 import android.content.Context;
 
 import com.mdgz.dam.labdam2022.model.Ciudad;
-import com.mdgz.dam.labdam2022.persistencia.repository.CiudadRepository;
+import com.mdgz.dam.labdam2022.persistencia.room.repository.CiudadRepository;
 
 import java.util.ArrayList;
 import java.util.List;

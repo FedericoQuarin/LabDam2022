@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia.daos;
+package com.mdgz.dam.labdam2022.persistencia.room.daos;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
