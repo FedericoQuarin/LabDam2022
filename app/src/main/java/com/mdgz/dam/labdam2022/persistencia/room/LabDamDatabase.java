@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia;
+package com.mdgz.dam.labdam2022.persistencia.room;
 
 import android.content.Context;
 
@@ -13,10 +13,8 @@ import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.model.Favorito;
 import com.mdgz.dam.labdam2022.model.Reserva;
-import com.mdgz.dam.labdam2022.persistencia.daos.AlojamientoDao;
-import com.mdgz.dam.labdam2022.persistencia.daos.CiudadDao;
-import com.mdgz.dam.labdam2022.persistencia.daos.FavoritoDao;
-import com.mdgz.dam.labdam2022.persistencia.daos.ReservaDao;
+import com.mdgz.dam.labdam2022.persistencia.room.daos.CiudadDao;
+import com.mdgz.dam.labdam2022.persistencia.room.daos.ReservaDao;
 
 import java.util.concurrent.Executors;
 

@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia.room;
+package com.mdgz.dam.labdam2022.persistencia.room.dataSource;
 
 import com.mdgz.dam.labdam2022.model.Favorito;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.FavoritoDataSource;
