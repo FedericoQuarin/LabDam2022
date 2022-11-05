@@ -108,24 +108,32 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         listaPreference = findPreference("pagoPreferido");
         listaMoneda = findPreference("monedaPreferida");
         if (listaPreference != null) {
+            if (listaMoneda != null) {
+                if (!listaPreference.getValue().equals("efectivo")) {
+                    listaMoneda.setValue("pesos");
+                    listaMoneda.setEnabled(false);
+                }
+                else {
+                    listaMoneda.setEnabled(true);
+                }
 
-            listaPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                listaPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                    // Habilitar o desabilitar la moneda preferida dependiendo del metodo preferido
-                    if(listaMoneda != null) {
+                        // Habilitar o desabilitar la moneda preferida dependiendo del metodo preferido
                         if (!newValue.toString().equals("efectivo")) {
                             listaMoneda.setValue("pesos");
                             listaMoneda.setEnabled(false);
                         } else {
                             listaMoneda.setEnabled(true);
                         }
-                    }
 
-                    return true;
-                }
-            });
+                        return true;
+                    }
+                });
+            }
+
         }
 
         logs = findPreference("logs");
