@@ -19,6 +19,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.transition.MaterialElevationScale;
+import com.google.android.material.transition.MaterialFade;
+import com.google.android.material.transition.MaterialFadeThrough;
 import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
@@ -128,7 +130,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                     .build();
 
             setExitTransition(transicionElevationScale_exit);
-            setReenterTransition(transicionElevationScale_enter);
+            //setReenterTransition(transicionElevationScale_enter);
 
             /*setExitSharedElementCallback(
                     new SharedElementCallback() {

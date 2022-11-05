@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.mdgz.dam.labdam2022.SettingsFragment"
-        android:label="AirBooking" >
+        android:label="Configuraciones" >
         <action
             android:id="@+id/action_settingsFragment_to_logBusquedaFragment"
             app:destination="@id/logBusquedaFragment" />
@@ -60,7 +60,11 @@
     <action
         android:id="@+id/action_global_settingsFragment"
         app:destination="@id/settingsFragment"
-        app:launchSingleTop="true"/>
+        app:launchSingleTop="true"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popExitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"/>
     <action
         android:id="@+id/action_global_busquedaFragment"
         app:destination="@id/busquedaFragment"
