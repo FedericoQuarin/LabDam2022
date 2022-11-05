@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia.interfaces;
+package com.mdgz.dam.labdam2022.persistencia.dataSources;
 
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 

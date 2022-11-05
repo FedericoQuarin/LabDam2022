@@ -5,7 +5,7 @@
         <item name="colorPrimary">@color/red</item>
         <item name="colorPrimaryVariant">@color/dark_red</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="android:textColorPrimary">?attr/colorOnPrimary</item>
+        <!--item name="android:textColorPrimary">?attr/colorOnPrimary</item-->
 
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/red</item>
@@ -32,7 +32,6 @@
 
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.LabDam2022.BottomSheetDialog</item>
 
-
     </style>
 
     <!-- Estilos -->
@@ -41,7 +40,7 @@
     </style>
 
     <style name="ThemeOverlay.LabDam2022.Toolbar" parent="">
-        <item name="colorControlNormal">?android:textColorPrimary</item>
+        <item name="colorControlNormal">?attr/colorOnPrimary</item>
     </style>
 
     <style name="Widget.LabDam2022.TextView" parent="Widget.AppCompat.TextView">

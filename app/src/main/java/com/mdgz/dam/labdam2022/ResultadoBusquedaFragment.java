@@ -3,6 +3,7 @@ package com.mdgz.dam.labdam2022;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.SharedElementCallback;
@@ -11,12 +12,12 @@ import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.TransitionInflater;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.transition.MaterialElevationScale;
 import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
@@ -42,6 +43,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    @IntegerRes private int TIEMPO_TRANSICION_A_DETALLE;
 
     private GestorAlojamiento gestorAlojamiento;
 
@@ -64,6 +66,9 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
     private String mParam1;
     private String mParam2;
+
+    private MaterialElevationScale transicionElevationScale_exit;
+    private MaterialElevationScale transicionElevationScale_enter;
 
     public ResultadoBusquedaFragment() {
         // Required empty public constructor
@@ -120,6 +125,17 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
         // Paso el bundle para generar el JSON
         generarJSON(getArguments());
+
+        binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
+
+        TIEMPO_TRANSICION_A_DETALLE = getResources().getInteger(R.integer.transition_time_container_transform);
+
+        transicionElevationScale_exit = new MaterialElevationScale(false);
+        transicionElevationScale_exit.setDuration(TIEMPO_TRANSICION_A_DETALLE);
+
+
+        transicionElevationScale_enter = new MaterialElevationScale(true);
+        transicionElevationScale_enter.setDuration(TIEMPO_TRANSICION_A_DETALLE);
     }
 
     // Se implementa el metodo de la interfaz OnNoteListener, que se
@@ -138,6 +154,8 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                     .addSharedElement(selectedViewHolder.card, selectedViewHolder.card.getTransitionName())
                     .build();
 
+            setExitTransition(transicionElevationScale_exit);
+            setReenterTransition(transicionElevationScale_enter);
 
             setExitSharedElementCallback(
                     new SharedElementCallback() {

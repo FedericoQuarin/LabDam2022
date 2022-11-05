@@ -1,12 +1,10 @@
-package com.mdgz.dam.labdam2022.persistencia.repository;
+package com.mdgz.dam.labdam2022.persistencia.room.repository;
 
 import android.content.Context;
 
-import androidx.room.Room;
-
 import com.mdgz.dam.labdam2022.model.Ciudad;
-import com.mdgz.dam.labdam2022.persistencia.daos.CiudadDao;
-import com.mdgz.dam.labdam2022.persistencia.LabDamDatabase;
+import com.mdgz.dam.labdam2022.persistencia.room.daos.CiudadDao;
+import com.mdgz.dam.labdam2022.persistencia.room.LabDamDatabase;
 
 import java.util.List;
 

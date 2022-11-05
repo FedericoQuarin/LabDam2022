@@ -36,7 +36,7 @@
     <!-- Estilos -->
     <style name="Widget.LabDam2022.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="materialThemeOverlay">@style/ThemeOverlay.LabDam2022.Toolbar</item>
-        <item name="titleTextColor">?attr/colorOnSurface</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
     </style>
 
     <style name="ThemeOverlay.LabDam2022.Toolbar" parent="">
