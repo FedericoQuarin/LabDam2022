@@ -25,10 +25,14 @@ import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
@@ -157,10 +161,10 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         this.IDLog++;
         cargarListaCriteriosDeBusqueda();
         try{
-            archivoJSON.put("IDLog", this.IDLog);
-            archivoJSON.put("timestampBusqueda", System.currentTimeMillis()/1000);
-            archivoJSON.put("cantidadResultados", cantidadAlojamientosEncontrados); //TODO: VER
-            archivoJSON.put("tiempoDeBusqueda", System.currentTimeMillis()/1000 - (Long) bundle.get("tiempoPresionoBuscar"));
+            archivoJSON.put("ID Log", proximoIDLog());
+            archivoJSON.put("Timestamp de busqueda", System.currentTimeMillis()/1000);
+            archivoJSON.put("Cantidad de resultados", cantidadAlojamientosEncontrados); //TODO: VER
+            archivoJSON.put("Tiempo de busqueda", System.currentTimeMillis()/1000 - (Long) bundle.get("tiempoPresionoBuscar"));
 
             JSONArray criteriosDeBusqueda = new JSONArray();
 
@@ -171,7 +175,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                 criteriosDeBusqueda.put(CDB_JSON);
             }
 
-            archivoJSON.put("criteriosDeBusqueda", criteriosDeBusqueda);
+            archivoJSON.put("Criterios de busqueda", criteriosDeBusqueda);
         }
         catch(JSONException e){
             e.printStackTrace();
@@ -202,12 +206,44 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
     private void cargarListaCriteriosDeBusqueda(){
 
-        ListaCriteriosDeBusqueda.add("switchHoteles");
-        ListaCriteriosDeBusqueda.add("switchDepartamentos");
-        ListaCriteriosDeBusqueda.add("capacidad");
-        ListaCriteriosDeBusqueda.add("ciudad");
-        ListaCriteriosDeBusqueda.add("precioMinimo");
-        ListaCriteriosDeBusqueda.add("precioMaximo");
-        ListaCriteriosDeBusqueda.add("switchWiFi");
+        ListaCriteriosDeBusqueda.add("Switch hoteles");
+        ListaCriteriosDeBusqueda.add("Switch departamentos");
+        ListaCriteriosDeBusqueda.add("Capacidad");
+        ListaCriteriosDeBusqueda.add("Ciudad");
+        ListaCriteriosDeBusqueda.add("Precio minimo");
+        ListaCriteriosDeBusqueda.add("Precio maximo");
+        ListaCriteriosDeBusqueda.add("Switch WiFi");
     }
+
+    // Se busca el número de un log ya creado, si existe se copia y se le agrega 1 y si no existe se asigna el valor 1
+    private Integer proximoIDLog(){
+        Integer IDLog = 1;
+        FileInputStream fis = null;
+        StringBuilder sb = new StringBuilder();
+
+        try{
+            fis = ctx.openFileInput(FILENAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader buffRdr = new BufferedReader(isr);
+            String line = buffRdr.readLine();
+            fis.close();
+
+            JSONObject log = (JSONObject) new JSONTokener(line).nextValue();
+
+            IDLog = Integer.parseInt(log.getString("ID Log")) + 1;
+        }
+        catch (FileNotFoundException e){
+            // No hago nada, se devuelve el valor 1
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+
+
+        return IDLog;
+    }
+
 }

@@ -135,13 +135,13 @@ public class BusquedaFragment extends Fragment {
 
             if(validarEditTexts()) {
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("switchHoteles", this.switchHoteles.isActivated());
-                bundle.putBoolean("switchDepartamentos", this.switchDeptos.isActivated());
-                bundle.putInt("capacidad", this.seekBarCapacidad.getProgress());
-                bundle.putString("ciudad", this.list_ciudades.getTransitionName());
-                bundle.putString("precioMinimo", this.editTxtPrecioMinimo.getText().toString());
-                bundle.putString("precioMaximo", this.editTxtPrecioMaximo.getText().toString());
-                bundle.putBoolean("switchWiFi", this.switchWifi.isActivated());
+                bundle.putBoolean("Switch hoteles", this.switchHoteles.isActivated());
+                bundle.putBoolean("Switch departamentos", this.switchDeptos.isActivated());
+                bundle.putInt("Capacidad", this.seekBarCapacidad.getProgress());
+                bundle.putString("Ciudad", this.list_ciudades.getEditText().getText().toString());
+                bundle.putString("Precio minimo", this.editTxtPrecioMinimo.getText().toString());
+                bundle.putString("Precio maximo", this.editTxtPrecioMaximo.getText().toString());
+                bundle.putBoolean("Switch WiFi", this.switchWifi.isActivated());
                 bundle.putLong("tiempoPresionoBuscar", System.currentTimeMillis()/1000);
 
                 NavHostFragment.findNavController(BusquedaFragment.this)

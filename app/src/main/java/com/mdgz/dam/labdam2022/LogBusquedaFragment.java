@@ -88,20 +88,28 @@ public class LogBusquedaFragment extends Fragment {
         try{
             JSONObject log = (JSONObject) new JSONTokener(this.leerDeArchivo()).nextValue();
 
-            binding.txtViewIDLog.setText(log.getString("IDLog"));
-            binding.txtViewTimestamp.setText(log.getString("timestampBusqueda"));
-            binding.txtViewCantidadResultados.setText(log.getString("cantidadResultados"));
-            binding.txtViewTiempoDeBusqueda.setText(log.getString("tiempoDeBusqueda"));
+            binding.txtViewIDLog.setText(log.getString("ID Log"));
+            binding.txtViewTimestamp.setText(log.getString("Timestamp de busqueda"));
+            binding.txtViewCantidadResultados.setText(log.getString("Cantidad de resultados"));
+            binding.txtViewTiempoDeBusqueda.setText(log.getString("Tiempo de busqueda"));
 
-            JSONArray criteriosDeBusqueda = log.getJSONArray("criteriosDeBusqueda");
+            JSONArray criteriosDeBusqueda = log.getJSONArray("Criterios de busqueda");
 
-            String criteriosDeBusquedaString =  criteriosDeBusqueda.get(0) + "\n" +
-                                                criteriosDeBusqueda.get(1) + "\n" +
-                                                criteriosDeBusqueda.get(2) + "\n" +
-                                                criteriosDeBusqueda.get(3) + "\n" +
-                                                criteriosDeBusqueda.get(4) + "\n" +
-                                                criteriosDeBusqueda.get(5) + "\n" +
-                                                criteriosDeBusqueda.get(6);
+            String switchHoteles = criteriosDeBusqueda.get(0).toString();
+            String switchDepartamentos = criteriosDeBusqueda.get(1).toString();
+            String capacidad = criteriosDeBusqueda.get(2).toString();
+            String ciudad = criteriosDeBusqueda.get(3).toString();
+            String precioMinimo = criteriosDeBusqueda.get(4).toString();
+            String precioMaximo = criteriosDeBusqueda.get(5).toString();
+            String switchWiFi = criteriosDeBusqueda.get(6).toString();
+
+            String criteriosDeBusquedaString =  switchHoteles.substring(1, switchHoteles.length()-1) + "\n" +
+                                                switchDepartamentos.substring(1, switchDepartamentos.length()-1) + "\n" +
+                                                capacidad.substring(1, capacidad.length()-1) + "\n" +
+                                                ciudad.substring(1, ciudad.length()-1) + "\n" +
+                                                precioMinimo.substring(1, precioMinimo.length()-1) + "\n" +
+                                                precioMaximo.substring(1, precioMaximo.length()-1) + "\n" +
+                                                switchWiFi.substring(1, switchWiFi.length()-1);
 
             binding.txtViewCriteriosDeBusqueda.setText(criteriosDeBusquedaString);
         }
