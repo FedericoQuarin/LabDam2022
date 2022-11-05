@@ -247,7 +247,7 @@ public class DetalleAlojamientoFragment extends Fragment {
 
         botonReservar.setOnClickListener(v -> logicaReservar());
 
-        setEnterSharedElementCallback(
+        /*setEnterSharedElementCallback(
                 new SharedElementCallback() {
                     @Override
                     public void onMapSharedElements(
@@ -261,7 +261,7 @@ public class DetalleAlojamientoFragment extends Fragment {
 
                         sharedElements.put(names.get(0), fragmentView);
                     }
-                });
+                });*/
     }
 
     // Actualiza el texto del boton "Fecha de reserva" cuando se selecciona una fecha

@@ -6,12 +6,14 @@ import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.SharedElementCallback;
+import androidx.core.view.OneShotPreDrawListener;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,17 +83,22 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        postponeEnterTransition();
+        OneShotPreDrawListener.add(view, this::startPostponedEnterTransition);
+
         recyclerView = binding.recyclerAlojamiento;
-        //recyclerView.setHasFixedSize(true);
+
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new AlojamientoRecyclerAdapter(gestorAlojamiento.getAlojamientos(), this);
         recyclerView.setAdapter(adapter);
-
         recyclerView.setClickable(true);
-        //binding.labelResultadoBusqueda.setText("Existen " + adapter.getItemCount() + " alojamientos que cumplen los filtros seleccionados.");
+
         binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
+
+        // Borra cualquier transicion que se haya colocado previamente
+        setExitTransition(null);
 
         TIEMPO_TRANSICION_A_DETALLE = getResources().getInteger(R.integer.transition_time_container_transform);
 
@@ -123,7 +130,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
             setExitTransition(transicionElevationScale_exit);
             setReenterTransition(transicionElevationScale_enter);
 
-            setExitSharedElementCallback(
+            /*setExitSharedElementCallback(
                     new SharedElementCallback() {
                         @Override
                         public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
@@ -133,11 +140,10 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                                             selectedViewHolder.card);
                         }
 
-                    });
+                    });*/
 
             NavHostFragment.findNavController(ResultadoBusquedaFragment.this)
                     .navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment, bundle, null, extras); //TODO: Faltaría la animación
         }
     }
-
 }
