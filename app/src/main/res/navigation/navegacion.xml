@@ -13,10 +13,10 @@
         <action
             android:id="@+id/action_busquedaFragment_to_resultadoBusquedaFragment"
             app:destination="@id/resultadoBusquedaFragment"
-            app:enterAnim="@anim/desde_derecha"
-            app:exitAnim="@anim/hacia_izquierda"
-            app:popEnterAnim="@anim/desde_izquierda"
-            app:popExitAnim="@anim/hacia_derecha" />
+            app:enterAnim="@anim/desplazamiento_derecha_in"
+            app:exitAnim="@anim/desplazamiento_derecha_out"
+            app:popEnterAnim="@anim/desplazamiento_izquierda_in"
+            app:popExitAnim="@anim/desplazamiento_izquierda_out" />
     </fragment>
     <fragment
         android:id="@+id/resultadoBusquedaFragment"
@@ -26,11 +26,6 @@
         <action
             android:id="@+id/action_resultadoBusquedaFragment_to_detalleAlojamientoFragment"
             app:destination="@id/detalleAlojamientoFragment" />
-        <action
-            android:id="@+id/action_resultadoBusquedaFragment_to_busquedaFragment"
-            app:destination="@id/busquedaFragment"
-            app:popEnterAnim="@anim/desde_izquierda"
-            app:popExitAnim="@anim/hacia_derecha" />
     </fragment>
     <fragment
         android:id="@+id/detalleAlojamientoFragment"
@@ -41,13 +36,10 @@
             android:id="@+id/action_detalleAlojamientoFragment_to_busquedaFragment"
             app:destination="@id/busquedaFragment"
             app:launchSingleTop="true"
-            app:popEnterAnim="@anim/desde_izquierda"
-            app:popExitAnim="@anim/hacia_derecha"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
             app:popUpTo="@id/busquedaFragment"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_detalleAlojamientoFragment_to_resultadoBusquedaFragment"
-            app:destination="@id/resultadoBusquedaFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -55,26 +47,30 @@
         android:label="Configuraciones" >
         <action
             android:id="@+id/action_settingsFragment_to_logBusquedaFragment"
-            app:destination="@id/logBusquedaFragment" />
+            app:destination="@id/logBusquedaFragment"
+            app:enterAnim="@anim/desplazamiento_derecha_in"
+            app:exitAnim="@anim/desplazamiento_derecha_out"
+            app:popEnterAnim="@anim/desplazamiento_izquierda_in"
+            app:popExitAnim="@anim/desplazamiento_izquierda_out"/>
     </fragment>
+    <fragment
+        android:id="@+id/logBusquedaFragment"
+        android:name="com.mdgz.dam.labdam2022.LogBusquedaFragment"
+        android:label="Log de búsquedas"
+        tools:layout="@layout/fragment_log_busqueda" />
+
     <action
         android:id="@+id/action_global_settingsFragment"
         app:destination="@id/settingsFragment"
         app:launchSingleTop="true"
         app:enterAnim="@anim/fade_in"
         app:exitAnim="@anim/fade_out"
-        app:popExitAnim="@anim/fade_out"
-        app:popEnterAnim="@anim/fade_in"/>
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
     <action
         android:id="@+id/action_global_busquedaFragment"
         app:destination="@id/busquedaFragment"
         app:launchSingleTop="true"
         app:popUpTo="@id/busquedaFragment"
         app:popUpToInclusive="true"/>
-    <fragment
-        android:id="@+id/logBusquedaFragment"
-        android:name="com.mdgz.dam.labdam2022.LogBusquedaFragment"
-        android:label="AirBooking"
-        tools:layout="@layout/fragment_log_busqueda" />
-
 </navigation>
