@@ -107,6 +107,8 @@ public class BusquedaFragment extends Fragment {
             }
         }
 
+        setArguments(null);
+
         gestorCiudad = GestorCiudad.getInstance(getContext());
 
         // Se setea el numero de personas inicial en el correspondiente TextView
