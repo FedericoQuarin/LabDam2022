@@ -233,9 +233,15 @@ public class DetalleAlojamientoFragment extends Fragment {
 
 
         // TODO: corregir - si se clickea el boton antes de que se abra el datePicker crashea
-        botonFecha.setOnClickListener(v -> materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker"));
+        botonFecha.setOnClickListener(v -> {
+            botonFecha.setClickable(false);
+            materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker");
+        });
 
-        materialDatePicker.addOnDismissListener( p -> actualizarBotonesYLabel());
+        materialDatePicker.addOnDismissListener( v -> {
+            botonFecha.setClickable(true);
+            actualizarBotonesYLabel();
+        });
 
         txtViewCantidadPersonas.setText(String.valueOf(cantidadPersonas));
         txtViewCapacidadAlojamiento.setText(" / " + alojamiento.getCapacidad());
