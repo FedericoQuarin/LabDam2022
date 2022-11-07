@@ -5,18 +5,22 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.mdgz.dam.labdam2022.model.Alojamiento;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.AlojamientoEntity;
 
 import java.util.List;
+import java.util.UUID;
 
 @Dao
 public interface AlojamientoDao {
     @Insert
-    void save(Alojamiento... alojamientos);
+    void insertar(AlojamientoEntity... alojamientos);
 
     @Delete
-    void delete(Alojamiento alojamiento);
+    void delete(AlojamientoEntity alojamiento);
 
     @Query("SELECT * FROM ALOJAMIENTO")
-    List<Alojamiento> getList();
+    List<AlojamientoEntity> getAlojamientos();
+
+    @Query("SELECT * FROM ALOJAMIENTO WHERE id=:alojamientoId")
+    AlojamientoEntity getAlojamientoPorId(UUID alojamientoId);
 }
