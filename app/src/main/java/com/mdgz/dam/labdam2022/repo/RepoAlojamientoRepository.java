@@ -15,7 +15,7 @@ public class RepoAlojamientoRepository {
 
     public static final List<Alojamiento> _ALOJAMIENTOS = List.of(
             new Departamento("Depto 1", "luminoso y amplio", 6, 300.0,true, 1500.0, 3,ubicacion1, false),
-            new Habitacion("Habitacion 2", "Espectacular suite",4, 1200.0, 2,1,false,new Hotel(1,"Hotel 1",3,ubicacion2), false )
+            new Habitacion("Habitacion 2", "Espectacular suite",4, 1200.0, 2,1,false,new Hotel("Hotel 1",3,ubicacion2), false )
     );
 
     public List<Alojamiento> listaCiudades(){

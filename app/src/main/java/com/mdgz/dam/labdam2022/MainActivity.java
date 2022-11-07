@@ -115,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
             Ciudad ciudad1 = gestorCiudad.getCiudad(1);
 
             Ubicacion ubicacion = new Ubicacion(50.0, 30.0, "Calle principal", "1", ciudad1);
-            Ubicacion ubicacion1 = new Ubicacion(50, 30, "Balcarce", "1442", ciudad1);
+            Ubicacion ubicacion1 = new Ubicacion(50.0, 30.0, "Balcarce", "1442", ciudad1);
 
-            Hotel hotel = new Hotel(1, "Hotel principal", 1, ubicacion);
+            Hotel hotel = new Hotel("Hotel principal", 1, ubicacion);
 
             String loremIpsum = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum suscipit mauris. Praesent imperdiet ultrices euismod.";
 

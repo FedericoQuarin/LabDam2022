@@ -50,9 +50,9 @@ public class GestorCiudad {
 
     public static List<Ciudad> ciudadesIniciales() {
         List<Ciudad> ciudadesIniciales = new ArrayList<>();
-        ciudadesIniciales.add(new Ciudad(1, "Santa Fe", "SF"));
-        ciudadesIniciales.add(new Ciudad(2, "Paraná", "PA"));
-        ciudadesIniciales.add(new Ciudad(3, "Rosario", "RS"));
+        ciudadesIniciales.add(new Ciudad("Santa Fe", "SF"));
+        ciudadesIniciales.add(new Ciudad("Paraná", "PA"));
+        ciudadesIniciales.add(new Ciudad("Rosario", "RS"));
 
         return ciudadesIniciales;
     }

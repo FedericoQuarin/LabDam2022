@@ -1,27 +1,30 @@
 package com.mdgz.dam.labdam2022.model;
 
+import java.util.UUID;
+
 public class Hotel {
-    Integer id;
-    String nombre;
-    Integer categoria;
-    Ubicacion ubicacion;
+
+    private UUID id;
+    private String nombre;
+    private Integer categoria;
+    private Ubicacion ubicacion;
 
     public Hotel(){
         super();
     }
 
-    public Hotel(Integer id, String nombre, Integer categoria, Ubicacion ubicacion) {
-        this.id = id;
+    public Hotel(String nombre, Integer categoria, Ubicacion ubicacion) {
+        this.id = UUID.randomUUID();
         this.nombre = nombre;
         this.categoria = categoria;
         this.ubicacion = ubicacion;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

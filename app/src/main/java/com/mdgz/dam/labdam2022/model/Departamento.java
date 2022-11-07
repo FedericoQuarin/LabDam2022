@@ -1,22 +1,10 @@
 package com.mdgz.dam.labdam2022.model;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-
-@Entity
 public class Departamento extends Alojamiento{
 
-    @ColumnInfo(name = "tiene_wifi")
     private Boolean tieneWifi;
-
-    @ColumnInfo(name = "costo_limpieza")
     private Double costoLimpieza;
-
-    @ColumnInfo(name = "cantidad_habitaciones")
     private Integer cantidadHabitaciones;
-
-    @Ignore
     private Ubicacion ubicacion;
 
     public void setUbicacion(Ubicacion ubicacion) {

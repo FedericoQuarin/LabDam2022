@@ -1,35 +1,26 @@
 package com.mdgz.dam.labdam2022.model;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+import java.util.UUID;
 
-@Entity(tableName = "CIUDAD")
 public class Ciudad {
-    @PrimaryKey
-    @NonNull
-    Integer id;
 
-    @ColumnInfo(name = "nombre")
-    String nombre;
-
-    @ColumnInfo(name = "abreviatura")
-    String abreviatura;
+    private UUID id;
+    private String nombre;
+    private String abreviatura;
 
     public Ciudad(){}
 
-    public Ciudad(Integer id, String nombre, String abreviatura) {
-        this.id = id;
+    public Ciudad(String nombre, String abreviatura) {
+        this.id = UUID.randomUUID();
         this.nombre = nombre;
         this.abreviatura = abreviatura;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

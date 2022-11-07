@@ -1,8 +1,12 @@
 package com.mdgz.dam.labdam2022.model;
 
+import java.util.UUID;
+
 public class Ubicacion {
-    private double lat;
-    private double lng;
+
+    private UUID id;
+    private Double lat;
+    private Double lng;
     private String calle;
     private String numero;
     private Ciudad ciudad;
@@ -11,12 +15,21 @@ public class Ubicacion {
 
     }
 
-    public Ubicacion(double lat, double lng, String calle, String numero, Ciudad ciudad) {
+    public Ubicacion(Double lat, Double lng, String calle, String numero, Ciudad ciudad) {
+        this.id = UUID.randomUUID();
         this.lat = lat;
         this.lng = lng;
         this.calle = calle;
         this.numero = numero;
         this.ciudad = ciudad;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public double getLat() {
