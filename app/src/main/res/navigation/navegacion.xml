@@ -71,6 +71,6 @@
         android:id="@+id/logBusquedaFragment"
         android:name="com.mdgz.dam.labdam2022.LogBusquedaFragment"
         android:label="AirBooking"
-        tools:layout="@layout/fragment_log_busqueda" />
+        tools:layout="@layout/recycler_view_busqueda_logs" />
 
 </navigation>

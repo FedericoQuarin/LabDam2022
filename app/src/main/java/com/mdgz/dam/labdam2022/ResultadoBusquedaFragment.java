@@ -29,6 +29,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -123,11 +124,6 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         cantidadAlojamientosEncontrados = adapter.getItemCount();
         binding.labelResultadoBusqueda.setText(cantidadAlojamientosEncontrados + " alojamientos encontrados.");
 
-        // Paso el bundle para generar el JSON
-        generarJSON(getArguments());
-
-        binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
-
         TIEMPO_TRANSICION_A_DETALLE = getResources().getInteger(R.integer.transition_time_container_transform);
 
         transicionElevationScale_exit = new MaterialElevationScale(false);
@@ -173,95 +169,4 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                     .navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment, bundle, null, extras); //TODO: Faltaría la animación
         }
     }
-
-    public JSONObject generarJSON (Bundle bundle) {
-        JSONObject archivoJSON = new JSONObject();
-        this.IDLog++;
-        cargarListaCriteriosDeBusqueda();
-        try{
-            archivoJSON.put("ID Log", proximoIDLog());
-            archivoJSON.put("Timestamp de busqueda", System.currentTimeMillis()/1000);
-            archivoJSON.put("Cantidad de resultados", cantidadAlojamientosEncontrados); //TODO: VER
-            archivoJSON.put("Tiempo de busqueda", System.currentTimeMillis()/1000 - (Long) bundle.get("tiempoPresionoBuscar"));
-
-            JSONArray criteriosDeBusqueda = new JSONArray();
-
-            for(String cdb : ListaCriteriosDeBusqueda){
-
-                JSONObject CDB_JSON = new JSONObject();
-                CDB_JSON.put(cdb, bundle.get(cdb));
-                criteriosDeBusqueda.put(CDB_JSON);
-            }
-
-            archivoJSON.put("Criterios de busqueda", criteriosDeBusqueda);
-        }
-        catch(JSONException e){
-            e.printStackTrace();
-        }
-
-        this.escribirEnArchivo(archivoJSON);
-
-        return archivoJSON;
-    }
-
-    private void escribirEnArchivo(JSONObject log){
-        FileOutputStream fos = null;
-
-        try{
-            fos = ctx.openFileOutput(FILENAME, Context.MODE_PRIVATE);
-            fos.write(log.toString().getBytes());
-            fos.close();
-        }
-        catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-
-        return;
-    }
-
-    private void cargarListaCriteriosDeBusqueda(){
-
-        ListaCriteriosDeBusqueda.add("Switch hoteles");
-        ListaCriteriosDeBusqueda.add("Switch departamentos");
-        ListaCriteriosDeBusqueda.add("Capacidad");
-        ListaCriteriosDeBusqueda.add("Ciudad");
-        ListaCriteriosDeBusqueda.add("Precio minimo");
-        ListaCriteriosDeBusqueda.add("Precio maximo");
-        ListaCriteriosDeBusqueda.add("Switch WiFi");
-    }
-
-    // Se busca el número de un log ya creado, si existe se copia y se le agrega 1 y si no existe se asigna el valor 1
-    private Integer proximoIDLog(){
-        Integer IDLog = 1;
-        FileInputStream fis = null;
-        StringBuilder sb = new StringBuilder();
-
-        try{
-            fis = ctx.openFileInput(FILENAME);
-            InputStreamReader isr = new InputStreamReader(fis);
-            BufferedReader buffRdr = new BufferedReader(isr);
-            String line = buffRdr.readLine();
-            fis.close();
-
-            JSONObject log = (JSONObject) new JSONTokener(line).nextValue();
-
-            IDLog = Integer.parseInt(log.getString("ID Log")) + 1;
-        }
-        catch (FileNotFoundException e){
-            // No hago nada, se devuelve el valor 1
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
-        catch (JSONException e){
-            e.printStackTrace();
-        }
-
-
-        return IDLog;
-    }
-
 }

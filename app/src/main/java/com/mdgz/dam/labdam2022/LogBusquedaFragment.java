@@ -6,13 +6,16 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mdgz.dam.labdam2022.databinding.FragmentLogBusquedaBinding;
-import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
+import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaLogBinding;
+import com.mdgz.dam.labdam2022.databinding.RecyclerViewBusquedaLogsBinding;
+import com.mdgz.dam.labdam2022.recyclerView.LogRecyclerAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,23 +25,26 @@ import org.json.JSONTokener;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LogBusquedaFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+
     // Nombre del archivo
     private String FILENAME = "logs";
     // Contexto
     private Context ctx;
 
-    private FragmentLogBusquedaBinding binding;
+    private FragmentBusquedaLogBinding binding;
 
     private String mParam1;
     private String mParam2;
@@ -69,7 +75,7 @@ public class LogBusquedaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentLogBusquedaBinding.inflate(inflater, container, false);
+        binding = FragmentBusquedaLogBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -80,45 +86,20 @@ public class LogBusquedaFragment extends Fragment {
         // Me guardo el contexto para leer el archivo
         this.ctx = view.getContext();
 
-        // Cargo el JSON
-        cargarJSON();
+        this.recyclerView = binding.recyclerLog;
+        this.layoutManager = new LinearLayoutManager(view.getContext());
+        this.recyclerView.setLayoutManager(layoutManager);
+
+        this.adapter = new LogRecyclerAdapter(leerArchivoLogs());
+        this.recyclerView.setAdapter(adapter);
+
+        this.recyclerView.setClickable(false);
     }
 
-    public void cargarJSON(){
-        try{
-            JSONObject log = (JSONObject) new JSONTokener(this.leerDeArchivo()).nextValue();
+    private List<JSONObject> leerArchivoLogs(){
 
-            binding.txtViewIDLog.setText(log.getString("ID Log"));
-            binding.txtViewTimestamp.setText(log.getString("Timestamp de busqueda"));
-            binding.txtViewCantidadResultados.setText(log.getString("Cantidad de resultados"));
-            binding.txtViewTiempoDeBusqueda.setText(log.getString("Tiempo de busqueda"));
+        List<JSONObject> listaLogs = new ArrayList<>();
 
-            JSONArray criteriosDeBusqueda = log.getJSONArray("Criterios de busqueda");
-
-            String switchHoteles = criteriosDeBusqueda.get(0).toString();
-            String switchDepartamentos = criteriosDeBusqueda.get(1).toString();
-            String capacidad = criteriosDeBusqueda.get(2).toString();
-            String ciudad = criteriosDeBusqueda.get(3).toString();
-            String precioMinimo = criteriosDeBusqueda.get(4).toString();
-            String precioMaximo = criteriosDeBusqueda.get(5).toString();
-            String switchWiFi = criteriosDeBusqueda.get(6).toString();
-
-            String criteriosDeBusquedaString =  switchHoteles.substring(1, switchHoteles.length()-1) + "\n" +
-                                                switchDepartamentos.substring(1, switchDepartamentos.length()-1) + "\n" +
-                                                capacidad.substring(1, capacidad.length()-1) + "\n" +
-                                                ciudad.substring(1, ciudad.length()-1) + "\n" +
-                                                precioMinimo.substring(1, precioMinimo.length()-1) + "\n" +
-                                                precioMaximo.substring(1, precioMaximo.length()-1) + "\n" +
-                                                switchWiFi.substring(1, switchWiFi.length()-1);
-
-            binding.txtViewCriteriosDeBusqueda.setText(criteriosDeBusquedaString);
-        }
-        catch (JSONException e){
-            e.printStackTrace();
-        }
-    }
-
-    private String leerDeArchivo(){
         FileInputStream fis = null;
         StringBuilder sb = new StringBuilder();
 
@@ -132,6 +113,11 @@ public class LogBusquedaFragment extends Fragment {
                 sb.append(line);
                 sb.append(System.lineSeparator());
                 line =buffRdr.readLine();
+
+                System.out.println("LO QUE LEE = " + sb.toString());
+                JSONObject log = (JSONObject) new JSONTokener(sb.toString()).nextValue();
+                listaLogs.add(log);
+                sb = new StringBuilder();
             }
 
             fis.close();
@@ -142,7 +128,10 @@ public class LogBusquedaFragment extends Fragment {
         catch (IOException e){
             e.printStackTrace();
         }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
 
-        return sb.toString();
+        return listaLogs;
     }
 }

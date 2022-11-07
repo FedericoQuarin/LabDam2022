@@ -28,6 +28,18 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -52,6 +64,15 @@ public class BusquedaFragment extends Fragment {
     private EditText editTxtPrecioMaximo;
     private EditText editTxtPrecioMinimo;
     private AutoCompleteTextView editTxtListCiudades;
+
+    // Nombre del archivo
+    private String FILENAME = "logs";
+    // Contexto
+    private Context ctx;
+    // IDLog
+    private Integer IDLog = 0;
+    // Cantidad de alojamientos encontrados
+    private Integer cantidadAlojamientosEncontrados;
 
     // Variables
     String stringMinimo;
@@ -78,6 +99,9 @@ public class BusquedaFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Me guardo el contexto para generar el archivo
+        this.ctx = view.getContext();
 
         seekBarCapacidad = binding.seekBarCapacidad;
         txtViewCapacidad = binding.txtViewCapacidad;
@@ -134,18 +158,21 @@ public class BusquedaFragment extends Fragment {
         // TODO validaciones y filtrado de alojamientos
         buttonBuscar.setOnClickListener(v -> {
             if(validarEditTexts()) {
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("Switch hoteles", this.switchHoteles.isActivated());
-                bundle.putBoolean("Switch departamentos", this.switchDeptos.isActivated());
-                bundle.putInt("Capacidad", this.seekBarCapacidad.getProgress());
-                bundle.putString("Ciudad", this.list_ciudades.getEditText().getText().toString());
-                bundle.putString("Precio minimo", this.editTxtPrecioMinimo.getText().toString());
-                bundle.putString("Precio maximo", this.editTxtPrecioMaximo.getText().toString());
-                bundle.putBoolean("Switch WiFi", this.switchWifi.isActivated());
-                bundle.putLong("tiempoPresionoBuscar", System.currentTimeMillis()/1000);
+//                Bundle bundle = new Bundle();
+  //              bundle.putBoolean("seApretoBotonBuscar", true);
+    //            bundle.putBoolean("Switch hoteles", this.switchHoteles.isActivated());
+      //          bundle.putBoolean("Switch departamentos", this.switchDeptos.isActivated());
+        //        bundle.putInt("Capacidad", this.seekBarCapacidad.getProgress());
+          //      bundle.putString("Ciudad", this.list_ciudades.getEditText().getText().toString());
+            //    bundle.putString("Precio minimo", this.editTxtPrecioMinimo.getText().toString());
+              //  bundle.putString("Precio maximo", this.editTxtPrecioMaximo.getText().toString());
+                //bundle.putBoolean("Switch WiFi", this.switchWifi.isActivated());
+                //bundle.putLong("tiempoPresionoBuscar", System.currentTimeMillis()/1000);
+
+                generarJSON();
 
                 NavHostFragment.findNavController(BusquedaFragment.this)
-                .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment, bundle);
+                .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
             }
 
         });
@@ -245,5 +272,102 @@ public class BusquedaFragment extends Fragment {
             outState.putString("maximo", editTxtPrecioMaximo.getText().toString());
             outState.putString("ciudad", list_ciudades.getEditText().getText().toString());
         }
+    }
+
+
+    public JSONObject generarJSON () {
+        JSONObject archivoJSON = new JSONObject();
+        this.IDLog++;
+
+        try{
+            archivoJSON.put("ID Log", this.IDLog);
+            archivoJSON.put("Timestamp de busqueda", System.currentTimeMillis()/1000);
+            archivoJSON.put("Cantidad de resultados", "?");
+            archivoJSON.put("Tiempo de busqueda", "-");
+
+            JSONArray criteriosDeBusqueda = new JSONArray();
+
+            JSONObject switchHoteles = new JSONObject();
+            JSONObject switchDepartamentos = new JSONObject();
+            JSONObject capacidad = new JSONObject();
+            JSONObject ciudad = new JSONObject();
+            JSONObject precioMinimo = new JSONObject();
+            JSONObject precioMaximo = new JSONObject();
+            JSONObject switchWiFi = new JSONObject();
+            switchHoteles.put("Switch hoteles", binding.switchHoteles.isChecked());
+            criteriosDeBusqueda.put(switchHoteles);
+            switchDepartamentos.put("Switch departamentos", binding.switchDepartamentos.isChecked());
+            criteriosDeBusqueda.put(switchDepartamentos);
+            capacidad.put("Capacidad", binding.seekBarCapacidad.getProgress());
+            criteriosDeBusqueda.put(capacidad);
+            ciudad.put("Ciudad", binding.listCiudades.getEditText().getText().toString());
+            criteriosDeBusqueda.put(ciudad);
+            precioMinimo.put("Precio minimo", this.editTxtPrecioMinimo.getText().toString());
+            criteriosDeBusqueda.put(precioMinimo);
+            precioMaximo.put("Precio maximo", this.editTxtPrecioMaximo.getText().toString());
+            criteriosDeBusqueda.put(precioMaximo);
+            switchWiFi.put("Switch WiFi", binding.switchWiFi.isChecked());
+            criteriosDeBusqueda.put(switchWiFi);
+
+            archivoJSON.put("Criterios de busqueda", criteriosDeBusqueda);
+        }
+        catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        this.escribirEnArchivo(archivoJSON);
+
+        return archivoJSON;
+    }
+
+    private void escribirEnArchivo(JSONObject log){
+        FileOutputStream fos = null;
+
+        try{
+            fos = ctx.openFileOutput(FILENAME, Context.MODE_APPEND);
+            fos.write(log.toString().getBytes());
+            String espacio = "\r\n";
+            fos.write(espacio.getBytes());
+            fos.close();
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return;
+    }
+
+    // Se busca el número de un log ya creado, si existe se copia y se le agrega 1 y si no existe se asigna el valor 1
+    private Integer proximoIDLog(){
+        Integer IDLog = 1;
+        FileInputStream fis = null;
+        StringBuilder sb = new StringBuilder();
+
+        try{
+            fis = ctx.openFileInput(FILENAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader buffRdr = new BufferedReader(isr);
+            String line = buffRdr.readLine();
+            fis.close();
+
+            JSONObject log = (JSONObject) new JSONTokener(line).nextValue();
+
+            IDLog = Integer.parseInt(log.getString("ID Log")) + 1;
+        }
+        catch (FileNotFoundException e){
+            // No hago nada, se devuelve el valor 1
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+        catch (JSONException e){
+            e.printStackTrace();
+        }
+
+
+        return IDLog;
     }
 }
