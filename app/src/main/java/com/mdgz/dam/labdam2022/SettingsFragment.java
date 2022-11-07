@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.preference.EditTextPreference;
@@ -21,6 +23,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import com.google.android.material.transition.MaterialFade;
+import com.google.android.material.transition.MaterialFadeThrough;
+
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -115,24 +121,32 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         listaPreference = findPreference("pagoPreferido");
         listaMoneda = findPreference("monedaPreferida");
         if (listaPreference != null) {
+            if (listaMoneda != null) {
+                if (!listaPreference.getValue().equals("efectivo")) {
+                    listaMoneda.setValue("pesos");
+                    listaMoneda.setEnabled(false);
+                }
+                else {
+                    listaMoneda.setEnabled(true);
+                }
 
-            listaPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                listaPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                    @Override
+                    public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                    // Habilitar o desabilitar la moneda preferida dependiendo del metodo preferido
-                    if(listaMoneda != null) {
+                        // Habilitar o desabilitar la moneda preferida dependiendo del metodo preferido
                         if (!newValue.toString().equals("efectivo")) {
                             listaMoneda.setValue("pesos");
                             listaMoneda.setEnabled(false);
                         } else {
                             listaMoneda.setEnabled(true);
                         }
-                    }
 
-                    return true;
-                }
-            });
+                        return true;
+                    }
+                });
+            }
+
         }
 
         guardarInformacion = findPreference("guardarInformacion");
