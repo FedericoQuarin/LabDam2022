@@ -114,9 +114,9 @@ public class LogBusquedaFragment extends Fragment {
                 sb.append(System.lineSeparator());
                 line =buffRdr.readLine();
 
-                System.out.println("LO QUE LEE = " + sb.toString());
                 JSONObject log = (JSONObject) new JSONTokener(sb.toString()).nextValue();
-                listaLogs.add(log);
+                // Se agregar primero en la lista de logs (orden cronológico)
+                listaLogs.add(0, log);
                 sb = new StringBuilder();
             }
 

@@ -138,15 +138,18 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         guardarInformacion = findPreference("guardarInformacion");
         if(guardarInformacion != null){
 
+            // Si se entra al Settings de una y está desactivado, borrar el archivo de logs
+            if(!guardarInformacion.isChecked()){
+                borrarArchivo();
+            }
+
+            // Si se presiona el switch borrar el archivo de logs
             guardarInformacion.setOnPreferenceChangeListener( new Preference.OnPreferenceChangeListener() {
 
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                    // Si se desabilita borrar el archivo de logs
                     if(guardarInformacion.isChecked()){
-                        System.out.println("PATH3 = "+getContext().getFilesDir());
-                        //new File(getContext().getFilesDir(),FILENAME + ".txt").delete();
                         borrarArchivo();
                         }
 

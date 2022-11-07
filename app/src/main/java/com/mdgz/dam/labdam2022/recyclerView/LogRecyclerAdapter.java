@@ -60,8 +60,6 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogRecyclerAdapter.
 
     @Override
     public void onBindViewHolder(LogRecyclerAdapter.LogViewHolder logHolder, int position) {
-        System.out.println("LARGO DEL LOGS = "+this.logs.size());
-        System.out.println("OnBindViewHolder");
         try{
             JSONObject log = this.logs.get(position);
 
