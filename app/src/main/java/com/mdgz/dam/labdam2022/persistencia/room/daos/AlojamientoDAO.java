@@ -11,12 +11,15 @@ import java.util.List;
 import java.util.UUID;
 
 @Dao
-public interface AlojamientoDao {
+public interface AlojamientoDAO {
     @Insert
-    void insertar(AlojamientoEntity... alojamientos);
+    void guardar(AlojamientoEntity alojamiento);
+
+    @Insert
+    void guardar(List<AlojamientoEntity> alojamientos);
 
     @Delete
-    void delete(AlojamientoEntity alojamiento);
+    void borrar(AlojamientoEntity alojamiento);
 
     @Query("SELECT * FROM ALOJAMIENTO")
     List<AlojamientoEntity> getAlojamientos();

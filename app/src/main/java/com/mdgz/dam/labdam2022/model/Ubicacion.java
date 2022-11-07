@@ -11,10 +11,6 @@ public class Ubicacion {
     private String numero;
     private Ciudad ciudad;
 
-    public Ubicacion(){
-
-    }
-
     public Ubicacion(Double lat, Double lng, String calle, String numero, Ciudad ciudad) {
         this.id = UUID.randomUUID();
         this.lat = lat;
@@ -26,10 +22,6 @@ public class Ubicacion {
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public double getLat() {

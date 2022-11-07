@@ -382,7 +382,7 @@ public class DetalleAlojamientoFragment extends Fragment {
                 .setPositiveButton("Confirmar", (dialogInterface, i) -> {
                     gestorReserva.crearReserva(Date.from(Instant.ofEpochMilli(periodoSeleccionado.first)),
                                                Date.from(Instant.ofEpochMilli(periodoSeleccionado.second)),
-                                               cantidadPersonas, montoTotal, alojamiento.getId());
+                                               cantidadPersonas, montoTotal, alojamiento, null);
 
                     Bundle bundle = new Bundle();
                     bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID

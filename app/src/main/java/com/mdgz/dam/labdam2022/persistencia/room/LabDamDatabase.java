@@ -8,23 +8,22 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
-import com.mdgz.dam.labdam2022.model.Alojamiento;
-import com.mdgz.dam.labdam2022.model.Ciudad;
-import com.mdgz.dam.labdam2022.model.Favorito;
-import com.mdgz.dam.labdam2022.model.Reserva;
-import com.mdgz.dam.labdam2022.persistencia.room.daos.CiudadDao;
-import com.mdgz.dam.labdam2022.persistencia.room.daos.ReservaDao;
+import com.mdgz.dam.labdam2022.persistencia.room.daos.CiudadDAO;
+import com.mdgz.dam.labdam2022.persistencia.room.daos.ReservaDAO;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.AlojamientoEntity;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.CiudadEntity;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.FavoritoEntity;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.ReservaEntity;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Ciudad.class, Alojamiento.class, Reserva.class, Favorito.class}, version = 7)
+@Database(entities = {CiudadEntity.class, AlojamientoEntity.class, ReservaEntity.class, FavoritoEntity.class}, version = 8)
 public abstract class LabDamDatabase extends RoomDatabase {
     private static LabDamDatabase instance;
 
-    public abstract CiudadDao ciudadDao();
+    public abstract CiudadDAO ciudadDao();
     //public abstract AlojamientoDao alojamientoDao();
-    public abstract ReservaDao reservaDao();
+    public abstract ReservaDAO reservaDao();
     //public abstract FavoritoDao favoritoDao();
 
     public synchronized static LabDamDatabase getInstance(Context context){
@@ -44,7 +43,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                 new Runnable() {
                                     @Override
                                     public void run() {
-                                        getInstance(context).ciudadDao().save(GestorCiudad.ciudadesIniciales());
+                                        //getInstance(context).ciudadDao().save(GestorCiudad.ciudadesIniciales());
                                     }
                                 }
                         );

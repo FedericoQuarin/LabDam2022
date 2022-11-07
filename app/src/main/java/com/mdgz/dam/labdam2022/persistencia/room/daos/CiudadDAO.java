@@ -4,21 +4,21 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.mdgz.dam.labdam2022.model.Ciudad;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.CiudadEntity;
 
 import java.util.List;
 
 @Dao
-public interface CiudadDao {
+public interface CiudadDAO {
     @Insert
-    void save(Ciudad ciudad);
+    void guardar(CiudadEntity ciudad);
 
     @Insert
-    void save(List<Ciudad> ciudades);
+    void save(List<CiudadEntity> ciudades);
 
     @Query("SELECT * FROM CIUDAD")
-    List<Ciudad> getList();
+    List<CiudadEntity> getCiudades();
 
     @Query("SELECT * FROM CIUDAD WHERE id = :id")
-    Ciudad getCiudad(Integer id);
+    CiudadEntity getCiudadPorId(Integer id);
 }

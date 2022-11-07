@@ -3,14 +3,14 @@ package com.mdgz.dam.labdam2022.persistencia.room.repository;
 import android.content.Context;
 
 import com.mdgz.dam.labdam2022.model.Ciudad;
-import com.mdgz.dam.labdam2022.persistencia.room.daos.CiudadDao;
+import com.mdgz.dam.labdam2022.persistencia.room.daos.CiudadDAO;
 import com.mdgz.dam.labdam2022.persistencia.room.LabDamDatabase;
 
 import java.util.List;
 
 public class CiudadRepository {
     private static CiudadRepository _CIUDADREPO = null;
-    private CiudadDao ciudadDao;
+    private CiudadDAO ciudadDao;
 
     private CiudadRepository(Context ctx){
         LabDamDatabase db = LabDamDatabase.getInstance(ctx);

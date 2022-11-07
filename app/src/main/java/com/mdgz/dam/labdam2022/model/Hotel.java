@@ -9,10 +9,6 @@ public class Hotel {
     private Integer categoria;
     private Ubicacion ubicacion;
 
-    public Hotel(){
-        super();
-    }
-
     public Hotel(String nombre, Integer categoria, Ubicacion ubicacion) {
         this.id = UUID.randomUUID();
         this.nombre = nombre;
@@ -22,10 +18,6 @@ public class Hotel {
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getNombre() {

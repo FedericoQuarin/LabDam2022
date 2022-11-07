@@ -8,8 +8,6 @@ public class Ciudad {
     private String nombre;
     private String abreviatura;
 
-    public Ciudad(){}
-
     public Ciudad(String nombre, String abreviatura) {
         this.id = UUID.randomUUID();
         this.nombre = nombre;
@@ -18,10 +16,6 @@ public class Ciudad {
 
     public UUID getId() {
         return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getNombre() {

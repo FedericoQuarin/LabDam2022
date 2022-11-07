@@ -22,17 +22,18 @@ public class Reserva {
     private Boolean cancelada;
     private Integer cantidadPersonas;
     private Double monto;
-    private UUID alojamientoID;
-    private UUID usuarioID;
+    private Alojamiento alojamiento;
+    private Usuario usuario;
 
-    public Reserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, UUID alojamientoID) {
+    public Reserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, Alojamiento alojamiento, Usuario usuario) {
         this.id = UUID.randomUUID();
         this.fechaIngreso = fechaIngreso;
         this.fechaEgreso = fechaEgreso;
         this.cancelada = false;
         this.cantidadPersonas = cantidadPersonas;
         this.monto = monto;
-        this.alojamientoID = alojamientoID;
+        this.alojamiento = alojamiento;
+        this.usuario = usuario;
     }
 
     public void cancelar(){
@@ -40,8 +41,6 @@ public class Reserva {
     }
 
     public UUID getId() { return id; }
-
-    public void setId(UUID id) { this.id = id; }
 
     public Date getFechaIngreso() { return fechaIngreso; }
 
@@ -63,11 +62,11 @@ public class Reserva {
 
     public void setMonto(Double monto) { this.monto = monto; }
 
-    public UUID getAlojamientoID() { return alojamientoID; }
+    public Alojamiento getAlojamientoID() { return alojamiento; }
 
-    public void setAlojamientoID(UUID alojamientoID) { this.alojamientoID = alojamientoID; }
+    public void setAlojamientoID(UUID Alojamiento) { this.alojamiento = alojamiento; }
 
-    public UUID getUsuarioID() { return usuarioID; }
+    public Usuario getUsuarioID() { return usuario; }
 
-    public void setUsuarioID(UUID usuarioID) { this.usuarioID = usuarioID; }
+    public void setUsuarioID(Usuario usuario) { this.usuario = usuario; }
 }

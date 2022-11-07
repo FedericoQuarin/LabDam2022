@@ -16,10 +16,6 @@ public abstract class Alojamiento {
         return precioBase * diasEstadia;
     }
 
-    public Alojamiento(){
-        super();
-    }
-
     public Alojamiento(String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean esFavorito) {
         this.id = UUID.randomUUID();
         this.titulo = titulo;
@@ -50,8 +46,6 @@ public abstract class Alojamiento {
     }
 
     public Boolean getEsFavorito() { return esFavorito; }
-
-    public void setId(UUID id) { this.id = id; }
 
     public void setTitulo(String titulo) { this.titulo = titulo; }
 
