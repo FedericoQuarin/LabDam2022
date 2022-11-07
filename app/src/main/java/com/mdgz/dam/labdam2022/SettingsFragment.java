@@ -1,5 +1,6 @@
 package com.mdgz.dam.labdam2022;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -16,18 +17,30 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreferenceCompat;
 
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import com.google.android.material.transition.MaterialFade;
 import com.google.android.material.transition.MaterialFadeThrough;
+
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     private SwitchPreferenceCompat temaOscuroPreference;
+    private SwitchPreferenceCompat guardarInformacion;
     private ListPreference listaModoOscuro;
     private EditTextPreference emailPreference;
     private EditTextPreference cuitPreference;
     private ListPreference listaPreference;
     private ListPreference listaMoneda;
     private Preference logs;
+
+    private String path = "/data/user/0/com.mdgz.dam.labdam2022/files";
+    private String FILENAME = "logs";
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -136,6 +149,29 @@ public class SettingsFragment extends PreferenceFragmentCompat {
 
         }
 
+        guardarInformacion = findPreference("guardarInformacion");
+        if(guardarInformacion != null){
+
+            // Si se entra al Settings de una y está desactivado, borrar el archivo de logs
+            if(!guardarInformacion.isChecked()){
+                borrarArchivo();
+            }
+
+            // Si se presiona el switch borrar el archivo de logs
+            guardarInformacion.setOnPreferenceChangeListener( new Preference.OnPreferenceChangeListener() {
+
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+                    if(guardarInformacion.isChecked()){
+                        borrarArchivo();
+                        }
+
+                    return true;
+                }
+            });
+        }
+
         logs = findPreference("logs");
         if (logs != null) {
 
@@ -146,5 +182,24 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 return true;
             });
         }
+    }
+
+    private void borrarArchivo(){
+        FileOutputStream fos = null;
+
+        try{
+            fos = getContext().openFileOutput(FILENAME, Context.MODE_PRIVATE);
+            String vacio = "";
+            fos.write(vacio.getBytes());
+            fos.close();
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return;
     }
 }
