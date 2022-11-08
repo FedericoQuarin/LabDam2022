@@ -19,6 +19,14 @@ public class Usuario {
         this.listaFavoritos = listaFavoritos;
     }
 
+    public Usuario(UUID id, String nombre, String email, List<Reserva> listaReservas, List<Alojamiento> listaFavoritos) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.listaReservas = listaReservas;
+        this.listaFavoritos = listaFavoritos;
+    }
+
     public UUID getId() { return id; }
 
     public String getNombre() { return nombre; }

@@ -15,7 +15,8 @@ public class DepartamentoEntity {
 
     @NonNull
     @PrimaryKey
-    private UUID id;
+    @ColumnInfo(name = "id")
+    private UUID idDepartamento;
 
     @ColumnInfo(name = "tiene_wifi")
     private Boolean tieneWifi;
@@ -34,7 +35,7 @@ public class DepartamentoEntity {
 
     public DepartamentoEntity(@NonNull final UUID id, final Boolean tieneWifi, final Double costoLimpieza,
                               final Integer cantidadHabitaciones, final UUID alojamientoId, final UUID ubicacionId) {
-        this.id = id;
+        this.idDepartamento = id;
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
         this.cantidadHabitaciones = cantidadHabitaciones;
@@ -44,11 +45,11 @@ public class DepartamentoEntity {
 
     @NonNull
     public UUID getId() {
-        return id;
+        return idDepartamento;
     }
 
     public void setId(@NonNull UUID id) {
-        this.id = id;
+        this.idDepartamento = id;
     }
 
     public Boolean getTieneWifi() {

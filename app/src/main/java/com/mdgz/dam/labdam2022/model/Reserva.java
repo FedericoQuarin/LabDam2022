@@ -1,16 +1,5 @@
 package com.mdgz.dam.labdam2022.model;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.mdgz.dam.labdam2022.persistencia.DateTypeConverter;
-
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -27,6 +16,17 @@ public class Reserva {
 
     public Reserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, Alojamiento alojamiento, Usuario usuario) {
         this.id = UUID.randomUUID();
+        this.fechaIngreso = fechaIngreso;
+        this.fechaEgreso = fechaEgreso;
+        this.cancelada = false;
+        this.cantidadPersonas = cantidadPersonas;
+        this.monto = monto;
+        this.alojamiento = alojamiento;
+        this.usuario = usuario;
+    }
+
+    public Reserva(UUID id, Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, Alojamiento alojamiento, Usuario usuario) {
+        this.id = id;
         this.fechaIngreso = fechaIngreso;
         this.fechaEgreso = fechaEgreso;
         this.cancelada = false;
@@ -62,11 +62,11 @@ public class Reserva {
 
     public void setMonto(Double monto) { this.monto = monto; }
 
-    public Alojamiento getAlojamientoID() { return alojamiento; }
+    public Alojamiento getAlojamiento() { return alojamiento; }
 
-    public void setAlojamientoID(UUID Alojamiento) { this.alojamiento = alojamiento; }
+    public void setAlojamiento(Alojamiento alojamiento) { this.alojamiento = alojamiento; }
 
-    public Usuario getUsuarioID() { return usuario; }
+    public Usuario getUsuario() { return usuario; }
 
-    public void setUsuarioID(Usuario usuario) { this.usuario = usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 }

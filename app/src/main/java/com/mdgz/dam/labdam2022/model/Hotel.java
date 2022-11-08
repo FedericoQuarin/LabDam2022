@@ -16,6 +16,13 @@ public class Hotel {
         this.ubicacion = ubicacion;
     }
 
+    public Hotel(UUID id, String nombre, Integer categoria, Ubicacion ubicacion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.ubicacion = ubicacion;
+    }
+
     public UUID getId() {
         return id;
     }

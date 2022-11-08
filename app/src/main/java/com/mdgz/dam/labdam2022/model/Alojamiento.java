@@ -25,6 +25,15 @@ public abstract class Alojamiento {
         this.esFavorito = esFavorito;
     }
 
+    public Alojamiento(UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean esFavorito) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.capacidad = capacidad;
+        this.precioBase = precioBase;
+        this.esFavorito = esFavorito;
+    }
+
     public UUID getId(){
         return this.id;
     }

@@ -20,6 +20,15 @@ public class Ubicacion {
         this.ciudad = ciudad;
     }
 
+    public Ubicacion(UUID id, Double lat, Double lng, String calle, String numero, Ciudad ciudad) {
+        this.id = id;
+        this.lat = lat;
+        this.lng = lng;
+        this.calle = calle;
+        this.numero = numero;
+        this.ciudad = ciudad;
+    }
+
     public UUID getId() {
         return id;
     }

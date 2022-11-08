@@ -4,7 +4,6 @@ import java.util.UUID;
 
 public class Departamento extends Alojamiento{
 
-    private UUID departamentoId;
     private Boolean tieneWifi;
     private Double costoLimpieza;
     private Integer cantidadHabitaciones;
@@ -16,14 +15,19 @@ public class Departamento extends Alojamiento{
 
     public Departamento(String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion, Boolean esFavorito) {
         super(titulo, descripcion, capacidad, precioBase, esFavorito);
-        this.departamentoId = UUID.randomUUID();
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
         this.cantidadHabitaciones = cantidadHabitaciones;
         this.ubicacion = ubicacion;
     }
 
-    public UUID getDeptoId() { return departamentoId; }
+    public Departamento(UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion, Boolean esFavorito) {
+        super(id, titulo, descripcion, capacidad, precioBase, esFavorito);
+        this.tieneWifi = tieneWifi;
+        this.costoLimpieza = costoLimpieza;
+        this.cantidadHabitaciones = cantidadHabitaciones;
+        this.ubicacion = ubicacion;
+    }
 
     public Boolean getTieneWifi() {
         return tieneWifi;

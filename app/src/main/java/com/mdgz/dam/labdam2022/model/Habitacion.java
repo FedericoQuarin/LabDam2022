@@ -4,7 +4,6 @@ import java.util.UUID;
 
 public class Habitacion  extends Alojamiento {
 
-    private UUID idHabitacion;
     private Integer camasIndividuales;
     private Integer camasMatrimoniales;
     private Boolean tieneEstacionamiento;
@@ -12,14 +11,19 @@ public class Habitacion  extends Alojamiento {
 
     public Habitacion(String titulo, String descripcion, Integer capacidad, Double precioBase, Integer camasIndividuales, Integer camasMatrimoniales, Boolean tieneEstacionamiento, Hotel hotel, Boolean esFavorito) {
         super(titulo, descripcion, capacidad, precioBase, esFavorito);
-        this.idHabitacion = UUID.randomUUID();
         this.camasIndividuales = camasIndividuales;
         this.camasMatrimoniales = camasMatrimoniales;
         this.tieneEstacionamiento = tieneEstacionamiento;
         this.hotel = hotel;
     }
 
-    public UUID getIdHabitacion() { return idHabitacion; }
+    public Habitacion(UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Integer camasIndividuales, Integer camasMatrimoniales, Boolean tieneEstacionamiento, Hotel hotel, Boolean esFavorito) {
+        super(id, titulo, descripcion, capacidad, precioBase, esFavorito);
+        this.camasIndividuales = camasIndividuales;
+        this.camasMatrimoniales = camasMatrimoniales;
+        this.tieneEstacionamiento = tieneEstacionamiento;
+        this.hotel = hotel;
+    }
 
     public int getCamasIndividuales() {
         return camasIndividuales;

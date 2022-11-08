@@ -14,6 +14,12 @@ public class Ciudad {
         this.abreviatura = abreviatura;
     }
 
+    public Ciudad(UUID id, String nombre, String abreviatura) {
+        this.id = id;
+        this.nombre = nombre;
+        this.abreviatura = abreviatura;
+    }
+
     public UUID getId() {
         return id;
     }

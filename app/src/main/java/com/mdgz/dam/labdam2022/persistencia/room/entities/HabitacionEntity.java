@@ -15,7 +15,8 @@ public class HabitacionEntity {
 
     @NonNull
     @PrimaryKey
-    private UUID id;
+    @ColumnInfo(name = "id")
+    private UUID idHabitacion;
 
     @ColumnInfo(name = "camas_individuales")
     private Integer camasIndividuales;
@@ -33,7 +34,7 @@ public class HabitacionEntity {
     private UUID hotelId;
 
     public HabitacionEntity(@NonNull UUID id, Integer camasIndividuales, Integer camasMatrimoniales, Boolean tieneEstacionamiento, UUID alojamientoId, UUID hotelId) {
-        this.id = id;
+        this.idHabitacion = id;
         this.camasIndividuales = camasIndividuales;
         this.camasMatrimoniales = camasMatrimoniales;
         this.tieneEstacionamiento = tieneEstacionamiento;
@@ -43,11 +44,11 @@ public class HabitacionEntity {
 
     @NonNull
     public UUID getId() {
-        return id;
+        return idHabitacion;
     }
 
     public void setId(@NonNull UUID id) {
-        this.id = id;
+        this.idHabitacion = id;
     }
 
     public Integer getCamasIndividuales() {
