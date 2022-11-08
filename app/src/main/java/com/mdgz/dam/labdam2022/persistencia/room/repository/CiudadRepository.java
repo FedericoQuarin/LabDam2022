@@ -14,7 +14,7 @@ public class CiudadRepository {
 
     private CiudadRepository(Context ctx){
         LabDamDatabase db = LabDamDatabase.getInstance(ctx);
-        ciudadDao= db.ciudadDao();
+        ciudadDao= db.ciudadDAO();
     }
     public static CiudadRepository getInstance(Context ctx){
         if(_CIUDADREPO==null) _CIUDADREPO = new CiudadRepository(ctx);

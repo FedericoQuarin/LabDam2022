@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia;
+package com.mdgz.dam.labdam2022.persistencia.room.mappers;
 
 import androidx.room.TypeConverter;
 
