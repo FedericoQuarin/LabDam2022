@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia.room.dataSource;
+package com.mdgz.dam.labdam2022.persistencia.room.roomDataSource;
 
 import android.content.Context;
 

@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.UUID;
 
 @Entity(tableName = "departamento",
+        indices = @Index(value = {"alojamiento_id", "ubicacion_id"}),
         foreignKeys = {@ForeignKey(entity = AlojamientoEntity.class, parentColumns = "id", childColumns = "alojamiento_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE),
                        @ForeignKey(entity = UbicacionEntity.class, parentColumns = "id", childColumns = "ubicacion_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)})
 public class DepartamentoEntity {
@@ -33,9 +35,9 @@ public class DepartamentoEntity {
     @ColumnInfo(name = "ubicacion_id")
     private UUID ubicacionId;
 
-    public DepartamentoEntity(@NonNull final UUID id, final Boolean tieneWifi, final Double costoLimpieza,
+    public DepartamentoEntity(@NonNull final UUID idDepartamento, final Boolean tieneWifi, final Double costoLimpieza,
                               final Integer cantidadHabitaciones, final UUID alojamientoId, final UUID ubicacionId) {
-        this.idDepartamento = id;
+        this.idDepartamento = idDepartamento;
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
         this.cantidadHabitaciones = cantidadHabitaciones;
@@ -44,11 +46,11 @@ public class DepartamentoEntity {
     }
 
     @NonNull
-    public UUID getId() {
+    public UUID getIdDepartamento() {
         return idDepartamento;
     }
 
-    public void setId(@NonNull UUID id) {
+    public void setIdDepartamento(@NonNull UUID id) {
         this.idDepartamento = id;
     }
 

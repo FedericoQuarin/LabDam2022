@@ -13,9 +13,6 @@ public interface CiudadDAO {
     @Insert
     void guardar(CiudadEntity ciudad);
 
-    @Insert
-    void save(List<CiudadEntity> ciudades);
-
     @Query("SELECT * FROM CIUDAD")
     List<CiudadEntity> getCiudades();
 

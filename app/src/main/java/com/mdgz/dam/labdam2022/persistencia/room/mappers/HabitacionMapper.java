@@ -22,7 +22,7 @@ public class HabitacionMapper {
 
     public static Habitacion fromEntity(HabitacionEntity habitacion, AlojamientoEntity alojamiento) {
         return new Habitacion(
-                habitacion.getId(),
+                habitacion.getIdHabitacion(),
                 alojamiento.getTitulo(),
                 alojamiento.getDescripcion(),
                 alojamiento.getCapacidad(),

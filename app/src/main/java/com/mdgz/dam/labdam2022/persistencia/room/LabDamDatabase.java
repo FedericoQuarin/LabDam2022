@@ -9,6 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.OnResult;
@@ -30,14 +31,16 @@ import com.mdgz.dam.labdam2022.persistencia.room.entities.HotelEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.ReservaEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.UbicacionEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.UsuarioEntity;
+import com.mdgz.dam.labdam2022.persistencia.room.mappers.CiudadMapper;
 import com.mdgz.dam.labdam2022.persistencia.room.mappers.UUIDConverter;
+import com.mdgz.dam.labdam2022.persistencia.room.roomDataSource.CiudadRoomDataSource;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {AlojamientoEntity.class, CiudadEntity.class, DepartamentoEntity.class, FavoritoEntity.class,
                       HabitacionEntity.class, HotelEntity.class, ReservaEntity.class, UbicacionEntity.class, UsuarioEntity.class},
-          version = 8,
+          version = 9,
           exportSchema = false)
 @TypeConverters({UUIDConverter.class})
 public abstract class LabDamDatabase extends RoomDatabase {
@@ -66,18 +69,45 @@ public abstract class LabDamDatabase extends RoomDatabase {
 
     private static LabDamDatabase buildDatabase(final Context context) {
         return Room.databaseBuilder(context, LabDamDatabase.class, DATABASE_NAME)
-                   .addCallback(mRoomCallback)
+                   .addCallback(new Callback() {
+                       @Override
+                       public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                           super.onCreate(db);
+                           EXECUTOR_DB.execute(new Runnable() {
+                               @Override
+                               public void run() {
+                                   getInstance(context).ciudadDAO().guardar(
+                                           CiudadMapper.toEntity(new Ciudad("Santa Fe", "SF"))
+                                   );
+                                   getInstance(context).ciudadDAO().guardar(
+                                           CiudadMapper.toEntity(new Ciudad("Parana", "PN"))
+                                   );
+                                   getInstance(context).ciudadDAO().guardar(
+                                           CiudadMapper.toEntity(new Ciudad("Rosario", "RS"))
+                                   );
+                               }
+                           });
+                       }
+
+
+                   })
                    .fallbackToDestructiveMigration()
                    .allowMainThreadQueries()
                    .build();
     }
 
-    private static final RoomDatabase.Callback mRoomCallback = new Callback() {
+    /*private static final RoomDatabase.Callback mRoomCallback = new Callback() {
         @Override
         public void onCreate(@NonNull final SupportSQLiteDatabase db) {
             super.onCreate(db);
-            EXECUTOR_DB.execute(() -> {
-                final OnResult<Departamento> dc = new OnResult<Departamento>() {
+            EXECUTOR_DB.execute(new Runnable() {
+                @Override
+                public void run() {
+                    getInstance()
+                }
+            });
+            /*EXECUTOR_DB.execute(() -> {
+                /*final OnResult<Departamento> dc = new OnResult<Departamento>() {
 
                     @Override
                     public void onSuccess(final Departamento result) {
@@ -101,12 +131,15 @@ public abstract class LabDamDatabase extends RoomDatabase {
                         // noop
                     }
                 };
+
+                final CiudadRoomDataSource ciudadRoomDataSource = new CiudadRoomDataSource(instance);
+                ciudadRoomDataSource.guardar(new Ciudad("Santa Fe","SF"), ciudadRoomDataSource);
             });
         }
     };
 
 
-    /*private static LabDamDatabase buildDatabase(final Context context) {
+    private static LabDamDatabase buildDatabase(final Context context) {
         return Room.databaseBuilder(context, LabDamDatabase.class, "labdam_db")
                 .addCallback(new Callback() {
                     @Override

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        testing();
+        //testing();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
         MaterialToolbar toolbar = binding.materialToolbar;
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void testing() {
+    /*private void testing() {
         GestorAlojamiento gestorAlojamiento = GestorAlojamiento.getInstance();
         GestorCiudad gestorCiudad = GestorCiudad.getInstance(getApplicationContext());
 
@@ -176,5 +176,5 @@ public class MainActivity extends AppCompatActivity {
             Alojamiento h6 = new Habitacion("Habitacion6", "Habitacion6 - " + loremIpsum, 6, 600.0, 6, 6, false, hotel, false);
             gestorAlojamiento.agregarAlojamiento(h6);
         }
-    }
+    }*/
 }

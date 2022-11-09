@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.mdgz.dam.labdam2022.model.Ciudad;
@@ -11,6 +12,7 @@ import com.mdgz.dam.labdam2022.model.Ciudad;
 import java.util.UUID;
 
 @Entity(tableName = "ubicacion",
+        indices = @Index(value = {"ciudad_id"}),
         foreignKeys = {@ForeignKey(entity = CiudadEntity.class, parentColumns = "id", childColumns = "ciudad_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE),})
 public class UbicacionEntity {
 

@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.UUID;
 
 @Entity(tableName = "reserva",
+        indices = @Index(value = {"alojamiento_id", "usuario_id"}),
         foreignKeys = {@ForeignKey(entity = AlojamientoEntity.class, parentColumns = "id", childColumns = "alojamiento_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE),
                        @ForeignKey(entity = UsuarioEntity.class, parentColumns = "id", childColumns = "usuario_id", onDelete = ForeignKey.CASCADE, onUpdate = ForeignKey.CASCADE)})
 public class ReservaEntity {
