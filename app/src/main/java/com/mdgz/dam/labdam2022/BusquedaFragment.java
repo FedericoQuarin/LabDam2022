@@ -39,7 +39,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -70,7 +72,7 @@ public class BusquedaFragment extends Fragment {
     // Contexto
     private Context ctx;
     // IDLog
-    private Integer IDLog = 0;
+    private Integer IDLog;
     // Cantidad de alojamientos encontrados
     private Integer cantidadAlojamientosEncontrados;
 
@@ -279,11 +281,9 @@ public class BusquedaFragment extends Fragment {
 
     public JSONObject generarJSON () {
         JSONObject archivoJSON = new JSONObject();
-        this.IDLog++;
-
         try{
-            archivoJSON.put("ID Log", this.IDLog);
-            archivoJSON.put("Timestamp de busqueda", System.currentTimeMillis()/1000);
+            archivoJSON.put("ID Log", proximoIDLog());
+            archivoJSON.put("Timestamp de busqueda", timestampHH_MM_SS());
             archivoJSON.put("Cantidad de resultados", "?");
             archivoJSON.put("Tiempo de busqueda", "-");
 
@@ -342,34 +342,43 @@ public class BusquedaFragment extends Fragment {
         return;
     }
 
-    // Se busca el número de un log ya creado, si existe se copia y se le agrega 1 y si no existe se asigna el valor 1
+    // Se busca el número del siguiente log a crear, en base al número de líneas en el archivo logs.txt
     private Integer proximoIDLog(){
-        Integer IDLog = 1;
         FileInputStream fis = null;
         StringBuilder sb = new StringBuilder();
+        IDLog = 1;
 
         try{
             fis = ctx.openFileInput(FILENAME);
             InputStreamReader isr = new InputStreamReader(fis);
             BufferedReader buffRdr = new BufferedReader(isr);
             String line = buffRdr.readLine();
+
+            // El número del IDLog es el número de logs cargados en el archivo (1 log por línea)
+            while (line != null){
+                IDLog++;
+                line =buffRdr.readLine();
+            }
+
             fis.close();
-
-            JSONObject log = (JSONObject) new JSONTokener(line).nextValue();
-
-            IDLog = Integer.parseInt(log.getString("ID Log")) + 1;
         }
         catch (FileNotFoundException e){
-            // No hago nada, se devuelve el valor 1
+            // No se encuentra el archivo, IDLog = 1
         }
         catch (IOException e){
-            e.printStackTrace();
+            // Excepción de entrada/salida, IDLog = 1
         }
-        catch (JSONException e){
-            e.printStackTrace();
-        }
-
 
         return IDLog;
+    }
+
+    private String timestampHH_MM_SS(){
+        Long currentTime = System.currentTimeMillis();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
+
+        Date date = new Date(currentTime);
+
+        return simpleDateFormat.format(date);
     }
 }

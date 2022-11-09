@@ -79,19 +79,29 @@ public class LogRecyclerAdapter extends RecyclerView.Adapter<LogRecyclerAdapter.
             String switchWiFi = criteriosDeBusqueda.get(6).toString();
 
             String criteriosDeBusquedaString =
-                    "- " + switchHoteles.substring(1, switchHoteles.length()-1) + "\n" +
-                    "- " + switchDepartamentos.substring(1, switchDepartamentos.length()-1) + "\n" +
-                    "- " + capacidad.substring(1, capacidad.length()-1) + "\n" +
-                    "- " + ciudad.substring(1, ciudad.length()-1) + "\n" +
-                    "- " + precioMinimo.substring(1, precioMinimo.length()-1) + "\n" +
-                    "- " + precioMaximo.substring(1, precioMaximo.length()-1) + "\n" +
-                    "- " + switchWiFi.substring(1, switchWiFi.length()-1);
+            "- " + prepararStringSalida(switchHoteles)       + "\n" +
+            "- " + prepararStringSalida(switchDepartamentos) + "\n" +
+            "- " + prepararStringSalida(capacidad)           + "\n" +
+            "- " + prepararStringSalida(ciudad)              + "\n" +
+            "- " + prepararStringSalida(precioMinimo)        + "\n" +
+            "- " + prepararStringSalida(precioMaximo)        + "\n" +
+            "- " + prepararStringSalida(switchWiFi);
 
             logHolder.criteriosDeBusqueda.setText(criteriosDeBusquedaString);
         }
         catch (JSONException e){
             e.printStackTrace();
         }
+    }
+
+    private String prepararStringSalida(String s){
+
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == ':'){
+                s = s.substring(0, i+1) + ' ' + s.substring(i+1);
+            }
+        }
+        return s.replace('"', Character.MIN_VALUE).substring(2, s.length()-1);
     }
 
     @Override
