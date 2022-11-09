@@ -24,7 +24,7 @@
             android:paddingVertical="5dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -33,13 +33,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Log: " />
+                    android:text="Log "
+                    android:textAlignment="textEnd"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/txtViewIDLog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:textAlignment="textStart"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
@@ -52,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Timestamp: " />
+                    android:text="@string/tituloTimestamp" />
 
                 <TextView
                     android:id="@+id/txtViewTimestamp"
@@ -62,22 +68,25 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/labelCriteriosDeBusqueda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Criterios de búsqueda: " />
+                    android:text="@string/titloCriteriosDeBusqueda" />
 
                 <TextView
                     android:id="@+id/txtViewCriteriosDeBusqueda"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:text="a"
+                    android:textStyle="italic" />
             </LinearLayout>
 
             <LinearLayout
@@ -90,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Cantidad de resultados: " />
+                    android:text="@string/tituloCantidadDeResultados" />
 
                 <TextView
                     android:id="@+id/txtViewCantidadResultados"
@@ -109,7 +118,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Tiempo de búsqueda: " />
+                    android:text="@string/tituloTiempoDeBusqueda" />
 
                 <TextView
                     android:id="@+id/txtViewTiempoDeBusqueda"

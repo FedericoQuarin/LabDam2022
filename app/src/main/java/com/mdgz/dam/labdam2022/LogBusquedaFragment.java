@@ -115,9 +115,11 @@ public class LogBusquedaFragment extends Fragment {
                 line =buffRdr.readLine();
 
                 JSONObject log = (JSONObject) new JSONTokener(sb.toString()).nextValue();
+
                 // Se agregar primero en la lista de logs (orden cronológico)
                 listaLogs.add(0, log);
                 sb = new StringBuilder();
+
             }
 
             fis.close();
