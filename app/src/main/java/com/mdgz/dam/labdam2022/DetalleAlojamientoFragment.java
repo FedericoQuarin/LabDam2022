@@ -6,13 +6,10 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.SharedElementCallback;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.transition.Transition;
 
-import android.transition.TransitionInflater;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -40,12 +37,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
 public class DetalleAlojamientoFragment extends Fragment {
     private FragmentDetalleAlojamientoBinding binding;
@@ -117,17 +111,21 @@ public class DetalleAlojamientoFragment extends Fragment {
         fragmentView.setTransitionName(alojamiento.getId().toString());
 
         // Se crea la transicion de entrada a este fragmento desde la pestaña resultadosBusqueda
-        MaterialContainerTransform t = new MaterialContainerTransform();
-        t.setDrawingViewId(R.id.fragmentContainerView);
-        t.setScrimColor(Color.TRANSPARENT);
-        t.setDuration(getContext().getResources().getInteger(R.integer.transition_time_container_transform));
+        MaterialContainerTransform containerTransform = new MaterialContainerTransform();
+        containerTransform.setDrawingViewId(R.id.fragmentContainerView);
+        containerTransform.setScrimColor(Color.TRANSPARENT);
+        containerTransform.setDuration(getContext().getResources().getInteger(R.integer.transition_time_container_transform));
 
         TypedValue typedValue = new TypedValue();
-        getContext().getTheme().resolveAttribute(com.google.android.material.R.attr.colorSurface, typedValue, true);
-        t.setAllContainerColors(typedValue.data);
+        getContext().getTheme().resolveAttribute(com.google.android.material.R.attr.backgroundColor, typedValue, true);
+        containerTransform.setAllContainerColors(typedValue.data);
+
 
         // Se setea la transicion
-        setSharedElementEnterTransition(t);
+        setSharedElementEnterTransition(containerTransform);
+
+        /*MaterialContainerTransform transform = new MaterialContainerTransform();
+        transform.setStartViewId();*/
 
         return fragmentView;
     }
