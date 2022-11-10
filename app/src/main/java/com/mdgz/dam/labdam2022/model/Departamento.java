@@ -1,34 +1,28 @@
 package com.mdgz.dam.labdam2022.model;
 
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
+import java.util.UUID;
 
-@Entity
 public class Departamento extends Alojamiento{
 
-    @ColumnInfo(name = "tiene_wifi")
     private Boolean tieneWifi;
-
-    @ColumnInfo(name = "costo_limpieza")
     private Double costoLimpieza;
-
-    @ColumnInfo(name = "cantidad_habitaciones")
     private Integer cantidadHabitaciones;
-
-    @Ignore
     private Ubicacion ubicacion;
 
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
 
-    public Departamento(){
-        super();
-    }
-
     public Departamento(String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion, Boolean esFavorito) {
         super(titulo, descripcion, capacidad, precioBase, esFavorito);
+        this.tieneWifi = tieneWifi;
+        this.costoLimpieza = costoLimpieza;
+        this.cantidadHabitaciones = cantidadHabitaciones;
+        this.ubicacion = ubicacion;
+    }
+
+    public Departamento(UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion, Boolean esFavorito) {
+        super(id, titulo, descripcion, capacidad, precioBase, esFavorito);
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
         this.cantidadHabitaciones = cantidadHabitaciones;
@@ -67,5 +61,21 @@ public class Departamento extends Alojamiento{
     @Override
     public Double costoTotal(Long diasEstadia){
         return precioBase * diasEstadia + costoLimpieza;
+    }
+
+    @Override
+    public String toString() {
+        return "Departamento{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", capacidad=" + capacidad +
+                ", precioBase=" + precioBase +
+                ", esFavorito=" + esFavorito +
+                ", tieneWifi=" + tieneWifi +
+                ", costoLimpieza=" + costoLimpieza +
+                ", cantidadHabitaciones=" + cantidadHabitaciones +
+                ", ubicacion=" + ubicacion +
+                '}';
     }
 }

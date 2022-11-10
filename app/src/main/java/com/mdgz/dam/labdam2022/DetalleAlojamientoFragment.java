@@ -89,7 +89,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         if (getArguments() != null) {
             // Busca el alojamiento a mostrar
             String stringIdAlojamiento = getArguments().getString("idAlojamiento");
-            gestorAlojamiento = GestorAlojamiento.getInstance();
+            gestorAlojamiento = GestorAlojamiento.getInstance(getContext());
             alojamiento = gestorAlojamiento.getAlojamiento(UUID.fromString(stringIdAlojamiento));
 
             // Infla parte de la interfaz que es especifica del tipo de alojamiento
@@ -386,7 +386,7 @@ public class DetalleAlojamientoFragment extends Fragment {
                 .setPositiveButton("Confirmar", (dialogInterface, i) -> {
                     gestorReserva.crearReserva(Date.from(Instant.ofEpochMilli(periodoSeleccionado.first)),
                                                Date.from(Instant.ofEpochMilli(periodoSeleccionado.second)),
-                                               cantidadPersonas, montoTotal, alojamiento.getId());
+                                               cantidadPersonas, montoTotal, alojamiento, null);
 
                     Bundle bundle = new Bundle();
                     bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID

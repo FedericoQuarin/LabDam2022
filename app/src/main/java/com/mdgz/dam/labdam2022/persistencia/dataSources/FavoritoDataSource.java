@@ -1,6 +1,6 @@
 package com.mdgz.dam.labdam2022.persistencia.dataSources;
 
-import com.mdgz.dam.labdam2022.model.Favorito;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.FavoritoEntity;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ public interface FavoritoDataSource {
         void resultado(final boolean exito);
     }
     interface RecuperarFavoritoCallback {
-        void resultado(final boolean exito, final List<Favorito> resultados);
+        void resultado(final boolean exito, final List<FavoritoEntity> resultados);
     }
-    void guardarFavorito(final Favorito entidad, final FavoritoDataSource.GuardarFavoritoCallback callback);
+    void guardarFavorito(final FavoritoEntity entidad, final FavoritoDataSource.GuardarFavoritoCallback callback);
     void recuperarFavorito(final FavoritoDataSource.RecuperarFavoritoCallback callback);
 }

@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey;
 
 import java.util.UUID;
 
-@Entity(tableName = "ciudad")
-public class CiudadEntity {
+@Entity(tableName = "usuario")
+public class UsuarioEntity {
 
     @NonNull
     @PrimaryKey
@@ -15,12 +15,12 @@ public class CiudadEntity {
 
     private String nombre;
 
-    private String abreviatura;
+    private String email;
 
-    public CiudadEntity(@NonNull UUID id, String nombre, String abreviatura) {
+    public UsuarioEntity(@NonNull UUID id, String nombre, String email) {
         this.id = id;
         this.nombre = nombre;
-        this.abreviatura = abreviatura;
+        this.email = email;
     }
 
     @NonNull
@@ -40,11 +40,11 @@ public class CiudadEntity {
         this.nombre = nombre;
     }
 
-    public String getAbreviatura() {
-        return abreviatura;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAbreviatura(String abreviatura) {
-        this.abreviatura = abreviatura;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

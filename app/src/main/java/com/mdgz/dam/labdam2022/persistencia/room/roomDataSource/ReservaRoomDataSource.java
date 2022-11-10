@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia.room.dataSource;
+package com.mdgz.dam.labdam2022.persistencia.room.roomDataSource;
 
 import com.mdgz.dam.labdam2022.model.Reserva;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.ReservaDataSource;

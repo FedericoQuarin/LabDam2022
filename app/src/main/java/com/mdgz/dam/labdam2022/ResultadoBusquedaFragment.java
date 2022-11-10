@@ -74,7 +74,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        gestorAlojamiento = GestorAlojamiento.getInstance();
+        gestorAlojamiento = GestorAlojamiento.getInstance(getContext());
     }
 
     @Override

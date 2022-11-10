@@ -2,6 +2,7 @@ package com.mdgz.dam.labdam2022.gestores;
 
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Reserva;
+import com.mdgz.dam.labdam2022.model.Usuario;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -28,8 +29,8 @@ public class GestorReserva {
         return gestorReserva;
     }
 
-    public void crearReserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, UUID alojamientoID) {
-        agregarReserva(new Reserva(fechaIngreso, fechaEgreso, cantidadPersonas, monto, alojamientoID));
+    public void crearReserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, Alojamiento alojamiento, Usuario usuario) {
+        agregarReserva(new Reserva(fechaIngreso, fechaEgreso, cantidadPersonas, monto, alojamiento, usuario));
     }
 
     private void agregarReserva(Reserva r){

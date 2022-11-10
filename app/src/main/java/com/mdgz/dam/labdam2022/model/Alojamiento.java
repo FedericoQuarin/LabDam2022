@@ -1,27 +1,14 @@
 package com.mdgz.dam.labdam2022.model;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 import java.util.UUID;
 
-@Entity(tableName = "ALOJAMIENTO")
 public abstract class Alojamiento {
 
-    @PrimaryKey
-    @NonNull
     protected UUID id;
-
     protected String titulo;
     protected String descripcion;
     protected Integer capacidad;
-
-    @ColumnInfo(name = "precio_base")
     protected Double precioBase;
-
-    @ColumnInfo(name = "es_favorito")
     protected Boolean esFavorito;
 
     public abstract Ubicacion getUbicacion();
@@ -29,12 +16,17 @@ public abstract class Alojamiento {
         return precioBase * diasEstadia;
     }
 
-    public Alojamiento(){
-        super();
-    }
-
     public Alojamiento(String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean esFavorito) {
         this.id = UUID.randomUUID();
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.capacidad = capacidad;
+        this.precioBase = precioBase;
+        this.esFavorito = esFavorito;
+    }
+
+    public Alojamiento(UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean esFavorito) {
+        this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.capacidad = capacidad;
@@ -63,8 +55,6 @@ public abstract class Alojamiento {
     }
 
     public Boolean getEsFavorito() { return esFavorito; }
-
-    public void setId(UUID id) { this.id = id; }
 
     public void setTitulo(String titulo) { this.titulo = titulo; }
 

@@ -5,18 +5,18 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.mdgz.dam.labdam2022.model.Favorito;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.FavoritoEntity;
 
 import java.util.List;
 
 @Dao
-public interface FavoritoDao {
+public interface FavoritoDAO {
     @Insert
-    void save(Favorito... favoritos);
+    void save(FavoritoEntity... favoritos);
 
     @Delete
-    void delete(Favorito favorito);
+    void delete(FavoritoEntity favorito);
 
     @Query("SELECT * FROM FAVORITO")
-    List<Favorito> getList();
+    List<FavoritoEntity> getList();
 }

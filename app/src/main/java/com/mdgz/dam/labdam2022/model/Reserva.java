@@ -1,67 +1,46 @@
 package com.mdgz.dam.labdam2022.model;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
-import com.mdgz.dam.labdam2022.persistencia.DateTypeConverter;
-
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
 public class Reserva {
 
-    private static Integer numeroID = 0;
-
-    @PrimaryKey (autoGenerate = true)
-    @NonNull
-    private Integer id;
-
-    @ColumnInfo(name = "fecha_ingreso")
-    @TypeConverters({DateTypeConverter.class})
+    private UUID id;
     private Date fechaIngreso;
-
-    @ColumnInfo(name = "fecha_egreso")
-    @TypeConverters({DateTypeConverter.class})
     private Date fechaEgreso;
-
     private Boolean cancelada;
-
-    @ColumnInfo(name = "cantidad_personas")
     private Integer cantidadPersonas;
-
     private Double monto;
+    private Alojamiento alojamiento;
+    private Usuario usuario;
 
-    @ColumnInfo(name = "alojamiento_id")
-    private UUID alojamientoID;
-
-    @ColumnInfo(name = "usuario_id")
-    private UUID usuarioID;
-
-    public Reserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, UUID alojamientoID) {
-        this.id = numeroID;
+    public Reserva(Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, Alojamiento alojamiento, Usuario usuario) {
+        this.id = UUID.randomUUID();
         this.fechaIngreso = fechaIngreso;
         this.fechaEgreso = fechaEgreso;
         this.cancelada = false;
         this.cantidadPersonas = cantidadPersonas;
         this.monto = monto;
-        this.alojamientoID = alojamientoID;
-        numeroID++;
+        this.alojamiento = alojamiento;
+        this.usuario = usuario;
+    }
+
+    public Reserva(UUID id, Date fechaIngreso, Date fechaEgreso, Integer cantidadPersonas, Double monto, Alojamiento alojamiento, Usuario usuario) {
+        this.id = id;
+        this.fechaIngreso = fechaIngreso;
+        this.fechaEgreso = fechaEgreso;
+        this.cancelada = false;
+        this.cantidadPersonas = cantidadPersonas;
+        this.monto = monto;
+        this.alojamiento = alojamiento;
+        this.usuario = usuario;
     }
 
     public void cancelar(){
         this.cancelada = true;
     }
 
-    public Integer getId() { return id; }
-
-    public void setId(Integer id) { this.id = id; }
+    public UUID getId() { return id; }
 
     public Date getFechaIngreso() { return fechaIngreso; }
 
@@ -83,11 +62,11 @@ public class Reserva {
 
     public void setMonto(Double monto) { this.monto = monto; }
 
-    public UUID getAlojamientoID() { return alojamientoID; }
+    public Alojamiento getAlojamiento() { return alojamiento; }
 
-    public void setAlojamientoID(UUID alojamientoID) { this.alojamientoID = alojamientoID; }
+    public void setAlojamiento(Alojamiento alojamiento) { this.alojamiento = alojamiento; }
 
-    public UUID getUsuarioID() { return usuarioID; }
+    public Usuario getUsuario() { return usuario; }
 
-    public void setUsuarioID(UUID usuarioID) { this.usuarioID = usuarioID; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 }
