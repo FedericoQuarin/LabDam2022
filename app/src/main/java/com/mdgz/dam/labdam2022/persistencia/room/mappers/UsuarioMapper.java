@@ -14,6 +14,7 @@ public class UsuarioMapper {
         );
     }
 
+    // TODO: ver como recuperar listas
     public static Usuario fromEntity (UsuarioEntity usuario) {
         return new Usuario(
                 usuario.getId(),

@@ -2,6 +2,7 @@ package com.mdgz.dam.labdam2022.persistencia.room.mappers;
 
 import com.mdgz.dam.labdam2022.model.Reserva;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.ReservaEntity;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.UsuarioEntity;
 
 import java.util.Date;
 
@@ -21,7 +22,8 @@ public class ReservaMapper {
         );
     }
 
-    public static Reserva fromEntity(ReservaEntity reserva) {
+    // TODO: recuperar alojamiento dependiendo si es depto o habitacion
+    public static Reserva fromEntity(ReservaEntity reserva, UsuarioEntity usuario) {
         return new Reserva(
                 reserva.getId(),
                 new Date(reserva.getFechaIngreso()),
@@ -29,7 +31,7 @@ public class ReservaMapper {
                 reserva.getCantidadPersonas(),
                 reserva.getMonto(),
                 null,
-                null
+                UsuarioMapper.fromEntity(usuario)
         );
     }
 }
