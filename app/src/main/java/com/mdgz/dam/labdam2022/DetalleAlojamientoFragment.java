@@ -95,7 +95,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         if (getArguments() != null) {
             // Busca el alojamiento a mostrar
             String stringIdAlojamiento = getArguments().getString("idAlojamiento");
-            gestorAlojamiento = GestorAlojamiento.getInstance();
+            gestorAlojamiento = GestorAlojamiento.getInstance(getContext());
             alojamiento = gestorAlojamiento.getAlojamiento(UUID.fromString(stringIdAlojamiento));
 
             // Infla parte de la interfaz que es especifica del tipo de alojamiento

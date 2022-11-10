@@ -22,4 +22,7 @@ public interface UbicacionDAO {
 
     @Query("SELECT * FROM UBICACION")
     List<UbicacionEntity> getUbicaciones();
+
+    @Query("SELECT * FROM UBICACION WHERE id = :id")
+    UbicacionEntity getUbicacionPorId(String id);
 }

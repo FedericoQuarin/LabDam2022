@@ -17,5 +17,5 @@ public interface CiudadDAO {
     List<CiudadEntity> getCiudades();
 
     @Query("SELECT * FROM CIUDAD WHERE id = :id")
-    CiudadEntity getCiudadPorId(Integer id);
+    CiudadEntity getCiudadPorId(String id);
 }

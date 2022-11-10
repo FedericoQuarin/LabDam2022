@@ -71,7 +71,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        gestorAlojamiento = GestorAlojamiento.getInstance();
+        gestorAlojamiento = GestorAlojamiento.getInstance(getContext());
     }
 
     @Override

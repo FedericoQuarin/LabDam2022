@@ -42,6 +42,10 @@ public class Ciudad {
 
     @Override
     public String toString() {
-        return this.nombre;
+        return "Ciudad{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", abreviatura='" + abreviatura + '\'' +
+                '}';
     }
 }

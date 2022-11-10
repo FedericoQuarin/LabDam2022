@@ -72,4 +72,16 @@ public class Ubicacion {
     public void setCiudad(Ciudad ciudad) {
         this.ciudad = ciudad;
     }
+
+    @Override
+    public String toString() {
+        return "Ubicacion{" +
+                "id=" + id +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                ", calle='" + calle + '\'' +
+                ", numero='" + numero + '\'' +
+                ", ciudad=" + ciudad +
+                '}';
+    }
 }

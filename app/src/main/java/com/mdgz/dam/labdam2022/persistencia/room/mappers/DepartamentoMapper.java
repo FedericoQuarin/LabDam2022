@@ -4,7 +4,9 @@ import android.util.Log;
 
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.AlojamientoEntity;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.CiudadEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.DepartamentoEntity;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.UbicacionEntity;
 
 import java.util.UUID;
 
@@ -23,7 +25,7 @@ public class DepartamentoMapper {
         );
     }
 
-    public static Departamento fromEntity(DepartamentoEntity departamento, AlojamientoEntity alojamiento) {
+    public static Departamento fromEntity(DepartamentoEntity departamento, AlojamientoEntity alojamiento, UbicacionEntity ubicacion, CiudadEntity ciudad) {
         return new Departamento(
                 departamento.getIdDepartamento(),
                 alojamiento.getTitulo(),
@@ -33,8 +35,8 @@ public class DepartamentoMapper {
                 departamento.getTieneWifi(),
                 departamento.getCostoLimpieza(),
                 departamento.getCantidadHabitaciones(),
-                null, // TODO: Agregar ubicaciones
-                null
+                UbicacionMapper.fromEntity(ubicacion, ciudad),
+                false
         );
     }
 }

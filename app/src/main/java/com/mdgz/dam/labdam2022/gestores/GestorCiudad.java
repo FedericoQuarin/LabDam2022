@@ -13,8 +13,11 @@ import java.util.stream.Collectors;
 
 // Clase encargada de gestionar las ciudades a nivel lógico
 public class GestorCiudad {
+
+    // Gestores
     private static GestorCiudad gestorCiudad;
 
+    // Repositorios
     private CiudadRepository ciudadRepository;
 
     private GestorCiudad(Context ctx){
@@ -47,8 +50,11 @@ public class GestorCiudad {
 
             @Override
             public void onError(Throwable exception) {
-                // TODO: ver que pasa si no encuentra
-                System.out.println("Hubo un error encontrando ciudades");
+                try {
+                    throw exception;
+                } catch (Throwable e) {
+                    e.printStackTrace();
+                }
             }
         });
 
