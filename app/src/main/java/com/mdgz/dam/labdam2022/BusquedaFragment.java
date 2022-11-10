@@ -28,6 +28,20 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -52,6 +66,15 @@ public class BusquedaFragment extends Fragment {
     private EditText editTxtPrecioMaximo;
     private EditText editTxtPrecioMinimo;
     private AutoCompleteTextView editTxtListCiudades;
+
+    // Nombre del archivo
+    private String FILENAME = "logs";
+    // Contexto
+    private Context ctx;
+    // IDLog
+    private Integer IDLog;
+    // Cantidad de alojamientos encontrados
+    private Integer cantidadAlojamientosEncontrados;
 
     // Variables
     String stringMinimo;
@@ -78,6 +101,9 @@ public class BusquedaFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Me guardo el contexto para generar el archivo
+        this.ctx = view.getContext();
 
         seekBarCapacidad = binding.seekBarCapacidad;
         txtViewCapacidad = binding.txtViewCapacidad;
@@ -136,6 +162,19 @@ public class BusquedaFragment extends Fragment {
         // TODO validaciones y filtrado de alojamientos
         buttonBuscar.setOnClickListener(v -> {
             if(validarEditTexts()) {
+//                Bundle bundle = new Bundle();
+  //              bundle.putBoolean("seApretoBotonBuscar", true);
+    //            bundle.putBoolean("Switch hoteles", this.switchHoteles.isActivated());
+      //          bundle.putBoolean("Switch departamentos", this.switchDeptos.isActivated());
+        //        bundle.putInt("Capacidad", this.seekBarCapacidad.getProgress());
+          //      bundle.putString("Ciudad", this.list_ciudades.getEditText().getText().toString());
+            //    bundle.putString("Precio minimo", this.editTxtPrecioMinimo.getText().toString());
+              //  bundle.putString("Precio maximo", this.editTxtPrecioMaximo.getText().toString());
+                //bundle.putBoolean("Switch WiFi", this.switchWifi.isActivated());
+                //bundle.putLong("tiempoPresionoBuscar", System.currentTimeMillis()/1000);
+
+                generarJSON();
+
                 NavHostFragment.findNavController(BusquedaFragment.this)
                 .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
             }
@@ -237,5 +276,109 @@ public class BusquedaFragment extends Fragment {
             outState.putString("maximo", editTxtPrecioMaximo.getText().toString());
             outState.putString("ciudad", list_ciudades.getEditText().getText().toString());
         }
+    }
+
+
+    public JSONObject generarJSON () {
+        JSONObject archivoJSON = new JSONObject();
+        try{
+            archivoJSON.put("ID Log", proximoIDLog());
+            archivoJSON.put("Timestamp de busqueda", timestampHH_MM_SS());
+            archivoJSON.put("Cantidad de resultados", "?");
+            archivoJSON.put("Tiempo de busqueda", "-");
+
+            JSONArray criteriosDeBusqueda = new JSONArray();
+
+            JSONObject switchHoteles = new JSONObject();
+            JSONObject switchDepartamentos = new JSONObject();
+            JSONObject capacidad = new JSONObject();
+            JSONObject ciudad = new JSONObject();
+            JSONObject precioMinimo = new JSONObject();
+            JSONObject precioMaximo = new JSONObject();
+            JSONObject switchWiFi = new JSONObject();
+            switchHoteles.put("Switch hoteles", binding.switchHoteles.isChecked());
+            criteriosDeBusqueda.put(switchHoteles);
+            switchDepartamentos.put("Switch departamentos", binding.switchDepartamentos.isChecked());
+            criteriosDeBusqueda.put(switchDepartamentos);
+            capacidad.put("Capacidad", binding.seekBarCapacidad.getProgress());
+            criteriosDeBusqueda.put(capacidad);
+            ciudad.put("Ciudad", binding.listCiudades.getEditText().getText().toString());
+            criteriosDeBusqueda.put(ciudad);
+            precioMinimo.put("Precio minimo", this.editTxtPrecioMinimo.getText().toString());
+            criteriosDeBusqueda.put(precioMinimo);
+            precioMaximo.put("Precio maximo", this.editTxtPrecioMaximo.getText().toString());
+            criteriosDeBusqueda.put(precioMaximo);
+            switchWiFi.put("Switch WiFi", binding.switchWiFi.isChecked());
+            criteriosDeBusqueda.put(switchWiFi);
+
+            archivoJSON.put("Criterios de busqueda", criteriosDeBusqueda);
+        }
+        catch(JSONException e){
+            e.printStackTrace();
+        }
+
+        this.escribirEnArchivo(archivoJSON);
+
+        return archivoJSON;
+    }
+
+    private void escribirEnArchivo(JSONObject log){
+        FileOutputStream fos = null;
+
+        try{
+            fos = ctx.openFileOutput(FILENAME, Context.MODE_APPEND);
+            fos.write(log.toString().getBytes());
+            String espacio = "\r\n";
+            fos.write(espacio.getBytes());
+            fos.close();
+        }
+        catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
+
+        return;
+    }
+
+    // Se busca el número del siguiente log a crear, en base al número de líneas en el archivo logs.txt
+    private Integer proximoIDLog(){
+        FileInputStream fis = null;
+        StringBuilder sb = new StringBuilder();
+        IDLog = 1;
+
+        try{
+            fis = ctx.openFileInput(FILENAME);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader buffRdr = new BufferedReader(isr);
+            String line = buffRdr.readLine();
+
+            // El número del IDLog es el número de logs cargados en el archivo (1 log por línea)
+            while (line != null){
+                IDLog++;
+                line =buffRdr.readLine();
+            }
+
+            fis.close();
+        }
+        catch (FileNotFoundException e){
+            // No se encuentra el archivo, IDLog = 1
+        }
+        catch (IOException e){
+            // Excepción de entrada/salida, IDLog = 1
+        }
+
+        return IDLog;
+    }
+
+    private String timestampHH_MM_SS(){
+        Long currentTime = System.currentTimeMillis();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
+
+        Date date = new Date(currentTime);
+
+        return simpleDateFormat.format(date);
     }
 }

@@ -73,4 +73,10 @@
         app:launchSingleTop="true"
         app:popUpTo="@id/busquedaFragment"
         app:popUpToInclusive="true"/>
+    <fragment
+        android:id="@+id/logBusquedaFragment"
+        android:name="com.mdgz.dam.labdam2022.LogBusquedaFragment"
+        android:label="AirBooking"
+        tools:layout="@layout/recycler_view_busqueda_logs" />
+
 </navigation>

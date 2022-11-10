@@ -4,6 +4,10 @@
     <string name="form_busqueda">FORMULARIO busqueda fragment</string>
     <string name="detalle_alojamiento">DETALLE alojamiento fragment</string>
     <string name="precio_por_dia">Precio por día</string>
+    <string name="tituloTimestamp"><u>Timestmap</u>: </string>
+    <string name="titloCriteriosDeBusqueda"><u>Criterios de búsqueda</u>: </string>
+    <string name="tituloCantidadDeResultados"><u>Cantidad de resultados</u>: </string>
+    <string name="tituloTiempoDeBusqueda"><u>Tiempo de búsqueda</u>: </string>
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>

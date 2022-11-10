@@ -1,5 +1,6 @@
 package com.mdgz.dam.labdam2022;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.IntegerRes;
@@ -26,6 +27,19 @@ import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +53,16 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    // Nombre del archivo
+    private String FILENAME = "logs";
+    // Contexto
+    private Context ctx;
+    // IDLog
+    private Integer IDLog = 6;
+    // Cantidad de alojamientos encontrados
+    private Integer cantidadAlojamientosEncontrados;
+    // Lista de criterios de busqueda
+    private List<String> ListaCriteriosDeBusqueda = new ArrayList();
 
     private MaterialElevationScale transicionElevationScale_exit;
 
@@ -77,7 +101,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         adapter = new AlojamientoRecyclerAdapter(gestorAlojamiento.getAlojamientos(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setClickable(true);
-
+        
         binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
 
         // Borra cualquier transicion que se haya colocado previamente
@@ -113,4 +137,6 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                     .navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment, bundle, null, extras); //TODO: Faltaría la animación
         }
     }
+
 }
+
