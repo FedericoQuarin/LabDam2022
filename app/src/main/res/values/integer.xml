@@ -2,8 +2,8 @@
 <resources>
     <integer name="seekbar_capacidad_def_value">2</integer>
     <integer name="tam_descripcion_acotada">200</integer>
-    <integer name="transition_time_container_transform">350</integer>
-    <integer name="transition_time_lateral_move">350</integer>
-    <integer name="transition_time_fade_in">150</integer>
-    <integer name="transition_time_fade_out">75</integer>
+    <integer name="transition_time_container_transform">250</integer>
+    <integer name="transition_time_lateral_move">250</integer>
+    <integer name="transition_time_fade_in">200</integer>
+    <integer name="transition_time_fade_out">100</integer>
 </resources>

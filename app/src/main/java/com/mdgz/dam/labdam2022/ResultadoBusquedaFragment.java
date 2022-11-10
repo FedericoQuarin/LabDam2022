@@ -45,11 +45,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRecyclerAdapter.OnNoteListener{
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    @IntegerRes private int TIEMPO_TRANSICION_A_DETALLE;
-
     private GestorAlojamiento gestorAlojamiento;
 
     private FragmentResultadoBusquedaBinding binding;
@@ -69,32 +64,15 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     // Lista de criterios de busqueda
     private List<String> ListaCriteriosDeBusqueda = new ArrayList();
 
-    private String mParam1;
-    private String mParam2;
-
     private MaterialElevationScale transicionElevationScale_exit;
-    private MaterialElevationScale transicionElevationScale_enter;
 
     public ResultadoBusquedaFragment() {
         // Required empty public constructor
     }
 
-    public static ResultadoBusquedaFragment newInstance(String param1, String param2) {
-        ResultadoBusquedaFragment fragment = new ResultadoBusquedaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         gestorAlojamiento = GestorAlojamiento.getInstance();
     }
@@ -110,10 +88,11 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Se pospone la transicion de entrada para que funcione la transicion al volver
         postponeEnterTransition();
         OneShotPreDrawListener.add(view, this::startPostponedEnterTransition);
 
-
+        // Se setea el recycler view
         recyclerView = binding.recyclerAlojamiento;
 
         layoutManager = new LinearLayoutManager(view.getContext());
@@ -128,14 +107,12 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         // Borra cualquier transicion que se haya colocado previamente
         setExitTransition(null);
 
-        TIEMPO_TRANSICION_A_DETALLE = getResources().getInteger(R.integer.transition_time_container_transform);
+        // Se busca el tiempo que deben durar las transiciones a detalle
+        int TIEMPO_TRANSICION_A_DETALLE = getResources().getInteger(R.integer.transition_time_container_transform);
 
+        // Se crea la transicion de salida
         transicionElevationScale_exit = new MaterialElevationScale(false);
         transicionElevationScale_exit.setDuration(TIEMPO_TRANSICION_A_DETALLE);
-
-
-        transicionElevationScale_enter = new MaterialElevationScale(true);
-        transicionElevationScale_enter.setDuration(TIEMPO_TRANSICION_A_DETALLE);
     }
 
     // Se implementa el metodo de la interfaz OnNoteListener, que se
@@ -155,19 +132,6 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                     .build();
 
             setExitTransition(transicionElevationScale_exit);
-            //setReenterTransition(transicionElevationScale_enter);
-
-            /*setExitSharedElementCallback(
-                    new SharedElementCallback() {
-                        @Override
-                        public void onMapSharedElements(List<String> names, Map<String, View> sharedElements) {
-                            // Map the first shared element name to the child ImageView.
-                            sharedElements
-                                    .put(names.get(0),
-                                            selectedViewHolder.card);
-                        }
-
-                    });*/
 
             NavHostFragment.findNavController(ResultadoBusquedaFragment.this)
                     .navigate(R.id.action_resultadoBusquedaFragment_to_detalleAlojamientoFragment, bundle, null, extras); //TODO: Faltaría la animación

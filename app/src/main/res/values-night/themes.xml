@@ -12,9 +12,11 @@
         <item name="colorOnSecondary">@color/white_alpha90</item>
 
         <!-- Surface color -->
-        <item name="android:colorBackground">@color/gray_darkmode</item>
         <item name="colorSurface">@color/gray_surface_darkmode</item>
         <item name="colorOnSurface">@color/white_alpha90</item>
+
+        <item name="backgroundColor">@color/gray_darkmode</item>
+        <item name="android:colorBackground">?attr/backgroundColor</item>
 
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?android:colorBackground</item>
