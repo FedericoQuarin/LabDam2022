@@ -5,6 +5,7 @@ import android.content.Context;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
+import com.mdgz.dam.labdam2022.model.Ubicacion;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.AlojamientoDataSource;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.OnResult;
 import com.mdgz.dam.labdam2022.persistencia.room.LabDamDatabase;
@@ -12,11 +13,13 @@ import com.mdgz.dam.labdam2022.persistencia.room.daos.AlojamientoDAO;
 import com.mdgz.dam.labdam2022.persistencia.room.daos.CiudadDAO;
 import com.mdgz.dam.labdam2022.persistencia.room.daos.DepartamentoDAO;
 import com.mdgz.dam.labdam2022.persistencia.room.daos.HabitacionDAO;
+import com.mdgz.dam.labdam2022.persistencia.room.daos.HotelDAO;
 import com.mdgz.dam.labdam2022.persistencia.room.daos.UbicacionDAO;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.AlojamientoEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.CiudadEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.DepartamentoEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.HabitacionEntity;
+import com.mdgz.dam.labdam2022.persistencia.room.entities.HotelEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.entities.UbicacionEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.mappers.AlojamientoMapper;
 import com.mdgz.dam.labdam2022.persistencia.room.mappers.DepartamentoMapper;
@@ -48,6 +51,7 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
     private final DepartamentoDAO departamentoDAO;
     private final UbicacionDAO ubicacionDAO;
     private final CiudadDAO ciudadDAO;
+    private final HotelDAO hotelDAO;
 
     public AlojamientoRoomDataSource(final Context context) {
         this(LabDamDatabase.getInstance(context));
@@ -59,6 +63,7 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
         departamentoDAO = db.departamentoDAO();
         ubicacionDAO = db.ubicacionDAO();
         ciudadDAO = db.ciudadDAO();
+        hotelDAO = db.hotelDAO();
     }
 
 
@@ -105,9 +110,16 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
             final List<Habitacion> listaHabitaciones = new ArrayList<>();
 
             AlojamientoEntity alojamientoEntity;
+            HotelEntity hotelEntity;
+            UbicacionEntity ubicacionEntity;
+            CiudadEntity ciudadEntity;
             for (final HabitacionEntity habitacionEntity : listaHabitacionEntities) {
                 alojamientoEntity = alojamientoDAO.getAlojamientoPorId(habitacionEntity.getAlojamientoId());
-                listaHabitaciones.add(HabitacionMapper.fromEntity(habitacionEntity, alojamientoEntity));
+                hotelEntity = hotelDAO.getHotelPorId(habitacionEntity.getHotelId().toString());
+                ubicacionEntity = ubicacionDAO.getUbicacionPorId(hotelEntity.getUbicacionId().toString());
+                ciudadEntity = ciudadDAO.getCiudadPorId(ubicacionEntity.getCiudadId().toString());
+
+                listaHabitaciones.add(HabitacionMapper.fromEntity(habitacionEntity, alojamientoEntity, hotelEntity, ubicacionEntity, ciudadEntity));
             }
             callback.onSuccess(listaHabitaciones);
         } catch (final Exception e) {
@@ -144,6 +156,7 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
             HabitacionEntity habitacionEntity;
             UbicacionEntity ubicacionEntity;
             CiudadEntity ciudadEntity;
+            HotelEntity hotelEntity;
 
             for (final AlojamientoEntity alojamientoEntity : listaAlojamientoEntities) {
                 // Si es un alojamiento
@@ -157,7 +170,12 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
                 // Si es una habitacion
                 else {
                     habitacionEntity = habitacionDAO.getHabitacionPorIdAlojamiento(alojamientoEntity.getId());
-                    listaAlojamientos.add(HabitacionMapper.fromEntity(habitacionEntity, alojamientoEntity));
+                    hotelEntity = hotelDAO.getHotelPorId(habitacionEntity.getHotelId().toString());
+                    ubicacionEntity = ubicacionDAO.getUbicacionPorId(hotelEntity.getUbicacionId().toString());
+                    ciudadEntity = ciudadDAO.getCiudadPorId(ubicacionEntity.getCiudadId().toString());
+
+                    listaAlojamientos.add(HabitacionMapper.fromEntity(habitacionEntity, alojamientoEntity, hotelEntity, ubicacionEntity, ciudadEntity));
+
                 }
             }
             callback.onSuccess(listaAlojamientos);

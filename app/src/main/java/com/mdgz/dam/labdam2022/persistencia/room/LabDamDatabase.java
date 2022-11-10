@@ -14,6 +14,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
+import com.mdgz.dam.labdam2022.model.Hotel;
 import com.mdgz.dam.labdam2022.model.Ubicacion;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.OnResult;
 import com.mdgz.dam.labdam2022.persistencia.room.daos.AlojamientoDAO;
@@ -37,10 +38,12 @@ import com.mdgz.dam.labdam2022.persistencia.room.entities.UsuarioEntity;
 import com.mdgz.dam.labdam2022.persistencia.room.mappers.AlojamientoMapper;
 import com.mdgz.dam.labdam2022.persistencia.room.mappers.CiudadMapper;
 import com.mdgz.dam.labdam2022.persistencia.room.mappers.DepartamentoMapper;
+import com.mdgz.dam.labdam2022.persistencia.room.mappers.HotelMapper;
 import com.mdgz.dam.labdam2022.persistencia.room.mappers.UUIDConverter;
 import com.mdgz.dam.labdam2022.persistencia.room.mappers.UbicacionMapper;
 import com.mdgz.dam.labdam2022.persistencia.room.roomDataSource.AlojamientoRoomDataSource;
 import com.mdgz.dam.labdam2022.persistencia.room.roomDataSource.CiudadRoomDataSource;
+import com.mdgz.dam.labdam2022.persistencia.room.roomDataSource.HotelRoomDataSource;
 import com.mdgz.dam.labdam2022.persistencia.room.roomDataSource.UbicacionRoomDataSource;
 
 import java.util.List;
@@ -130,25 +133,23 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                            50.0,
                                            50.0,
                                            "Lavaisse",
-                                           "621",
-                                           CiudadMapper.fromEntity(getInstance(context).ciudadDAO().getCiudades().get(0))),
+                                           "610",
+                                           CiudadMapper.fromEntity(getInstance(context).ciudadDAO().getCiudadPorNombre("Santa Fe"))),
                                            ubicacionOnResult);
 
-                                   /*getInstance(context).ubicacionDAO().guardar(
-                                           UbicacionMapper.toEntity(new Ubicacion(
-                                                   50.0,
-                                                   50.0,
-                                                   "Lavaisse",
-                                                   "621",
-                                                   CiudadMapper.fromEntity(getInstance(context).ciudadDAO().getCiudades().get(0))
-                                           ))
-                                   );*/
+                                   ubicacionRoomDataSource.guardar(new Ubicacion(
+                                                   30.0,
+                                                   30.0,
+                                                   "Balcarce",
+                                                   "1442",
+                                                   CiudadMapper.fromEntity(getInstance(context).ciudadDAO().getCiudadPorNombre("Rosario"))),
+                                           ubicacionOnResult);
 
                                    // Cartar departamento
                                    final OnResult<Departamento> departamentoOnResult = new OnResult<Departamento>() {
                                        @Override
                                        public void onSuccess(Departamento result) {
-
+                                           System.out.println(result.toString());
                                        }
 
                                        @Override
@@ -162,9 +163,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                    };
                                    final AlojamientoRoomDataSource alojamientoRoomDataSource = new AlojamientoRoomDataSource(instance);
 
-
-
-                                   MutableLiveData<Ubicacion> ubicacion1 = new MutableLiveData<Ubicacion>();
+                                   /*MutableLiveData<Ubicacion> ubicacion1 = new MutableLiveData<Ubicacion>();
                                    ubicacionRoomDataSource.getUbicaciones(new OnResult<List<Ubicacion>>() {
                                        @Override
                                        public void onSuccess(List<Ubicacion> result) {
@@ -175,10 +174,10 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                        public void onError(Throwable exception) {
 
                                        }
-                                   });
+                                   });*/
 
-                                   UbicacionEntity ue = getInstance(context).ubicacionDAO().getUbicaciones().get(0);
-                                   CiudadEntity ce = getInstance(context).ciudadDAO().getCiudadPorId(ue.getCiudadId().toString());
+                                   UbicacionEntity ue1 = getInstance(context).ubicacionDAO().getUbicaciones().get(0);
+                                   CiudadEntity ce1 = getInstance(context).ciudadDAO().getCiudadPorId(ue1.getCiudadId().toString());
 
                                    alojamientoRoomDataSource.guardarDepartamento(new Departamento(
                                            "Depto1",
@@ -188,22 +187,67 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                            true,
                                            50.0,
                                            2,
-                                           UbicacionMapper.fromEntity(ue, ce),
-                                           false), departamentoOnResult);
-                                   /*getInstance(context).departamentoDAO().guardar(
-                                           DepartamentoMapper.toEntity(new Departamento(
-                                                   "Depto1",
-                                                   "Un depto",
-                                                   3,
-                                                   100.0,
-                                                   true,
-                                                   50.0,
-                                                   2,
-                                                   UbicacionMapper.fromEntity(getInstance(context).ubicacionDAO().getUbicaciones().get(0)),
-                                                   false
-                                           ))
-                                   );*/
-                                   //System.out.println(UbicacionMapper.fromEntity(getInstance(context).ubicacionDAO().getUbicaciones().get(0)).toString());
+                                           UbicacionMapper.fromEntity(ue1, ce1),
+                                           false),
+                                           departamentoOnResult);
+
+                                   // Cargar Hotel
+                                   final OnResult<Hotel> hotelOnResult = new OnResult<Hotel>() {
+                                       @Override
+                                       public void onSuccess(Hotel result) {
+                                           System.out.println(result.toString());
+                                       }
+
+                                       @Override
+                                       public void onError(Throwable exception) {
+                                           try {
+                                               throw exception;
+                                           } catch (Throwable e) {
+                                               e.printStackTrace();
+                                           }
+                                       }
+                                   };
+                                   final HotelRoomDataSource hotelRoomDataSource = new HotelRoomDataSource(instance);
+
+                                   UbicacionEntity ue2 = getInstance(context).ubicacionDAO().getUbicaciones().get(1);
+                                   CiudadEntity ce2 = getInstance(context).ciudadDAO().getCiudadPorId(ue2.getCiudadId().toString());
+
+                                   hotelRoomDataSource.guardar(new Hotel(
+                                           "Hotel principal",
+                                           1,
+                                           UbicacionMapper.fromEntity(ue2, ce2)),
+                                           hotelOnResult);
+
+                                   // Cargar una habitacion
+                                   final OnResult<Habitacion> habitacionOnResult = new OnResult<Habitacion>() {
+                                       @Override
+                                       public void onSuccess(Habitacion result) {
+                                           System.out.println(result.toString());
+                                       }
+
+                                       @Override
+                                       public void onError(Throwable exception) {
+                                           try {
+                                               throw exception;
+                                           } catch (Throwable e) {
+                                               e.printStackTrace();
+                                           }
+                                       }
+                                   };
+
+                                   HotelEntity he = getInstance(context).hotelDAO().getHoteles().get(0);
+
+                                   alojamientoRoomDataSource.guardarHabitacion(new Habitacion(
+                                           "Habitacion1",
+                                           "Descripcion",
+                                           3,
+                                           100.0,
+                                           1,
+                                           1,
+                                           true,
+                                           HotelMapper.fromEntity(he, ue2, ce2),
+                                           false),
+                                           habitacionOnResult);
                                }
                            });
                        }

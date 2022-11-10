@@ -62,4 +62,20 @@ public class Departamento extends Alojamiento{
     public Double costoTotal(Long diasEstadia){
         return precioBase * diasEstadia + costoLimpieza;
     }
+
+    @Override
+    public String toString() {
+        return "Departamento{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", capacidad=" + capacidad +
+                ", precioBase=" + precioBase +
+                ", esFavorito=" + esFavorito +
+                ", tieneWifi=" + tieneWifi +
+                ", costoLimpieza=" + costoLimpieza +
+                ", cantidadHabitaciones=" + cantidadHabitaciones +
+                ", ubicacion=" + ubicacion +
+                '}';
+    }
 }

@@ -56,4 +56,19 @@ public class Habitacion  extends Alojamiento {
         return hotel.getUbicacion();
     }
 
+    @Override
+    public String toString() {
+        return "Habitacion{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", capacidad=" + capacidad +
+                ", precioBase=" + precioBase +
+                ", esFavorito=" + esFavorito +
+                ", camasIndividuales=" + camasIndividuales +
+                ", camasMatrimoniales=" + camasMatrimoniales +
+                ", tieneEstacionamiento=" + tieneEstacionamiento +
+                ", hotel=" + hotel +
+                '}';
+    }
 }

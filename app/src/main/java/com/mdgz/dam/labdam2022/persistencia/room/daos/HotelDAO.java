@@ -22,4 +22,7 @@ public interface HotelDAO {
 
     @Query("SELECT * FROM HOTEL")
     List<HotelEntity> getHoteles();
+
+    @Query("SELECT * FROM HOTEL WHERE id = :id")
+    HotelEntity getHotelPorId(String id);
 }

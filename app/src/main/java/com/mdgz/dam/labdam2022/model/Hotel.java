@@ -50,4 +50,14 @@ public class Hotel {
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
     }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", categoria=" + categoria +
+                ", ubicacion=" + ubicacion +
+                '}';
+    }
 }
