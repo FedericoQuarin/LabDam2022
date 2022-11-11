@@ -90,41 +90,37 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                public void run() {
 
                                    // Cargar ciudades
-                                   final OnResult<Ciudad> ciudadOnResult = new OnResult<Ciudad>() {
+                                   final OnResult<Ciudad> ciudadOnResult = new OnResult<>() {
                                        @Override
                                        public void onSuccess(Ciudad result) {
-                                           System.out.println(result.toString());
+                                           // noop
                                        }
 
                                        @Override
                                        public void onError(Throwable exception) {
-                                           try {
-                                               throw exception;
-                                           } catch (Throwable e) {
-                                               e.printStackTrace();
-                                           }
+                                           // noop
                                        }
                                    };
                                    final CiudadRoomDataSource ciudadRoomDataSource = new CiudadRoomDataSource(instance);
 
-                                   ciudadRoomDataSource.guardar(new Ciudad("Santa Fe", "SF"), ciudadOnResult);
-                                   ciudadRoomDataSource.guardar(new Ciudad("Parana", "PN"), ciudadOnResult);
-                                   ciudadRoomDataSource.guardar(new Ciudad("Rosario", "RS"), ciudadOnResult);
+                                   final Ciudad santaFe = new Ciudad("Santa Fe", "SF");
+                                   final Ciudad parana = new Ciudad("Parana", "PN");
+                                   final Ciudad rosario = new Ciudad("Rosario", "RS");
+
+                                   ciudadRoomDataSource.guardar(santaFe, ciudadOnResult);
+                                   ciudadRoomDataSource.guardar(parana, ciudadOnResult);
+                                   ciudadRoomDataSource.guardar(rosario, ciudadOnResult);
 
                                    // Cargar ubicacion
-                                   final OnResult<Ubicacion> ubicacionOnResult = new OnResult<Ubicacion>() {
+                                   final OnResult<Ubicacion> ubicacionOnResult = new OnResult<>() {
                                        @Override
                                        public void onSuccess(Ubicacion result) {
-                                           System.out.println(result.toString());
+                                           // noop
                                        }
 
                                        @Override
                                        public void onError(Throwable exception) {
-                                           try {
-                                               throw exception;
-                                           } catch (Throwable e) {
-                                               e.printStackTrace();
-                                           }
+                                           // noop
                                        }
                                    };
 
@@ -134,7 +130,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                            50.0,
                                            "Lavaisse",
                                            "610",
-                                           CiudadMapper.fromEntity(getInstance(context).ciudadDAO().getCiudadPorNombre("Santa Fe"))),
+                                           santaFe),
                                            ubicacionOnResult);
 
                                    ubicacionRoomDataSource.guardar(new Ubicacion(
@@ -142,7 +138,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                                    30.0,
                                                    "Balcarce",
                                                    "1442",
-                                                   CiudadMapper.fromEntity(getInstance(context).ciudadDAO().getCiudadPorNombre("Rosario"))),
+                                                   rosario),
                                            ubicacionOnResult);
 
                                    // Cartar departamento
