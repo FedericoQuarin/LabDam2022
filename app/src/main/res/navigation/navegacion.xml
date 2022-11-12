@@ -57,7 +57,7 @@
         android:id="@+id/logBusquedaFragment"
         android:name="com.mdgz.dam.labdam2022.LogBusquedaFragment"
         android:label="Log de búsquedas"
-        tools:layout="@layout/fragment_log_busqueda" />
+        tools:layout="@layout/fragment_busqueda_log" />
 
     <action
         android:id="@+id/action_global_settingsFragment"
@@ -73,10 +73,18 @@
         app:launchSingleTop="true"
         app:popUpTo="@id/busquedaFragment"
         app:popUpToInclusive="true"/>
+    <action
+        android:id="@+id/action_global_misReservasFragment"
+        app:launchSingleTop="true"
+        app:destination="@id/misReservasFragment"
+        app:enterAnim="@anim/desplazamiento_derecha_in"
+        app:exitAnim="@anim/desplazamiento_derecha_out"
+        app:popEnterAnim="@anim/desplazamiento_izquierda_in"
+        app:popExitAnim="@anim/desplazamiento_izquierda_out" />
     <fragment
-        android:id="@+id/logBusquedaFragment"
-        android:name="com.mdgz.dam.labdam2022.LogBusquedaFragment"
+        android:id="@+id/misReservasFragment"
+        android:name="com.mdgz.dam.labdam2022.MisReservasFragment"
         android:label="AirBooking"
-        tools:layout="@layout/recycler_view_busqueda_logs" />
+        tools:layout="@layout/fragment_mis_reservas" />
 
 </navigation>
