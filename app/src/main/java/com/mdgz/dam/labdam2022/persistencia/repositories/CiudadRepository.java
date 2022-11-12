@@ -9,6 +9,7 @@ import com.mdgz.dam.labdam2022.persistencia.room.daos.CiudadDAO;
 import com.mdgz.dam.labdam2022.persistencia.room.LabDamDatabase;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CiudadRepository implements CiudadDataSource{
 
@@ -24,6 +25,23 @@ public class CiudadRepository implements CiudadDataSource{
     @Override
     public void getCiudades(OnResult<List<Ciudad>> callback) {
         ciudadDataSource.getCiudades(callback);
+    }
+
+    public void getNombreCiudades(OnResult<List<String>> callback) {
+        ciudadDataSource.getCiudades(new OnResult<List<Ciudad>>() {
+            @Override
+            public void onSuccess(List<Ciudad> result) {
+                callback.onSuccess(result
+                        .stream()
+                        .map(Ciudad::getNombre)
+                        .collect(Collectors.toList()));
+            }
+
+            @Override
+            public void onError(Throwable exception) {
+                callback.onError(exception);
+            }
+        });
     }
 
     /*private static CiudadRepository _CIUDADREPO = null;

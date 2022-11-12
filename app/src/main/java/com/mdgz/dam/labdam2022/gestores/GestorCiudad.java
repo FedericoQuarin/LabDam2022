@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 // Clase encargada de gestionar las ciudades a nivel lógico
+@Deprecated
 public class GestorCiudad {
 
     // Gestores

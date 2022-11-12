@@ -254,7 +254,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
 
                    })
                    .fallbackToDestructiveMigration()
-                   .allowMainThreadQueries()
+                   //.allowMainThreadQueries()
                    .build();
     }
 

@@ -3,62 +3,47 @@ package com.mdgz.dam.labdam2022;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.IntegerRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.SharedElementCallback;
 import androidx.core.view.OneShotPreDrawListener;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.transition.MaterialElevationScale;
-import com.google.android.material.transition.MaterialFade;
-import com.google.android.material.transition.MaterialFadeThrough;
 import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
-import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
+import com.mdgz.dam.labdam2022.viewModels.ResultadoBusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewModels.factories.ResultadoBusquedaViewModelFactory;
 
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.List;
-import java.util.Map;
 
 public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRecyclerAdapter.OnNoteListener{
-    private GestorAlojamiento gestorAlojamiento;
+    //private GestorAlojamiento gestorAlojamiento;
 
     private FragmentResultadoBusquedaBinding binding;
+
+    private ResultadoBusquedaViewModel viewModel;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     // Nombre del archivo
-    private String FILENAME = "logs";
+    final private String FILENAME = "logs";
     // Contexto
     private Context ctx;
     // IDLog
-    private Integer IDLog = 6;
+    final private Integer IDLog = 6;
     // Cantidad de alojamientos encontrados
     private Integer cantidadAlojamientosEncontrados;
     // Lista de criterios de busqueda
@@ -74,7 +59,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        gestorAlojamiento = GestorAlojamiento.getInstance(getContext());
+        //gestorAlojamiento = GestorAlojamiento.getInstance(getContext());
     }
 
     @Override
@@ -98,9 +83,16 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         layoutManager = new LinearLayoutManager(view.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new AlojamientoRecyclerAdapter(gestorAlojamiento.getAlojamientos(), this);
+        adapter = new AlojamientoRecyclerAdapter(new ArrayList<>(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setClickable(true);
+
+        viewModel = new ViewModelProvider(this, new ResultadoBusquedaViewModelFactory(getContext())).get(
+                ResultadoBusquedaViewModel.class);
+        viewModel.alojamientoCollection.observe(getViewLifecycleOwner(), alojamientos -> {
+            adapter = new AlojamientoRecyclerAdapter(alojamientos, this);
+            recyclerView.setAdapter(adapter);
+        });
         
         binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
 

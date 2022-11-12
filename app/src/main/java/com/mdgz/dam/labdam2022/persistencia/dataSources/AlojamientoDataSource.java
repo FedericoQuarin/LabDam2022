@@ -5,6 +5,7 @@ import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface AlojamientoDataSource {
 
@@ -31,4 +32,6 @@ public interface AlojamientoDataSource {
     void recuperarDepartamentos(OnResult<List<Departamento>> callback);
 
     void recuperarAlojamientos(OnResult<List<Alojamiento>> callback);
+
+    void recuperarAlojamiento(final UUID idAlojamiento, OnResult<Alojamiento> callback);
 }

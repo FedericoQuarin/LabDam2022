@@ -28,6 +28,7 @@ import com.mdgz.dam.labdam2022.persistencia.room.mappers.HabitacionMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class AlojamientoRoomDataSource implements AlojamientoDataSource {
 
@@ -179,6 +180,33 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
                 }
             }
             callback.onSuccess(listaAlojamientos);
+        } catch (final Exception e) {
+            callback.onError(e);
+        }
+    }
+
+    @Override
+    public void recuperarAlojamiento(UUID idAlojamiento, OnResult<Alojamiento> callback) {
+        try {
+            AlojamientoEntity alojamientoEntity = alojamientoDAO.getAlojamientoPorId(idAlojamiento);
+            Alojamiento alojamiento = null;
+
+            if (Objects.equals(alojamientoEntity.getTipo(), AlojamientoEntity.TIPO_DEPARTAMENTO)) {
+                DepartamentoEntity departamentoEntity = departamentoDAO.getDepartamentoPorIdAlojamiento(alojamientoEntity.getId());
+                UbicacionEntity ubicacionEntity = ubicacionDAO.getUbicacionPorId(departamentoEntity.getUbicacionId().toString());
+                CiudadEntity ciudadEntity = ciudadDAO.getCiudadPorId(ubicacionEntity.getCiudadId().toString());
+                alojamiento = DepartamentoMapper.fromEntity(departamentoEntity, alojamientoEntity, ubicacionEntity, ciudadEntity);
+            }
+            else {
+                HabitacionEntity habitacionEntity = habitacionDAO.getHabitacionPorIdAlojamiento(alojamientoEntity.getId());
+                HotelEntity hotelEntity = hotelDAO.getHotelPorId(habitacionEntity.getHotelId().toString());
+                UbicacionEntity ubicacionEntity = ubicacionDAO.getUbicacionPorId(hotelEntity.getUbicacionId().toString());
+                CiudadEntity ciudadEntity = ciudadDAO.getCiudadPorId(ubicacionEntity.getCiudadId().toString());
+
+                alojamiento = HabitacionMapper.fromEntity(habitacionEntity, alojamientoEntity, hotelEntity, ubicacionEntity, ciudadEntity);
+            }
+
+            callback.onSuccess(alojamiento);
         } catch (final Exception e) {
             callback.onError(e);
         }
