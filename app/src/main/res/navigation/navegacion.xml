@@ -81,10 +81,27 @@
         app:exitAnim="@anim/desplazamiento_derecha_out"
         app:popEnterAnim="@anim/desplazamiento_izquierda_in"
         app:popExitAnim="@anim/desplazamiento_izquierda_out" />
+    <action
+        android:id="@+id/action_global_misFavoritosFragment"
+        app:launchSingleTop="true"
+        app:destination="@id/misFavoritosFragment"
+        app:enterAnim="@anim/desplazamiento_derecha_in"
+        app:exitAnim="@anim/desplazamiento_derecha_out"
+        app:popEnterAnim="@anim/desplazamiento_izquierda_in"
+        app:popExitAnim="@anim/desplazamiento_izquierda_out" />
     <fragment
         android:id="@+id/misReservasFragment"
         android:name="com.mdgz.dam.labdam2022.MisReservasFragment"
         android:label="AirBooking"
         tools:layout="@layout/fragment_mis_reservas" />
+    <fragment
+        android:id="@+id/misFavoritosFragment"
+        android:name="com.mdgz.dam.labdam2022.MisFavoritosFragment"
+        android:label="MisFavoritosFragment"
+        tools:layout="@layout/fragment_mis_favoritos" >
+        <action
+            android:id="@+id/action_misFavoritosFragment_to_detalleAlojamientoFragment"
+            app:destination="@id/detalleAlojamientoFragment" />
+    </fragment>
 
 </navigation>
