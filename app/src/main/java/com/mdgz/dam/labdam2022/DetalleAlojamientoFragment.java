@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
@@ -32,6 +33,11 @@ import com.mdgz.dam.labdam2022.gestores.GestorReserva;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
+import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
+import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
+import com.mdgz.dam.labdam2022.viewModels.ResultadoBusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewModels.factories.DetalleAlojamientoViewModelFactory;
+import com.mdgz.dam.labdam2022.viewModels.factories.ResultadoBusquedaViewModelFactory;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -46,7 +52,10 @@ public class DetalleAlojamientoFragment extends Fragment {
     private DetalleAlojamientoDeptoBinding bindingDepto;
     private DetalleAlojamientoHotelBinding bindingHotel;
 
-    private GestorAlojamiento gestorAlojamiento;
+    private DetalleAlojamientoViewModel viewModel;
+    private String idAlojamiento;
+
+    // private GestorAlojamiento gestorAlojamiento;
     private GestorReserva gestorReserva;
 
     private Alojamiento alojamiento;
@@ -82,16 +91,18 @@ public class DetalleAlojamientoFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Infla el layout de este fragmento
         binding = FragmentDetalleAlojamientoBinding.inflate(inflater, container, false);
         FrameLayout frameLayoutDetalleDepto = binding.frameLayoutDetalleDepto;
         FrameLayout frameLayoutDetalleHotel = binding.frameLayoutDetalleHotel;
 
+
         if (getArguments() != null) {
             // Busca el alojamiento a mostrar
-            String stringIdAlojamiento = getArguments().getString("idAlojamiento");
-            gestorAlojamiento = GestorAlojamiento.getInstance(getContext());
-            alojamiento = gestorAlojamiento.getAlojamiento(UUID.fromString(stringIdAlojamiento));
+            idAlojamiento = getArguments().getString("idAlojamiento");
+            //gestorAlojamiento = GestorAlojamiento.getInstance(getContext());
+            //alojamiento = gestorAlojamiento.getAlojamiento(UUID.fromString(stringIdAlojamiento));
 
             // Infla parte de la interfaz que es especifica del tipo de alojamiento
             bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayoutDetalleDepto, false);
@@ -106,7 +117,7 @@ public class DetalleAlojamientoFragment extends Fragment {
         configurarDateRangePicker();
 
         // Se asigna el nombre de la transicion
-        fragmentView.setTransitionName(alojamiento.getId().toString());
+        fragmentView.setTransitionName(idAlojamiento);
 
         // Se crea la transicion de entrada a este fragmento desde la pestaña resultadosBusqueda
         MaterialContainerTransform containerTransform = new MaterialContainerTransform();
@@ -118,12 +129,8 @@ public class DetalleAlojamientoFragment extends Fragment {
         getContext().getTheme().resolveAttribute(com.google.android.material.R.attr.backgroundColor, typedValue, true);
         containerTransform.setAllContainerColors(typedValue.data);
 
-
         // Se setea la transicion
         setSharedElementEnterTransition(containerTransform);
-
-        /*MaterialContainerTransform transform = new MaterialContainerTransform();
-        transform.setStartViewId();*/
 
         return fragmentView;
     }
@@ -136,11 +143,6 @@ public class DetalleAlojamientoFragment extends Fragment {
         // Gestores restantes
         gestorReserva = GestorReserva.getInstance();
 
-        // Seteo de elemento del fragmento
-        String ubicacion = alojamiento.getUbicacion().getCalle() + " "
-                + alojamiento.getUbicacion().getNumero() + ", "
-                + alojamiento.getUbicacion().getCiudad().getNombre();
-
         // Variables
         botonFecha = binding.buttonFecha;
         precioFinal = binding.txtPrecioFinalDetalleAlojamiento;
@@ -152,6 +154,35 @@ public class DetalleAlojamientoFragment extends Fragment {
         descripcion = binding.txtViewDescripcion;
         buttonMasDescripcion = binding.buttonMasDescripcion;
 
+        viewModel = new ViewModelProvider(this, new DetalleAlojamientoViewModelFactory(getContext())).get(
+                DetalleAlojamientoViewModel.class);
+        viewModel.alojamiento.observe(getViewLifecycleOwner(), alojamiento -> {
+            this.alojamiento = alojamiento;
+            setearInfoAlojamiento();
+        });
+
+        viewModel.buscarAlojamiento(UUID.fromString(idAlojamiento));
+
+        botonFecha.setOnClickListener(v -> {
+            botonFecha.setClickable(false);
+            materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker");
+        });
+
+        materialDatePicker.addOnDismissListener( v -> {
+            botonFecha.setClickable(true);
+            actualizarBotonesYLabel();
+        });
+
+        botonMenos.setEnabled(false);
+
+    }
+
+    public void setearInfoAlojamiento() {
+        // Armar ubicacion a mostrar
+        String ubicacion = alojamiento.getUbicacion().getCalle() + " "
+                + alojamiento.getUbicacion().getNumero() + ", "
+                + alojamiento.getUbicacion().getCiudad().getNombre();
+
         binding.txtTituloDetalleAlojamiento.setText(alojamiento.getTitulo());
         binding.txtUbicacionDetalleAlojamiento.setText(ubicacion);
         binding.txtPrecioDetalleAlojamiento.setText("$" + alojamiento.getPrecioBase() + " por noche");
@@ -162,10 +193,10 @@ public class DetalleAlojamientoFragment extends Fragment {
         if(alojamiento.getEsFavorito()) binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_lleno);
 
         binding.buttonDetalleFavorito.setOnClickListener((v) -> {
-            if(alojamiento.getEsFavorito()) binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_vacio);
-            else binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_lleno);
-
             alojamiento.turnFavorito();
+
+            if(alojamiento.getEsFavorito()) binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_lleno);
+            else binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_vacio);
         });
 
         // Si el alojamiento es un departamento se setean los parametros del detalleDepto
@@ -230,44 +261,14 @@ public class DetalleAlojamientoFragment extends Fragment {
             colocarDescripcionAcotada();
         }
 
-
-
-        // TODO: corregir - si se clickea el boton antes de que se abra el datePicker crashea
-        botonFecha.setOnClickListener(v -> {
-            botonFecha.setClickable(false);
-            materialDatePicker.show(getActivity().getSupportFragmentManager(), "Date_picker");
-        });
-
-        materialDatePicker.addOnDismissListener( v -> {
-            botonFecha.setClickable(true);
-            actualizarBotonesYLabel();
-        });
-
         txtViewCantidadPersonas.setText(String.valueOf(cantidadPersonas));
         txtViewCapacidadAlojamiento.setText(" / " + alojamiento.getCapacidad());
 
-        botonMenos.setEnabled(false);
         botonMenos.setOnClickListener(v -> restarCantidadPersonas());
 
         botonMas.setOnClickListener(v -> sumarCantidadPersonas());
 
         botonReservar.setOnClickListener(v -> logicaReservar());
-
-        /*setEnterSharedElementCallback(
-                new SharedElementCallback() {
-                    @Override
-                    public void onMapSharedElements(
-                            List<String> names, Map<String, View> sharedElements) {
-                        // Locate the image view at the primary fragment (the ImageFragment
-                        // that is currently visible). To locate the fragment, call
-                        // instantiateItem with the selection position.
-                        // At this stage, the method will simply return the fragment at the
-                        // position and will not create a new one.
-                        // Map the first shared element name to the child ImageView.
-
-                        sharedElements.put(names.get(0), fragmentView);
-                    }
-                });*/
     }
 
     // Actualiza el texto del boton "Fecha de reserva" cuando se selecciona una fecha
