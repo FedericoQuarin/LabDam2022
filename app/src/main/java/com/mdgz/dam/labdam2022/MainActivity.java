@@ -84,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
                         .navigate(R.id.action_global_misReservasFragment);
                 return true;
             case R.id.mis_favoritos:
-                Toast.makeText(this, "Favoritos", Toast.LENGTH_SHORT).show();
+                NavHostFragment.findNavController(binding.fragmentContainerView.getFragment())
+                        .navigate(R.id.action_global_misFavoritosFragment);
                 return true;
             case R.id.opciones:
                 NavHostFragment.findNavController(binding.fragmentContainerView.getFragment())
