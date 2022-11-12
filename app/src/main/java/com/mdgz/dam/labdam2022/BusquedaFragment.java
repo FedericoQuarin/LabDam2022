@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.text.TextUtils;
@@ -27,6 +28,11 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
+import com.mdgz.dam.labdam2022.model.Ciudad;
+import com.mdgz.dam.labdam2022.viewModels.BusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
+import com.mdgz.dam.labdam2022.viewModels.factories.BusquedaViewModelFactory;
+import com.mdgz.dam.labdam2022.viewModels.factories.DetalleAlojamientoViewModelFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +49,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class BusquedaFragment extends Fragment {
@@ -66,6 +73,9 @@ public class BusquedaFragment extends Fragment {
     private EditText editTxtPrecioMaximo;
     private EditText editTxtPrecioMinimo;
     private AutoCompleteTextView editTxtListCiudades;
+
+    // ViewModel
+    private BusquedaViewModel busquedaViewModel;
 
     // Nombre del archivo
     private String FILENAME = "logs";
@@ -135,7 +145,7 @@ public class BusquedaFragment extends Fragment {
 
         setArguments(null);
 
-        gestorCiudad = GestorCiudad.getInstance(getContext());
+        //gestorCiudad = GestorCiudad.getInstance(getContext());
 
         // Se setea el numero de personas inicial en el correspondiente TextView
         // y se coloca un listener para mantenerlo actualizado
@@ -158,46 +168,42 @@ public class BusquedaFragment extends Fragment {
             }
         });
 
+        // Se busca el viewModel de la pantalla
+        // TODO ver si podemos cambiar el metodo toString de Ciudad
+        busquedaViewModel = new ViewModelProvider(this, new BusquedaViewModelFactory(getContext())).get(
+                BusquedaViewModel.class);
+
+        // Se setea el observer sobre ciudadCollection. Este rellena la lista de ciudades.
+        busquedaViewModel.ciudadCollection.observe(getViewLifecycleOwner(), ciudades -> {
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
+                    R.layout.list_item_layout,
+                    ciudades.stream().map(Ciudad::getNombre).collect(Collectors.toList()));
+            editTxtListCiudades.setAdapter(adapter);
+        });
+
+
         buttonBuscar.setFocusable(true);
         // TODO validaciones y filtrado de alojamientos
         buttonBuscar.setOnClickListener(v -> {
             if(validarEditTexts()) {
 //                Bundle bundle = new Bundle();
-  //              bundle.putBoolean("seApretoBotonBuscar", true);
-    //            bundle.putBoolean("Switch hoteles", this.switchHoteles.isActivated());
-      //          bundle.putBoolean("Switch departamentos", this.switchDeptos.isActivated());
-        //        bundle.putInt("Capacidad", this.seekBarCapacidad.getProgress());
-          //      bundle.putString("Ciudad", this.list_ciudades.getEditText().getText().toString());
-            //    bundle.putString("Precio minimo", this.editTxtPrecioMinimo.getText().toString());
-              //  bundle.putString("Precio maximo", this.editTxtPrecioMaximo.getText().toString());
+                //              bundle.putBoolean("seApretoBotonBuscar", true);
+                //            bundle.putBoolean("Switch hoteles", this.switchHoteles.isActivated());
+                //          bundle.putBoolean("Switch departamentos", this.switchDeptos.isActivated());
+                //        bundle.putInt("Capacidad", this.seekBarCapacidad.getProgress());
+                //      bundle.putString("Ciudad", this.list_ciudades.getEditText().getText().toString());
+                //    bundle.putString("Precio minimo", this.editTxtPrecioMinimo.getText().toString());
+                //  bundle.putString("Precio maximo", this.editTxtPrecioMaximo.getText().toString());
                 //bundle.putBoolean("Switch WiFi", this.switchWifi.isActivated());
                 //bundle.putLong("tiempoPresionoBuscar", System.currentTimeMillis()/1000);
 
                 generarJSON();
 
                 NavHostFragment.findNavController(BusquedaFragment.this)
-                .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
+                        .navigate(R.id.action_busquedaFragment_to_resultadoBusquedaFragment);
             }
 
         });
-
-        // Se buscan las ciudades existentes y se crea el adapter para el spinner
-        List<String> ciudades = gestorCiudad.getNombresCiudades();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(),
-                R.layout.list_item_layout,
-                ciudades);
-        editTxtListCiudades.setAdapter(adapter);
-
-        // Crea el listener para que se cierre el teclado cuando sale el editText de foco
-        View.OnFocusChangeListener focusChangeListener = (view1, hasFocus) -> {
-            if (!hasFocus) {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view1.getWindowToken(), 0);
-            }
-        };
-
-        editTxtPrecioMinimo.setOnFocusChangeListener(focusChangeListener);
-        editTxtPrecioMaximo.setOnFocusChangeListener(focusChangeListener);
 
         // Se setea el listener del boton "Limpiar", que limpia todos los campos cargados
         buttonLimpiar.setOnClickListener(v -> {
@@ -216,11 +222,17 @@ public class BusquedaFragment extends Fragment {
 
         });
 
-        /*View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }*/
+
+        // Crea el listener para que se cierre el teclado cuando sale el editText de foco
+        View.OnFocusChangeListener focusChangeListener = (view1, hasFocus) -> {
+            if (!hasFocus) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view1.getWindowToken(), 0);
+            }
+        };
+
+        editTxtPrecioMinimo.setOnFocusChangeListener(focusChangeListener);
+        editTxtPrecioMaximo.setOnFocusChangeListener(focusChangeListener);
     }
 
     public Boolean validarEditTexts(){

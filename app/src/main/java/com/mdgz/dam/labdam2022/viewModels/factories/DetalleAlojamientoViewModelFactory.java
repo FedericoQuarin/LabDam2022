@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.mdgz.dam.labdam2022.persistencia.factory.AlojamientoRepositoryFactory;
 import com.mdgz.dam.labdam2022.persistencia.repositories.AlojamientoRepository;
 import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
-import com.mdgz.dam.labdam2022.viewModels.ResultadoBusquedaViewModel;
 
 public class DetalleAlojamientoViewModelFactory implements ViewModelProvider.Factory {
     private final Context context;
