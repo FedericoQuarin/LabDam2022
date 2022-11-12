@@ -2,10 +2,7 @@ package com.mdgz.dam.labdam2022;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavHostController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -17,22 +14,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.transition.MaterialFade;
 import com.google.android.material.transition.MaterialFadeThrough;
 import com.mdgz.dam.labdam2022.databinding.ActivityMainBinding;
-import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
-import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
-import com.mdgz.dam.labdam2022.model.Alojamiento;
-import com.mdgz.dam.labdam2022.model.Ciudad;
-import com.mdgz.dam.labdam2022.model.Departamento;
-import com.mdgz.dam.labdam2022.model.Habitacion;
-import com.mdgz.dam.labdam2022.model.Hotel;
-import com.mdgz.dam.labdam2022.model.Ubicacion;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;

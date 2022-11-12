@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,16 +27,12 @@ import com.google.android.material.transition.MaterialContainerTransform;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoDeptoBinding;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoHotelBinding;
 import com.mdgz.dam.labdam2022.databinding.FragmentDetalleAlojamientoBinding;
-import com.mdgz.dam.labdam2022.gestores.GestorAlojamiento;
 import com.mdgz.dam.labdam2022.gestores.GestorReserva;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
-import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
-import com.mdgz.dam.labdam2022.viewModels.ResultadoBusquedaViewModel;
 import com.mdgz.dam.labdam2022.viewModels.factories.DetalleAlojamientoViewModelFactory;
-import com.mdgz.dam.labdam2022.viewModels.factories.ResultadoBusquedaViewModelFactory;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -55,7 +50,6 @@ public class DetalleAlojamientoFragment extends Fragment {
     private DetalleAlojamientoViewModel viewModel;
     private String idAlojamiento;
 
-    // private GestorAlojamiento gestorAlojamiento;
     private GestorReserva gestorReserva;
 
     private Alojamiento alojamiento;

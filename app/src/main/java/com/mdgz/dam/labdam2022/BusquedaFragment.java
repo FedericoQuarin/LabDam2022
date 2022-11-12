@@ -27,7 +27,6 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
-import com.mdgz.dam.labdam2022.gestores.GestorCiudad;
 import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.viewModels.BusquedaViewModel;
 import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
@@ -54,9 +53,6 @@ import java.util.stream.Collectors;
 
 public class BusquedaFragment extends Fragment {
     static final int VENTANA_DETALLE = 1;
-
-    // Gestores
-    private GestorCiudad gestorCiudad;
 
     // Binding
     private FragmentBusquedaBinding binding;

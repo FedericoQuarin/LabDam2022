@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 // Clase encargada de gestionar los Alojamientos a nivel lógico
+@Deprecated
 public class GestorAlojamiento {
 
     // Gestores
