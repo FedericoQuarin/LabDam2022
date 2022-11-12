@@ -88,8 +88,13 @@ public abstract class LabDamDatabase extends RoomDatabase {
                            EXECUTOR_DB.execute(new Runnable() {
                                @Override
                                public void run() {
+                                   // Se obtienen roomDataSources necesarios
+                                   final CiudadRoomDataSource ciudadRoomDataSource = new CiudadRoomDataSource(instance);
+                                   final UbicacionRoomDataSource ubicacionRoomDataSource = new UbicacionRoomDataSource(instance);
+                                   final AlojamientoRoomDataSource alojamientoRoomDataSource = new AlojamientoRoomDataSource(instance);
+                                   final HotelRoomDataSource hotelRoomDataSource = new HotelRoomDataSource(instance);
 
-                                   // Cargar ciudades
+                                   // Se crean los onResult necesarios para utilizar los metodos
                                    final OnResult<Ciudad> ciudadOnResult = new OnResult<>() {
                                        @Override
                                        public void onSuccess(Ciudad result) {
@@ -101,17 +106,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                            // noop
                                        }
                                    };
-                                   final CiudadRoomDataSource ciudadRoomDataSource = new CiudadRoomDataSource(instance);
 
-                                   final Ciudad santaFe = new Ciudad("Santa Fe", "SF");
-                                   final Ciudad parana = new Ciudad("Parana", "PN");
-                                   final Ciudad rosario = new Ciudad("Rosario", "RS");
-
-                                   ciudadRoomDataSource.guardar(santaFe, ciudadOnResult);
-                                   ciudadRoomDataSource.guardar(parana, ciudadOnResult);
-                                   ciudadRoomDataSource.guardar(rosario, ciudadOnResult);
-
-                                   // Cargar ubicacion
                                    final OnResult<Ubicacion> ubicacionOnResult = new OnResult<>() {
                                        @Override
                                        public void onSuccess(Ubicacion result) {
@@ -124,58 +119,61 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                        }
                                    };
 
-                                   final UbicacionRoomDataSource ubicacionRoomDataSource = new UbicacionRoomDataSource(instance);
-                                   ubicacionRoomDataSource.guardar(new Ubicacion(
+                                   final OnResult<Departamento> departamentoOnResult = new OnResult<>() {
+                                       @Override
+                                       public void onSuccess(Departamento result) {
+                                           // noop
+                                       }
+
+                                       @Override
+                                       public void onError(Throwable exception) {
+                                           // noop
+                                       }
+                                   };
+
+                                   final OnResult<Hotel> hotelOnResult = new OnResult<>() {
+                                       @Override
+                                       public void onSuccess(Hotel result) {
+                                           // noop
+                                       }
+
+                                       @Override
+                                       public void onError(Throwable exception) {
+                                           // noop
+                                       }
+                                   };
+
+                                   final OnResult<Habitacion> habitacionOnResult = new OnResult<Habitacion>() {
+                                       @Override
+                                       public void onSuccess(Habitacion result) {
+                                           // noop
+                                       }
+
+                                       @Override
+                                       public void onError(Throwable exception) {
+                                           // noop
+                                       }
+                                   };
+
+                                   // Se crean los objetos iniciales
+                                   final Ciudad santaFe = new Ciudad("Santa Fe", "SF");
+                                   final Ciudad parana = new Ciudad("Parana", "PN");
+                                   final Ciudad rosario = new Ciudad("Rosario", "RS");
+
+                                   final Ubicacion ubicacion1 = new Ubicacion(
                                            50.0,
                                            50.0,
                                            "Lavaisse",
                                            "610",
-                                           santaFe),
-                                           ubicacionOnResult);
+                                           santaFe);
+                                   final Ubicacion ubicacion2 = new Ubicacion(
+                                           30.0,
+                                           30.0,
+                                           "Balcarce",
+                                           "1442",
+                                           rosario);
 
-                                   ubicacionRoomDataSource.guardar(new Ubicacion(
-                                                   30.0,
-                                                   30.0,
-                                                   "Balcarce",
-                                                   "1442",
-                                                   rosario),
-                                           ubicacionOnResult);
-
-                                   // Cartar departamento
-                                   final OnResult<Departamento> departamentoOnResult = new OnResult<Departamento>() {
-                                       @Override
-                                       public void onSuccess(Departamento result) {
-                                           System.out.println(result.toString());
-                                       }
-
-                                       @Override
-                                       public void onError(Throwable exception) {
-                                           try {
-                                               throw exception;
-                                           } catch (Throwable e) {
-                                               e.printStackTrace();
-                                           }
-                                       }
-                                   };
-                                   final AlojamientoRoomDataSource alojamientoRoomDataSource = new AlojamientoRoomDataSource(instance);
-
-                                   /*MutableLiveData<Ubicacion> ubicacion1 = new MutableLiveData<Ubicacion>();
-                                   ubicacionRoomDataSource.getUbicaciones(new OnResult<List<Ubicacion>>() {
-                                       @Override
-                                       public void onSuccess(List<Ubicacion> result) {
-                                           ubicacion1.postValue(result.get(0));
-                                       }
-
-                                       @Override
-                                       public void onError(Throwable exception) {
-
-                                       }
-                                   });*/
-
-                                   UbicacionEntity ue1 = getInstance(context).ubicacionDAO().getUbicaciones().get(0);
-                                   CiudadEntity ce1 = getInstance(context).ciudadDAO().getCiudadPorId(ue1.getCiudadId().toString());
-
-                                   alojamientoRoomDataSource.guardarDepartamento(new Departamento(
+                                   final Departamento depto1 = new Departamento(
                                            "Depto1",
                                            "Un depto",
                                            3,
@@ -183,57 +181,35 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                            true,
                                            50.0,
                                            2,
-                                           UbicacionMapper.fromEntity(ue1, ce1),
-                                           false),
-                                           departamentoOnResult);
+                                           ubicacion1,
+                                           false);
+                                   final Departamento depto2 = new Departamento(
+                                           "Depto2",
+                                           "Un depto",
+                                           4,
+                                           300.0,
+                                           true,
+                                           50.0,
+                                           2,
+                                           ubicacion1,
+                                           false);
+                                   final Departamento depto3 = new Departamento(
+                                           "Depto3",
+                                           "Un depto",
+                                           6,
+                                           1000.0,
+                                           false,
+                                           50.0,
+                                           3,
+                                           ubicacion1,
+                                           false);
 
-                                   // Cargar Hotel
-                                   final OnResult<Hotel> hotelOnResult = new OnResult<Hotel>() {
-                                       @Override
-                                       public void onSuccess(Hotel result) {
-                                           System.out.println(result.toString());
-                                       }
-
-                                       @Override
-                                       public void onError(Throwable exception) {
-                                           try {
-                                               throw exception;
-                                           } catch (Throwable e) {
-                                               e.printStackTrace();
-                                           }
-                                       }
-                                   };
-                                   final HotelRoomDataSource hotelRoomDataSource = new HotelRoomDataSource(instance);
-
-                                   UbicacionEntity ue2 = getInstance(context).ubicacionDAO().getUbicaciones().get(1);
-                                   CiudadEntity ce2 = getInstance(context).ciudadDAO().getCiudadPorId(ue2.getCiudadId().toString());
-
-                                   hotelRoomDataSource.guardar(new Hotel(
+                                   final Hotel hotel = new Hotel(
                                            "Hotel principal",
                                            1,
-                                           UbicacionMapper.fromEntity(ue2, ce2)),
-                                           hotelOnResult);
+                                           ubicacion2);
 
-                                   // Cargar una habitacion
-                                   final OnResult<Habitacion> habitacionOnResult = new OnResult<Habitacion>() {
-                                       @Override
-                                       public void onSuccess(Habitacion result) {
-                                           System.out.println(result.toString());
-                                       }
-
-                                       @Override
-                                       public void onError(Throwable exception) {
-                                           try {
-                                               throw exception;
-                                           } catch (Throwable e) {
-                                               e.printStackTrace();
-                                           }
-                                       }
-                                   };
-
-                                   HotelEntity he = getInstance(context).hotelDAO().getHoteles().get(0);
-
-                                   alojamientoRoomDataSource.guardarHabitacion(new Habitacion(
+                                   final Habitacion habitacion1 = new Habitacion(
                                            "Habitacion1",
                                            "Descripcion",
                                            3,
@@ -241,9 +217,36 @@ public abstract class LabDamDatabase extends RoomDatabase {
                                            1,
                                            1,
                                            true,
-                                           HotelMapper.fromEntity(he, ue2, ce2),
-                                           false),
-                                           habitacionOnResult);
+                                           hotel,
+                                           false);
+
+                                   final Habitacion habitacion2 = new Habitacion(
+                                           "Habitacion2",
+                                           "Descripcion",
+                                           2,
+                                           100.0,
+                                           0,
+                                           1,
+                                           true,
+                                           hotel,
+                                           false);
+
+                                   // Se guardar los objetos creados
+                                   ciudadRoomDataSource.guardar(santaFe, ciudadOnResult);
+                                   ciudadRoomDataSource.guardar(parana, ciudadOnResult);
+                                   ciudadRoomDataSource.guardar(rosario, ciudadOnResult);
+
+                                   ubicacionRoomDataSource.guardar(ubicacion1, ubicacionOnResult);
+                                   ubicacionRoomDataSource.guardar(ubicacion2, ubicacionOnResult);
+
+                                   alojamientoRoomDataSource.guardarDepartamento(depto1, departamentoOnResult);
+                                   alojamientoRoomDataSource.guardarDepartamento(depto2, departamentoOnResult);
+                                   alojamientoRoomDataSource.guardarDepartamento(depto3, departamentoOnResult);
+
+                                   hotelRoomDataSource.guardar(hotel, hotelOnResult);
+
+                                   alojamientoRoomDataSource.guardarHabitacion(habitacion1, habitacionOnResult);
+                                   alojamientoRoomDataSource.guardarHabitacion(habitacion2, habitacionOnResult);
                                }
                            });
                        }
