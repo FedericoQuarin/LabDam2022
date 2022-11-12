@@ -7,6 +7,7 @@ import com.mdgz.dam.labdam2022.persistencia.dataSources.AlojamientoDataSource;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.OnResult;
 
 import java.util.List;
+import java.util.UUID;
 
 // Aca decimos que el repository implementa el ds para de forma
 // facil nos exponga todos los metodos pero no es necesario y podría
@@ -40,5 +41,10 @@ public class AlojamientoRepository implements AlojamientoDataSource {
     @Override
     public void recuperarAlojamientos(OnResult<List<Alojamiento>> callback) {
         alojamientoDataSource.recuperarAlojamientos(callback);
+    }
+
+    @Override
+    public void recuperarAlojamiento(UUID idAlojamiento, OnResult<Alojamiento> callback) {
+        alojamientoDataSource.recuperarAlojamiento(idAlojamiento, callback);
     }
 }

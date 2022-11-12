@@ -28,6 +28,7 @@ import com.mdgz.dam.labdam2022.persistencia.room.mappers.HabitacionMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class AlojamientoRoomDataSource implements AlojamientoDataSource {
 
@@ -179,6 +180,22 @@ public class AlojamientoRoomDataSource implements AlojamientoDataSource {
                 }
             }
             callback.onSuccess(listaAlojamientos);
+        } catch (final Exception e) {
+            callback.onError(e);
+        }
+    }
+
+    @Override
+    public void recuperarAlojamiento(UUID idAlojamiento, OnResult<Alojamiento> callback) {
+        try {
+            final DepartamentoEntity deptoEntity = departamentoDAO.getDepartamentoPorId(idAlojamiento);
+
+            AlojamientoEntity alojamientoEntity = alojamientoDAO.getAlojamientoPorId(idAlojamiento);
+            UbicacionEntity ubicacionEntity = ubicacionDAO.getUbicacionPorId(deptoEntity.getUbicacionId().toString());
+            CiudadEntity ciudadEntity = ciudadDAO.getCiudadPorId(ubicacionEntity.getCiudadId().toString());
+            Departamento depto = DepartamentoMapper.fromEntity(deptoEntity, alojamientoEntity, ubicacionEntity, ciudadEntity);
+
+            callback.onSuccess(depto);
         } catch (final Exception e) {
             callback.onError(e);
         }
