@@ -84,7 +84,8 @@ public class DetalleAlojamientoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Infla el layout de este fragmento
         binding = FragmentDetalleAlojamientoBinding.inflate(inflater, container, false);
-        FrameLayout frameLayout = binding.frameLayout;
+        FrameLayout frameLayoutDetalleDepto = binding.frameLayoutDetalleDepto;
+        FrameLayout frameLayoutDetalleHotel = binding.frameLayoutDetalleHotel;
 
         if (getArguments() != null) {
             // Busca el alojamiento a mostrar
@@ -93,14 +94,11 @@ public class DetalleAlojamientoFragment extends Fragment {
             alojamiento = gestorAlojamiento.getAlojamiento(UUID.fromString(stringIdAlojamiento));
 
             // Infla parte de la interfaz que es especifica del tipo de alojamiento
-            if (alojamiento instanceof Departamento) {
-                bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayout, false);
-                frameLayout.addView(bindingDepto.getRoot());
-            }
-            else {
-                bindingHotel = DetalleAlojamientoHotelBinding.inflate(inflater, frameLayout, false);
-                frameLayout.addView(bindingHotel.getRoot());
-            }
+            bindingDepto = DetalleAlojamientoDeptoBinding.inflate(inflater, frameLayoutDetalleDepto, false);
+            frameLayoutDetalleDepto.addView(bindingDepto.getRoot());
+
+            bindingHotel = DetalleAlojamientoHotelBinding.inflate(inflater, frameLayoutDetalleHotel, false);
+            frameLayoutDetalleHotel.addView(bindingHotel.getRoot());
         }
 
         View fragmentView = binding.getRoot();
@@ -173,6 +171,8 @@ public class DetalleAlojamientoFragment extends Fragment {
         // Si el alojamiento es un departamento se setean los parametros del detalleDepto
         // Sino se setean los del detalleHotel
         if (alojamiento instanceof Departamento) {
+            binding.frameLayoutDetalleDepto.setVisibility(View.VISIBLE);
+
             Departamento depto = (Departamento) alojamiento;
 
             binding.txtViewPrecioLimpieza.setVisibility(View.VISIBLE);
@@ -189,6 +189,8 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
         }
         else {
+            binding.frameLayoutDetalleHotel.setVisibility(View.VISIBLE);
+
             Habitacion habitacion = (Habitacion) alojamiento;
 
             if (habitacion.getCamasMatrimoniales() == 0) {

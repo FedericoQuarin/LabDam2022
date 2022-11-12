@@ -163,9 +163,18 @@
             </androidx.cardview.widget.CardView>
 
             <FrameLayout
-                android:id="@+id/frameLayout"
+                android:id="@+id/frameLayoutDetalleDepto"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
+
+            <FrameLayout
+                android:id="@+id/frameLayoutDetalleHotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
