@@ -16,6 +16,7 @@ import com.mdgz.dam.labdam2022.databinding.RecyclerViewBusquedaAlojamientosBindi
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 
 import java.util.List;
+import java.util.UUID;
 
 public class AlojamientoRecyclerAdapter
         extends RecyclerView.Adapter<AlojamientoRecyclerAdapter.AlojamientoViewHolder> {
@@ -30,7 +31,7 @@ public class AlojamientoRecyclerAdapter
     }
 
     public class AlojamientoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        CardView card;
+        public CardView card;
         TextView titulo;
         TextView capacidad;
         TextView precio;
@@ -50,15 +51,13 @@ public class AlojamientoRecyclerAdapter
             this.imagen = binding.imagenAlojamiento;
             this.botonFavorito = binding.buttonFavorito;
 
-            //this.itemView.setOnClickListener(this);
-            //this.imagen.setOnClickListener(this);   //TODO: Por ahora sólo aprentando en la imagen
             this.card.setOnClickListener(this);
             this.onNoteListener = onNoteListener;
         }
 
         @Override
         public void onClick(View v) {
-            this.onNoteListener.onNoteClick(alojamientos.get(getAdapterPosition()).getId());
+            this.onNoteListener.onNoteClick(getBindingAdapterPosition(), alojamientos.get(getBindingAdapterPosition()).getId());
         }
     }
 
@@ -82,7 +81,7 @@ public class AlojamientoRecyclerAdapter
         if (alojamiento.getCapacidad() == 1) alojamientoHolder.capacidad.setText("1 persona");
         else alojamientoHolder.capacidad.setText(alojamiento.getCapacidad() + " personas");
         alojamientoHolder.precio.setText("$" + alojamiento.getPrecioBase());
-        alojamientoHolder.imagen.setImageResource(R.drawable.depto_prueba);
+        alojamientoHolder.imagen.setImageResource(R.drawable.hotel_lp_012_1200x498);
 
         if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
 
@@ -94,6 +93,8 @@ public class AlojamientoRecyclerAdapter
 
         });
 
+        alojamientoHolder.card.setTransitionName(alojamiento.getId().toString());
+
     }
 
     @Override
@@ -102,6 +103,6 @@ public class AlojamientoRecyclerAdapter
     }
 
     public interface OnNoteListener{
-        void onNoteClick(int idAlojamiento);
+        void onNoteClick(int posicion, UUID idAlojamiento);
     }
 }

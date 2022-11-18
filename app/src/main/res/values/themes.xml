@@ -5,39 +5,84 @@
         <item name="colorPrimary">@color/red</item>
         <item name="colorPrimaryVariant">@color/dark_red</item>
         <item name="colorOnPrimary">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
+        <!--item name="android:textColorPrimary">?attr/colorOnPrimary</item-->
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/red</item>
         <item name="colorSecondaryVariant">@color/dark_red</item>
         <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
+
+        <!-- ToolBar -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="toolbarSurfaceStyle">?attr/colorPrimary</item>
+        <item name="toolbarStyle">@style/Widget.LabDam2022.Toolbar</item>
+
         <!-- Customize your theme here. -->
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/black</item>
 
-        <item name="android:textColor">@color/black</item>
-        <item name="android:editTextColor">?android:textColor</item>
-
-        <item name="android:windowBackground">@color/white_red</item>
+        <item name="backgroundColor">@color/white_red</item>
+        <item name="android:colorBackground">?attr/backgroundColor</item>
         
         <item name="fontFamily">@font/nunito_regular</item>
 
+        <!-- Estilos personalizados seteados" -->
         <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
+        <item name="borderlessButtonStyle">@style/Widget.LabDam2022.Button.TextButton</item>
+
+        <item name="android:textViewStyle">@style/Widget.LabDam2022.TextView</item>
+
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.LabDam2022.BottomSheetDialog</item>
+
     </style>
 
+    <!-- Estilos -->
+    <style name="Widget.LabDam2022.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.LabDam2022.Toolbar</item>
+    </style>
+
+    <style name="ThemeOverlay.LabDam2022.Toolbar" parent="">
+        <item name="colorControlNormal">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="Widget.LabDam2022.TextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_color_lightmode</item>
+    </style>
+    
     <style name="Widget.LabDam2022.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="drawableTint">?attr/colorPrimary</item>
     </style>
 
     <style name="Widget.LabDam2022.ImageView" parent="">
         <item name="tint">?attr/colorOnSurface</item>
     </style>
 
+    <style name="Widget.LabDam2022.LabelWithDrawable" parent="Widget.AppCompat.TextView">
+        <item name="drawableTint">?attr/colorOnSurface</item>
+    </style>
+
     <style name="Widget.LabDam2022.ButtonFavorito" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
         <item name="buttonTint">@color/red</item>
         <item name="android:button">@drawable/corazon_vacio</item>
     </style>
+
+    <style name="Widget.LabDam2022.TextOnOutlinedButton" parent="">
+        <item name="android:tint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="Widget.LabDam2022.RoundCorner" parent="">
+        <item name="android:background">@drawable/roundcorner_red</item>
+    </style>
+
+    <style name="ThemeOverlay.LabDam2022.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+    
+    <style name="Widget.LabDam2022.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+
 </resources>

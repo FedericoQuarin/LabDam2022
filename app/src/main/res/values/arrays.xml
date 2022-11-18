@@ -1,0 +1,39 @@
+<resources>
+    <string-array name="formasPagos_entries">
+        <item>Efectivo</item>
+        <item>Tarjeta de crédito</item>
+        <item>Tarjeta de débito</item>
+        <item>Transferencia por CBU</item>
+    </string-array>
+
+    <string-array name="formasPagos_values">
+        <item>efectivo</item>
+        <item>tarjeta_de_crédito</item>
+        <item>tarjeta_de_débito</item>
+        <item>transferencia_por_CBU</item>
+    </string-array>
+
+    <string-array name="temaOscuro_entries">
+        <item>Desactivado</item>
+        <item>Activado</item>
+        <item>Usar la configuración del dispositivo</item>
+    </string-array>
+
+    <string-array name="temaOscuro_values">
+        <item>desactivado</item>
+        <item>activado</item>
+        <item>configuración_dispositivo</item>
+    </string-array>
+
+    <string-array name="monedaPreferida_entries">
+        <item>Pesos</item>
+        <item>Dólares</item>
+        <item>Euros</item>
+    </string-array>
+
+    <string-array name="monedaPreferida_values">
+        <item>pesos</item>
+        <item>dolares</item>
+        <item>euros</item>
+    </string-array>
+</resources>

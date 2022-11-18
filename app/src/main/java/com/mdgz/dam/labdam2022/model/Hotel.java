@@ -1,28 +1,30 @@
 package com.mdgz.dam.labdam2022.model;
 
-public class Hotel {
-    Integer id;
-    String nombre;
-    Integer categoria;
-    Ubicacion ubicacion;
+import java.util.UUID;
 
-    public Hotel(){
-        super();
+public class Hotel {
+
+    private UUID id;
+    private String nombre;
+    private Integer categoria;
+    private Ubicacion ubicacion;
+
+    public Hotel(String nombre, Integer categoria, Ubicacion ubicacion) {
+        this.id = UUID.randomUUID();
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.ubicacion = ubicacion;
     }
 
-    public Hotel(Integer id, String nombre, Integer categoria, Ubicacion ubicacion) {
+    public Hotel(UUID id, String nombre, Integer categoria, Ubicacion ubicacion) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
         this.ubicacion = ubicacion;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -47,5 +49,15 @@ public class Hotel {
 
     public void setUbicacion(Ubicacion ubicacion) {
         this.ubicacion = ubicacion;
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", categoria=" + categoria +
+                ", ubicacion=" + ubicacion +
+                '}';
     }
 }

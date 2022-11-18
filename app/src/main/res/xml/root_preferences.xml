@@ -1,0 +1,70 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="General">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="notificaciones"
+            android:title="Notificaciones" />
+        <ListPreference
+            app:defaultValue="desactivado"
+            app:entries="@array/temaOscuro_entries"
+            app:entryValues="@array/temaOscuro_values"
+            app:key="tema"
+            app:title="Modo oscuro"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Cuenta">
+
+        <EditTextPreference
+            android:key="email"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Dirección de correo"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            android:key="cuit"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="CUIT"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="efectivo"
+            app:entries="@array/formasPagos_entries"
+            app:entryValues="@array/formasPagos_values"
+            app:key="pagoPreferido"
+            app:title="Metodo de pago preferido"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="pesos"
+            app:entries="@array/monedaPreferida_entries"
+            app:entryValues="@array/monedaPreferida_values"
+            app:key="monedaPreferida"
+            app:title="Moneda preferida"
+            app:summary=""
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Privacidad">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="guardarInformacion"
+            android:title="Guardar información"
+            android:summary="Autorizar guardado de información sobre el uso de la aplicación"/>
+
+        <Preference
+            android:key="logs"
+            android:title="Ver información guardada"
+            app:dependency="guardarInformacion" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

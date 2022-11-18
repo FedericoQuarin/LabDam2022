@@ -4,4 +4,41 @@
     <string name="form_busqueda">FORMULARIO busqueda fragment</string>
     <string name="detalle_alojamiento">DETALLE alojamiento fragment</string>
     <string name="precio_por_dia">Precio por día</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Campos de mis reservas -->
+    <string name="id_reserva">Reserva: </string>
+    <string name="nombre_alojamiento"><u>Nombre del alojamiento</u>: </string>
+    <string name="cantidad_personas"><u>Cantidad de personas</u>: </string>
+    <string name="direccion"><u>Dirección</u>: </string>
+    <string name="precio_final"><u>Precio final</u>: </string>
+
+    <!-- Campos del log -->
+    <string name="tituloTimestamp"><u>Timestmap</u>: </string>
+    <string name="titloCriteriosDeBusqueda"><u>Criterios de búsqueda</u>: </string>
+    <string name="tituloCantidadDeResultados"><u>Cantidad de resultados</u>: </string>
+    <string name="tituloTiempoDeBusqueda"><u>Tiempo de búsqueda</u>: </string>
+
+    <!-- Texto de botones -->
+    <string name="button_ver_mas_descripcion">Ver mas</string>
+    <string name="button_ver_menos_descripcion">Ver menos</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <!-- misc -->
+    <string name="lorem_ipsum_250b">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum suscipit mauris. Praesent imperdiet ultrices euismod. Morbi purus enim, fringilla eget luctus sit amet, suscipit a est. Mauris at egestas risus. Vestibulum porttitor mi id odio cras.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

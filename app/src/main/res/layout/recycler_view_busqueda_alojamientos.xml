@@ -9,29 +9,30 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/card_resultados"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        app:cardBackgroundColor="?attr/colorSurface"
         android:foreground="?attr/selectableItemBackgroundBorderless"
+        app:cardBackgroundColor="?attr/colorSurface"
         app:cardCornerRadius="10dp"
         app:cardElevation="1dp"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/imagenAlojamiento"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                tools:srcCompat="@drawable/depto_prueba" />
+                android:scaleType="centerCrop"
+                tools:srcCompat="@drawable/hotel_lp_012_1200x498" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp">
@@ -51,10 +52,10 @@
 
                     <CheckBox
                         android:id="@+id/buttonFavorito"
+                        style="@style/Widget.LabDam2022.ButtonFavorito"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:minHeight="0dp"
-                        style="@style/Widget.LabDam2022.ButtonFavorito" />
+                        android:minHeight="0dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -80,7 +81,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0"
-                        android:paddingEnd="10dp"
                         android:text="CapacidadDpto" />
 
                     <TextView

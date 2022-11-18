@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="seekbar_capacidad_def_value">2</integer>
+    <dimen name="padding_linear_layout">10dp</dimen>
 </resources>

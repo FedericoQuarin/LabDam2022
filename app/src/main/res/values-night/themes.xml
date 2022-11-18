@@ -5,34 +5,63 @@
         <item name="colorPrimary">@color/red</item>
         <item name="colorPrimaryVariant">@color/dark_red</item>
         <item name="colorOnPrimary">@color/white_alpha90</item>
-        <item name="android:textColorPrimary">@color/white_alpha90</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/red</item>
         <item name="colorSecondaryVariant">@color/dark_red</item>
         <item name="colorOnSecondary">@color/white_alpha90</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?android:colorBackground</item>
-        <item name="toolbarSurfaceStyle">?attr/colorSurface</item>
-        <!-- Customize your theme here. -->
-        <item name="android:colorBackground">@color/gray_darkmode</item>
+
+        <!-- Surface color -->
         <item name="colorSurface">@color/gray_surface_darkmode</item>
         <item name="colorOnSurface">@color/white_alpha90</item>
 
-        <item name="android:textColor">@color/white_alpha90</item>
+        <item name="backgroundColor">@color/gray_darkmode</item>
+        <item name="android:colorBackground">?attr/backgroundColor</item>
 
-        <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?android:colorBackground</item>
+        <item name="toolbarStyle">@style/Widget.LabDam2022.Toolbar</item>
 
         <item name="fontFamily">@font/nunito_regular</item>
+
+        <!-- Estilos personalizados seteados -->
+        <item name="materialButtonOutlinedStyle">@style/Widget.LabDam2022.Button.OutlinedButton</item>
+        <item name="borderlessButtonStyle">@style/Widget.LabDam2022.Button.TextButton</item>
+
+        <item name="android:textViewStyle">@style/Widget.LabDam2022.TextView</item>
+
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.LabDam2022.BottomSheetDialog</item>
+    </style>
+
+
+
+    <!-- Estilos -->
+    <style name="Widget.LabDam2022.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.LabDam2022.Toolbar</item>
+        <item name="titleTextColor">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="ThemeOverlay.LabDam2022.Toolbar" parent="">
+        <item name="colorControlNormal">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.LabDam2022.TextView" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_color_darkmode</item>
     </style>
 
     <style name="Widget.LabDam2022.Button.OutlinedButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:textColor">?android:textColorPrimary</item>
         <item name="strokeColor">?android:textColorPrimary</item>
         <item name="rippleColor">@color/white_alpha15</item>
+        <item name="drawableTint">?android:textColorPrimary</item>
     </style>
 
     <style name="Widget.LabDam2022.ImageView" parent="">
-        <item name="tint">@color/white_alpha75</item>
+        <item name="tint">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.LabDam2022.labelWithDrawable" parent="Widget.AppCompat.TextView">
+        <item name="drawableTint">?attr/colorOnSurface</item>
     </style>
 
     <style name="Widget.LabDam2022.ButtonFavorito" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
@@ -40,4 +69,22 @@
         <item name="android:button">@drawable/corazon_vacio</item>
         <item name="android:background">@drawable/ripple_favorito</item>
     </style>
+
+    <style name="Widget.LabDam2022.TextOnOutlinedButton" parent="">
+        <item name="android:tint">?android:textColorPrimary</item>
+    </style>
+
+    <style name="Widget.LabDam2022.RoundCorner" parent="">
+        <item name="android:background">@drawable/roundcorner_white</item>
+    </style>
+
+    <style name="ThemeOverlay.LabDam2022.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
+    <style name="Widget.LabDam2022.Button.TextButton" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">?android:textColorPrimary</item>
+        <item name="rippleColor">@color/white_alpha15</item>
+    </style>
+
 </resources>

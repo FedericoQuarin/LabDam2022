@@ -1,24 +1,27 @@
 package com.mdgz.dam.labdam2022.model;
 
+import java.util.UUID;
+
 public class Ciudad {
-    Integer id;
-    String nombre;
-    String abreviatura;
 
-    public Ciudad(){}
+    private UUID id;
+    private String nombre;
+    private String abreviatura;
 
-    public Ciudad(Integer id, String nombre, String abreviatura) {
+    public Ciudad(String nombre, String abreviatura) {
+        this.id = UUID.randomUUID();
+        this.nombre = nombre;
+        this.abreviatura = abreviatura;
+    }
+
+    public Ciudad(UUID id, String nombre, String abreviatura) {
         this.id = id;
         this.nombre = nombre;
         this.abreviatura = abreviatura;
     }
 
-    public Integer getId() {
+    public UUID getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getNombre() {
@@ -39,6 +42,10 @@ public class Ciudad {
 
     @Override
     public String toString() {
-        return this.nombre;
+        return "Ciudad{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", abreviatura='" + abreviatura + '\'' +
+                '}';
     }
 }
