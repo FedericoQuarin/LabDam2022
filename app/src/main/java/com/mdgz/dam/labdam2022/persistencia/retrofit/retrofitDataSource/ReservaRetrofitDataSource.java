@@ -17,7 +17,7 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class ReservaRetrofitDataSource implements ReservaDataSource {
-    final private ReservaRest reservaRest;
+    private ReservaRest reservaRest;
 
     public ReservaRetrofitDataSource() {
         RetrofitConfig retrofitConfig = RetrofitConfig.getInstance();
@@ -31,7 +31,16 @@ public class ReservaRetrofitDataSource implements ReservaDataSource {
         Response<Reserva> res = null;
         try {
             res = call.execute();
-            if (!res.isSuccessful()) Log.e("ReservaRetrofit", "Fallo guardar reserva");
+            if (res.isSuccessful()) {
+                callback.onSuccess(res.body());
+            }
+            else {
+                callback.onError(new Throwable(call.request().url().toString() + "\n"
+                        + res.code() + "\n"
+                        + call.request().header("Authorization") + "\n"
+                        + call.request().header("Content-Type") + "\n"
+                        + call.request().toString()));
+            }
         } catch (IOException e) {
             callback.onError(e);
         }

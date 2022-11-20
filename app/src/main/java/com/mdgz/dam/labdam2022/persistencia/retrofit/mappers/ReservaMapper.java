@@ -5,7 +5,7 @@ import com.mdgz.dam.labdam2022.persistencia.retrofit.entities.ReservaEntity;
 
 public class ReservaMapper {
     public static Reserva toModelClass(ReservaEntity entity) {
-        Reserva reserva = new Reserva(entity.getUsuarioID(),
+        Reserva reserva = new Reserva(entity.getUsuarioId(),
                 entity.getFechaIngreso(),
                 entity.getFechaSalida(),
                 null,

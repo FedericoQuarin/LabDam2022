@@ -11,6 +11,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -21,14 +22,21 @@ public class RetrofitConfig {
     private static RetrofitConfig instance;
 
     private RetrofitConfig() {
-        Gson gson = new GsonBuilder().setLenient().create();
+        Gson gson = new GsonBuilder().setLenient().setDateFormat("yyyy-MM-dd'T'HH:mm:ss").create();
 
-        OkHttpClient httpClient = new OkHttpClient();
-        httpClient.networkInterceptors().add(chain -> {
-            Request.Builder requestBuilder = chain.request().newBuilder();
-            requestBuilder.header("Authorization", authorization);
-            return chain.proceed(requestBuilder.build());
-        });
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.HEADERS);
+
+
+        OkHttpClient httpClient = new OkHttpClient.Builder()
+                .addInterceptor(chain -> {
+                    Request.Builder requestBuilder = chain.request().newBuilder();
+                    requestBuilder.header("Authorization", authorization);
+                    requestBuilder.header("Content-Type", "application/json");
+                    return chain.proceed(requestBuilder.build());
+                })
+                .addInterceptor(logging)
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseURL)

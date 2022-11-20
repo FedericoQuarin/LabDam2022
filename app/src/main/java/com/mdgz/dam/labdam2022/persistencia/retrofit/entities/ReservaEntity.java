@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.UUID;
 
 public class ReservaEntity {
-    private UUID alojamientoID;
-    private UUID usuarioID;
+    private UUID alojamientoId;
+    private UUID usuarioId;
     private Date fechaIngreso;
     private Date fechaSalida;
 
@@ -13,27 +13,27 @@ public class ReservaEntity {
 
     }
 
-    public ReservaEntity(UUID alojamientoID, UUID usuarioID, Date fechaIngreso, Date fechaSalida) {
-        this.alojamientoID = alojamientoID;
-        this.usuarioID = usuarioID;
+    public ReservaEntity(UUID alojamientoId, UUID usuarioId, Date fechaIngreso, Date fechaSalida) {
+        this.alojamientoId = alojamientoId;
+        this.usuarioId = usuarioId;
         this.fechaIngreso = fechaIngreso;
         this.fechaSalida = fechaSalida;
     }
 
-    public UUID getAlojamientoID() {
-        return alojamientoID;
+    public UUID getAlojamientoId() {
+        return alojamientoId;
     }
 
-    public void setAlojamientoID(UUID alojamientoID) {
-        this.alojamientoID = alojamientoID;
+    public void setAlojamientoId(UUID alojamientoId) {
+        this.alojamientoId = alojamientoId;
     }
 
-    public UUID getUsuarioID() {
-        return usuarioID;
+    public UUID getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setUsuarioID(UUID usuarioID) {
-        this.usuarioID = usuarioID;
+    public void setUsuarioId(UUID usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public Date getFechaIngreso() {
