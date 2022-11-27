@@ -7,6 +7,7 @@ import com.mdgz.dam.labdam2022.persistencia.retrofit.RetrofitConfig;
 import com.mdgz.dam.labdam2022.persistencia.retrofit.mappers.ReservaMapper;
 import com.mdgz.dam.labdam2022.persistencia.retrofit.entities.ReservaEntity;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -96,4 +97,10 @@ public class ReservaRestTest {
             if (r.getAlojamientoId().equals(idAlojamiento)) Assert.fail("No se borro la reserva");
         }
     }
+
+    @AfterClass
+    public static void finish() {
+        reservaRest = null;
+    }
+
 }

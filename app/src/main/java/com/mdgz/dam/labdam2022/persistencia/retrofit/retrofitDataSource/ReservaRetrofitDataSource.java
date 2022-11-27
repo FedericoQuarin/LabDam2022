@@ -1,6 +1,7 @@
 package com.mdgz.dam.labdam2022.persistencia.retrofit.retrofitDataSource;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.mdgz.dam.labdam2022.exceptions.EntidadNoEncontradaException;
 import com.mdgz.dam.labdam2022.exceptions.ProblemaConApiException;
@@ -21,6 +22,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
+import kotlin.NotImplementedError;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -47,7 +50,20 @@ public class ReservaRetrofitDataSource implements ReservaDataSource {
 
     @Override
     public void guardarReserva(Reserva reserva, OnResult<Reserva> callback) {
-        //Call<ReservaEntity>
+        Call<ReservaEntity> reservaEntityCall = reservaRest.guardarReserva(ReservaMapper.toEntity(reserva));
+        try {
+            Response<ReservaEntity> response = reservaEntityCall.execute();
+
+            if (response.isSuccessful()) {
+                callback.onSuccess(reserva);
+            }
+            else {
+                callback.onError(new ProblemaConApiException(response.code()));
+            }
+        }
+        catch (IOException exc) {
+            callback.onError(exc);
+        }
     }
 
     // Este metodo devuelve todas las reservas existentes para un usuario dado
@@ -124,6 +140,21 @@ public class ReservaRetrofitDataSource implements ReservaDataSource {
 
     @Override
     public void eliminarReserva(UUID id, OnResult<Reserva> callback) {
+        Call<ResponseBody> eliminarCall = reservaRest.eliminarReserva(id);
+        try {
+            Response<ResponseBody> response = eliminarCall.execute();
 
+            if (response.isSuccessful()) {
+                callback.onSuccess(null);
+            }
+            else {
+                callback.onError(new ProblemaConApiException(response.code()));
+            }
+        }
+        catch (IOException exc) {
+            callback.onError(exc);
+        }
+        //Log.e("ReservaRetofitDS", "Metodo eliminarReserva no implementado");
+        //callback.onError(new NotImplementedError());
     }
 }
