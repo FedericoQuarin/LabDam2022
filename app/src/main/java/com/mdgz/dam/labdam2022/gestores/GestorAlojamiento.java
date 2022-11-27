@@ -5,7 +5,7 @@ import android.content.Context;
 import com.mdgz.dam.labdam2022.exceptions.EntidadNoEncontradaException;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.OnResult;
-import com.mdgz.dam.labdam2022.persistencia.factory.AlojamientoRepositoryFactory;
+import com.mdgz.dam.labdam2022.persistencia.factories.AlojamientoRepositoryFactory;
 import com.mdgz.dam.labdam2022.persistencia.repositories.AlojamientoRepository;
 
 import java.util.ArrayList;

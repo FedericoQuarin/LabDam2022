@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.mdgz.dam.labdam2022.persistencia.factory.AlojamientoRepositoryFactory;
+import com.mdgz.dam.labdam2022.persistencia.factories.AlojamientoRepositoryFactory;
 import com.mdgz.dam.labdam2022.persistencia.repositories.AlojamientoRepository;
 import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
 

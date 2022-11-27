@@ -17,10 +17,10 @@ import retrofit2.http.Query;
 
 public interface ReservaRest {
     @POST("reserva")
-    Call<Reserva> guardarReserva(@Body ReservaEntity reserva);
+    Call<ReservaEntity> guardarReserva(@Body ReservaEntity reserva);
 
     @GET("reserva")
-    Call<List<Reserva>> buscarReservas();
+    Call<List<ReservaEntity>> buscarReservas();
 
     @DELETE("reserva")
     Call<ResponseBody> eliminarReserva(@Query("alojamientoId") UUID alojamientoId);

@@ -15,5 +15,6 @@ public interface ReservaDataSource {
 
     void guardarReserva(final Reserva reserva, final OnResult<Reserva> callback);
     void recuperarReservas(final OnResult<List<Reserva>> callback);
-    void recuperarReserva(final UUID id, final OnResult<List<Reserva>> callback);
+    void recuperarReserva(final UUID id, final OnResult<Reserva> callback);
+    void eliminarReserva(final UUID id, final OnResult<Reserva> callback);
 }

@@ -19,7 +19,12 @@ public class ReservaRoomDataSource implements ReservaDataSource {
     }
 
     @Override
-    public void recuperarReserva(UUID id, OnResult<List<Reserva>> callback) {
+    public void eliminarReserva(UUID id, OnResult<Reserva> callback) {
+
+    }
+
+    @Override
+    public void recuperarReserva(UUID id, OnResult<Reserva> callback) {
 
     }
 }

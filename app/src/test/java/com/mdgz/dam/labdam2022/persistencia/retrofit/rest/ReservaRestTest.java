@@ -5,6 +5,7 @@ import com.mdgz.dam.labdam2022.model.Reserva;
 import com.mdgz.dam.labdam2022.model.Usuario;
 import com.mdgz.dam.labdam2022.persistencia.retrofit.RetrofitConfig;
 import com.mdgz.dam.labdam2022.persistencia.retrofit.mappers.ReservaMapper;
+import com.mdgz.dam.labdam2022.persistencia.retrofit.entities.ReservaEntity;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -30,8 +31,8 @@ public class ReservaRestTest {
 
     @Test
     public void buscarReservas() throws IOException {
-        Call<List<Reserva>> reservaCall = reservaRest.buscarReservas();
-        Response<List<Reserva>> response = reservaCall.execute();
+        Call<List<ReservaEntity>> reservaCall = reservaRest.buscarReservas();
+        Response<List<ReservaEntity>> response = reservaCall.execute();
         if (response.isSuccessful()) {
             System.out.println(response.body());
         } else {
@@ -42,14 +43,14 @@ public class ReservaRestTest {
     @Test
     public void guardarReserva() throws IOException {
         Reserva reserva = new Reserva(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)),
-                Date.from(LocalDateTime.of(2022, 11, 29, 12, 0).toInstant(ZoneOffset.UTC)),
+                Date.from(LocalDateTime.of(2022, 11, 29, 12, 0, 1).toInstant(ZoneOffset.UTC)),
                 1,
                 100.0,
                 new Departamento(),
                 new Usuario());
 
-        Call<Reserva> reservaCall = reservaRest.guardarReserva(ReservaMapper.toEntity(reserva));
-        Response<Reserva> response = reservaCall.execute();
+        Call<ReservaEntity> reservaCall = reservaRest.guardarReserva(ReservaMapper.toEntity(reserva));
+        Response<ReservaEntity> response = reservaCall.execute();
         if (response.isSuccessful()) {
             System.out.println(response.body());
         } else {
@@ -64,14 +65,14 @@ public class ReservaRestTest {
         UUID idAlojamiento = departamento.getId();
 
         Reserva reserva = new Reserva(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)),
-                Date.from(LocalDateTime.of(2022, 11, 29, 12, 0).toInstant(ZoneOffset.UTC)),
+                Date.from(LocalDateTime.of(2022, 11, 29, 12, 0, 1).toInstant(ZoneOffset.UTC)),
                 1,
                 100.0,
                 departamento,
                 new Usuario());
 
-        Call<Reserva> guardarReservaCall = reservaRest.guardarReserva(ReservaMapper.toEntity(reserva));
-        Response<Reserva> guardarReservaResponse = guardarReservaCall.execute();
+        Call<ReservaEntity> guardarReservaCall = reservaRest.guardarReserva(ReservaMapper.toEntity(reserva));
+        Response<ReservaEntity> guardarReservaResponse = guardarReservaCall.execute();
 
         if (!guardarReservaResponse.isSuccessful()) Assert.fail("Fallo guardarReserva");
 
@@ -88,11 +89,11 @@ public class ReservaRestTest {
             Assert.fail("No se pudo borrar la reserva. Codigo: " + borrarReservaResponse.code());
         }
 
-        Call<List<Reserva>> buscarReservaCall = reservaRest.buscarReservas();
-        List<Reserva> reservas = buscarReservaCall.execute().body();
+        Call<List<ReservaEntity>> buscarReservaCall = reservaRest.buscarReservas();
+        List<ReservaEntity> reservas = buscarReservaCall.execute().body();
 
-        for (Reserva r : reservas) {
-            if (r.getId().equals(idAlojamiento)) Assert.fail("No se borro la reserva");
+        for (ReservaEntity r : reservas) {
+            if (r.getAlojamientoId().equals(idAlojamiento)) Assert.fail("No se borro la reserva");
         }
     }
 }

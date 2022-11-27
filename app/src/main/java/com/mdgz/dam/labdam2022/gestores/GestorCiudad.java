@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.OnResult;
-import com.mdgz.dam.labdam2022.persistencia.factory.CiudadRepositoryFactory;
+import com.mdgz.dam.labdam2022.persistencia.factories.CiudadRepositoryFactory;
 import com.mdgz.dam.labdam2022.persistencia.repositories.CiudadRepository;
 
 import java.util.ArrayList;
