@@ -1,5 +1,7 @@
 package com.mdgz.dam.labdam2022.viewModels;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -20,10 +22,12 @@ public class DetalleAlojamientoViewModel extends ViewModel implements OnResult<A
 
     private MutableLiveData<Alojamiento> _alojamiento = new MutableLiveData<>();
     public LiveData<Alojamiento> alojamiento = _alojamiento;
-    private MutableLiveData<Throwable> _error = new MutableLiveData<>();
-    public LiveData<Throwable> error = _error;
+    private MutableLiveData<Throwable> _errorBusquedaAlojamiento = new MutableLiveData<>();
+    public LiveData<Throwable> errorBusquedaAlojamiento = _errorBusquedaAlojamiento;
     private MutableLiveData<Boolean> _reservaExitosa = new MutableLiveData<>();
     public LiveData<Boolean> reservaExitosa = _reservaExitosa;
+    private MutableLiveData<Throwable> _errorReservar = new MutableLiveData<>();
+    public LiveData<Throwable> errorReservar = _errorReservar;
 
     public DetalleAlojamientoViewModel(final AlojamientoRepository alojamientoRepository,
                                        final ReservaRepository reservaRepository) {
@@ -53,10 +57,14 @@ public class DetalleAlojamientoViewModel extends ViewModel implements OnResult<A
 
                 @Override
                 public void onError(Throwable exception) {
-                    _error.postValue(exception);
+                    _errorReservar.postValue(exception);
                 }
             });
         }).start();
+    }
+
+    public void observadoErrorReservar() {
+        _errorReservar.postValue(null);
     }
 
     @Override
@@ -66,6 +74,6 @@ public class DetalleAlojamientoViewModel extends ViewModel implements OnResult<A
 
     @Override
     public void onError(Throwable exception) {
-        _error.postValue(exception);
+        _errorBusquedaAlojamiento.postValue(exception);
     }
 }

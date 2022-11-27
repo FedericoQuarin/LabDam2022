@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +20,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.MaterialContainerTransform;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoDeptoBinding;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoHotelBinding;
@@ -180,8 +183,11 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
         });
 
-        viewModel.error.observe(getViewLifecycleOwner(), throwable -> {
-            throwable.printStackTrace();
+        viewModel.errorReservar.observe(getViewLifecycleOwner(), throwable -> {
+            if (throwable != null) {
+                snackbarReservaFallida(fragmentView);
+                viewModel.observadoErrorReservar();
+            }
         });
 
         botonFecha.setOnClickListener(v -> {
@@ -290,6 +296,13 @@ public class DetalleAlojamientoFragment extends Fragment {
         botonMas.setOnClickListener(v -> sumarCantidadPersonas());
 
         botonReservar.setOnClickListener(v -> logicaReservar());
+    }
+
+    public void snackbarReservaFallida(View view) {
+        Snackbar snackbar = Snackbar.make(view,"Error. No se pudo registrar su reserva.", Snackbar.LENGTH_LONG)
+                .setDuration(3000)
+                .setAnchorView(binding.bottomAppBar);
+        snackbar.show();
     }
 
     // Actualiza el texto del boton "Fecha de reserva" cuando se selecciona una fecha
