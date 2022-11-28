@@ -48,6 +48,7 @@ import com.mdgz.dam.labdam2022.persistencia.room.roomDataSource.HotelRoomDataSou
 import com.mdgz.dam.labdam2022.persistencia.room.roomDataSource.UbicacionRoomDataSource;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -168,6 +169,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                     rosario);
 
             final Departamento depto1 = new Departamento(
+                    UUID.fromString("77969e64-7291-4a32-b648-ca0364007e83"),
                     "Depto1",
                     "Un depto",
                     3,
@@ -178,6 +180,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                     ubicacion1,
                     false);
             final Departamento depto2 = new Departamento(
+                    UUID.fromString("4adc5326-2c5b-4440-a472-d146998deced"),
                     "Depto2",
                     "Un depto",
                     4,
@@ -188,6 +191,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                     ubicacion1,
                     false);
             final Departamento depto3 = new Departamento(
+                    UUID.fromString("36028e3f-3dc7-4b85-9d27-bbb2bc6702a9"),
                     "Depto3",
                     "Un depto",
                     6,
@@ -204,6 +208,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                     ubicacion2);
 
             final Habitacion habitacion1 = new Habitacion(
+                    UUID.fromString("c884754c-c1c8-4d19-ab7f-615e41e64f20"),
                     "Habitacion1",
                     "Descripcion",
                     3,
@@ -215,6 +220,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                     false);
 
             final Habitacion habitacion2 = new Habitacion(
+                    UUID.fromString("8c480cdf-6462-4e58-a059-cd6d73d0f13a"),
                     "Habitacion2",
                     "Descripcion",
                     2,
@@ -225,6 +231,7 @@ public abstract class LabDamDatabase extends RoomDatabase {
                     hotel,
                     false);
             final Habitacion habitacion3 = new Habitacion(
+                    UUID.fromString("aac90105-4c7e-4c08-9e0a-bce3de6eb3c5"),
                     "Habitacion3",
                     "Descripcion",
                     2,
