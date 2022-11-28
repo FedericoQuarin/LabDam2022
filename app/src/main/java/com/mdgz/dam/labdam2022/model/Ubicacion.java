@@ -75,13 +75,6 @@ public class Ubicacion {
 
     @Override
     public String toString() {
-        return "Ubicacion{" +
-                "id=" + id +
-                ", lat=" + lat +
-                ", lng=" + lng +
-                ", calle='" + calle + '\'' +
-                ", numero='" + numero + '\'' +
-                ", ciudad=" + ciudad +
-                '}';
+        return calle + " " + numero + ", " + ciudad.getNombre();
     }
 }
