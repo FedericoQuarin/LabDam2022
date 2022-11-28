@@ -84,6 +84,14 @@ public class MisReservasFragment extends Fragment {
             adapter = new ReservaRecyclerAdapter(reservas);
             recyclerView.setAdapter(adapter);
         });
+        viewModel.loading.observe(getViewLifecycleOwner(), loading -> {
+            if (loading) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+            }
+            else {
+                binding.progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
 }
