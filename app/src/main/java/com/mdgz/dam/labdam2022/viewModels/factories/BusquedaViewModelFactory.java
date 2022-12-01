@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.mdgz.dam.labdam2022.persistencia.factory.CiudadRepositoryFactory;
+import com.mdgz.dam.labdam2022.persistencia.factories.CiudadRepositoryFactory;
 import com.mdgz.dam.labdam2022.persistencia.repositories.CiudadRepository;
 import com.mdgz.dam.labdam2022.viewModels.BusquedaViewModel;
 

@@ -72,12 +72,9 @@ public class AlojamientoRecyclerAdapter
     @Override
     public void onBindViewHolder(AlojamientoViewHolder alojamientoHolder, int position) {
         Alojamiento alojamiento = this.alojamientos.get(position);
-        String ubicacion = alojamiento.getUbicacion().getCalle() + " "
-                         + alojamiento.getUbicacion().getNumero() + ", "
-                         + alojamiento.getUbicacion().getCiudad().getNombre();
 
         alojamientoHolder.titulo.setText(alojamiento.getTitulo());
-        alojamientoHolder.ubicacion.setText(ubicacion);
+        alojamientoHolder.ubicacion.setText(alojamiento.getUbicacion().toString());
         if (alojamiento.getCapacidad() == 1) alojamientoHolder.capacidad.setText("1 persona");
         else alojamientoHolder.capacidad.setText(alojamiento.getCapacidad() + " personas");
         alojamientoHolder.precio.setText("$" + alojamiento.getPrecioBase());

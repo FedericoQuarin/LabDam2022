@@ -12,6 +12,10 @@ public class Usuario {
     private List<Reserva> listaReservas;
     private List<Alojamiento> listaFavoritos;
 
+    public Usuario() {
+        id = UUID.randomUUID();
+    }
+
     public Usuario(String nombre, String email, List<Reserva> listaReservas, List<Alojamiento> listaFavoritos) {
         this.nombre = nombre;
         this.email = email;

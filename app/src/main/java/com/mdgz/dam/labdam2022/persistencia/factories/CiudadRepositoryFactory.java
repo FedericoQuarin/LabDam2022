@@ -1,4 +1,4 @@
-package com.mdgz.dam.labdam2022.persistencia.factory;
+package com.mdgz.dam.labdam2022.persistencia.factories;
 
 import android.content.Context;
 

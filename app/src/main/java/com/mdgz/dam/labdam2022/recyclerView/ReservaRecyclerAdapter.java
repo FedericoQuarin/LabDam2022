@@ -7,17 +7,20 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mdgz.dam.labdam2022.databinding.RecyclerViewMisReservasBinding;
+import com.mdgz.dam.labdam2022.model.Reserva;
+import com.mdgz.dam.labdam2022.model.Ubicacion;
+
+import java.util.List;
 
 public class ReservaRecyclerAdapter extends RecyclerView.Adapter<ReservaRecyclerAdapter.ReservaViewHolder> {
+    private List<Reserva> reservas;
 
-    public ReservaRecyclerAdapter(){
-
+    public ReservaRecyclerAdapter(List<Reserva> reservas){
+        this.reservas = reservas;
     }
 
     public static class ReservaViewHolder extends RecyclerView.ViewHolder{
-
         CardView card;
-        TextView IDReserva;
         TextView nombreAlojamiento;
         TextView cantidadPersonas;
         TextView direccion;
@@ -26,7 +29,6 @@ public class ReservaRecyclerAdapter extends RecyclerView.Adapter<ReservaRecycler
         public ReservaViewHolder(RecyclerViewMisReservasBinding binding){
             super(binding.getRoot());
             this.card = binding.cardReservas;
-            this.IDReserva = binding.txtViewIDReserva;
             this.nombreAlojamiento = binding.txtViewNombreAlojamiento;
             this.cantidadPersonas = binding.txtViewCantidadPersonas;
             this.direccion = binding.txtViewDireccion;
@@ -43,18 +45,17 @@ public class ReservaRecyclerAdapter extends RecyclerView.Adapter<ReservaRecycler
 
     @Override
     public void onBindViewHolder(ReservaRecyclerAdapter.ReservaViewHolder reservaHolder, int position) {
-        /*
-        reservaHolder.IDReserva.setText();
-        reservaHolder.nombreAlojamiento.setText();
-        reservaHolder.cantidadPersonas.setText();
-        reservaHolder.direccion.setText();
-        reservaHolder.precioFinal.setText();
-        */
+        Reserva reserva = reservas.get(position);
+
+        reservaHolder.nombreAlojamiento.setText(reserva.getAlojamiento().getTitulo());
+        reservaHolder.cantidadPersonas.setText(reserva.getCantidadPersonas().toString());
+        reservaHolder.direccion.setText(reserva.getAlojamiento().getUbicacion().toString());
+        reservaHolder.precioFinal.setText(reserva.getMonto().toString());
     }
 
     @Override
     public int getItemCount(){
 
-        return 1;
+        return reservas.size();
     }
 }

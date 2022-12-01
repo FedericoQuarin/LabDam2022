@@ -7,10 +7,18 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mdgz.dam.labdam2022.databinding.FragmentMisReservasBinding;
+import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 import com.mdgz.dam.labdam2022.recyclerView.ReservaRecyclerAdapter;
+import com.mdgz.dam.labdam2022.viewModels.MisReservasViewModel;
+import com.mdgz.dam.labdam2022.viewModels.ResultadoBusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewModels.factories.MisReservasViewModelFactory;
+import com.mdgz.dam.labdam2022.viewModels.factories.ResultadoBusquedaViewModelFactory;
+
+import java.util.ArrayList;
 
 public class MisReservasFragment extends Fragment {
 
@@ -20,6 +28,8 @@ public class MisReservasFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    private MisReservasViewModel viewModel;
 
     private FragmentMisReservasBinding binding;
 
@@ -63,10 +73,25 @@ public class MisReservasFragment extends Fragment {
         this.layoutManager = new LinearLayoutManager(view.getContext());
         this.recyclerView.setLayoutManager(layoutManager);
 
-        this.adapter = new ReservaRecyclerAdapter();
+        this.adapter = new ReservaRecyclerAdapter(new ArrayList<>());
         this.recyclerView.setAdapter(adapter);
 
         this.recyclerView.setClickable(false);
+
+        viewModel = new ViewModelProvider(this, new MisReservasViewModelFactory(getContext())).get(
+                MisReservasViewModel.class);
+        viewModel.listaReservas.observe(getViewLifecycleOwner(), reservas -> {
+            adapter = new ReservaRecyclerAdapter(reservas);
+            recyclerView.setAdapter(adapter);
+        });
+        viewModel.loading.observe(getViewLifecycleOwner(), loading -> {
+            if (loading) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+            }
+            else {
+                binding.progressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
 }

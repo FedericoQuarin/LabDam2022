@@ -21,9 +21,9 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="10dp"
-            android:paddingVertical="5dp">
+            android:paddingVertical="10dp">
 
-            <LinearLayout
+            <!--LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -35,7 +35,7 @@
                     android:layout_weight="1"
                     android:text="@string/id_reserva"
                     android:textAlignment="textEnd"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -45,9 +45,9 @@
                     android:layout_weight="1"
                     android:text="{id_reserva}"
                     android:textAlignment="textStart"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
-            </LinearLayout>
+            </LinearLayout-->
 
             <LinearLayout
                 android:layout_width="wrap_content"

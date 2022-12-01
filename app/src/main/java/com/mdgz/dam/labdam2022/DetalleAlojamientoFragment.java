@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +20,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.transition.MaterialContainerTransform;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoDeptoBinding;
 import com.mdgz.dam.labdam2022.databinding.DetalleAlojamientoHotelBinding;
@@ -31,11 +34,13 @@ import com.mdgz.dam.labdam2022.gestores.GestorReserva;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
+import com.mdgz.dam.labdam2022.model.Usuario;
 import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
 import com.mdgz.dam.labdam2022.viewModels.factories.DetalleAlojamientoViewModelFactory;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -72,6 +77,13 @@ public class DetalleAlojamientoFragment extends Fragment {
     private MaterialDatePicker<Pair<Long, Long>> materialDatePicker;
 
     private Integer tamDescripcionAcotada;
+
+    // TODO ver el tema de usuarios
+    final private Usuario usuario = new Usuario(UUID.fromString("34433635-b552-4b99-be2d-db8b820f0e21"),
+            "Pedrito",
+            "pedrito@gmail.com",
+            new ArrayList<>(),
+            new ArrayList<>());
 
     public DetalleAlojamientoFragment() {
         // Required empty public constructor
@@ -148,14 +160,35 @@ public class DetalleAlojamientoFragment extends Fragment {
         descripcion = binding.txtViewDescripcion;
         buttonMasDescripcion = binding.buttonMasDescripcion;
 
+        // Se busca ek correspondiente viewModel
         viewModel = new ViewModelProvider(this, new DetalleAlojamientoViewModelFactory(getContext())).get(
                 DetalleAlojamientoViewModel.class);
+        // Se setea el observer sobre el alojamiento
         viewModel.alojamiento.observe(getViewLifecycleOwner(), alojamiento -> {
             this.alojamiento = alojamiento;
             setearInfoAlojamiento();
         });
 
+        // Se busca el alojamiento
         viewModel.buscarAlojamiento(UUID.fromString(idAlojamiento));
+
+        // Se setea el observer sobre la variable reservaExitosa
+        viewModel.reservaExitosa.observe(getViewLifecycleOwner(), reservaExitosa -> {
+            if (reservaExitosa) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID
+
+                NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
+                        .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment, bundle);
+            }
+        });
+
+        viewModel.errorReservar.observe(getViewLifecycleOwner(), throwable -> {
+            if (throwable != null) {
+                snackbarReservaFallida(fragmentView);
+                viewModel.observadoErrorReservar();
+            }
+        });
 
         botonFecha.setOnClickListener(v -> {
             botonFecha.setClickable(false);
@@ -263,6 +296,13 @@ public class DetalleAlojamientoFragment extends Fragment {
         botonMas.setOnClickListener(v -> sumarCantidadPersonas());
 
         botonReservar.setOnClickListener(v -> logicaReservar());
+    }
+
+    public void snackbarReservaFallida(View view) {
+        Snackbar snackbar = Snackbar.make(view,"Error. No se pudo registrar su reserva.", Snackbar.LENGTH_LONG)
+                .setDuration(3000)
+                .setAnchorView(binding.bottomAppBar);
+        snackbar.show();
     }
 
     // Actualiza el texto del boton "Fecha de reserva" cuando se selecciona una fecha
@@ -381,15 +421,18 @@ public class DetalleAlojamientoFragment extends Fragment {
                 .setCancelable(false)
                 // Si se clickea "Confirmar" se crea la reserva y se vuelve a pantalla de busqueda
                 .setPositiveButton("Confirmar", (dialogInterface, i) -> {
-                    gestorReserva.crearReserva(Date.from(Instant.ofEpochMilli(periodoSeleccionado.first)),
+                    viewModel.crearReserva(Date.from(Instant.ofEpochMilli(periodoSeleccionado.first+1000)),
+                            Date.from(Instant.ofEpochMilli(periodoSeleccionado.second+1000)),
+                            cantidadPersonas, montoTotal, alojamiento, usuario);
+                    /*gestorReserva.crearReserva(Date.from(Instant.ofEpochMilli(periodoSeleccionado.first)),
                                                Date.from(Instant.ofEpochMilli(periodoSeleccionado.second)),
                                                cantidadPersonas, montoTotal, alojamiento, null);
-
-                    Bundle bundle = new Bundle();
+                    */
+                    /*Bundle bundle = new Bundle();
                     bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID
 
                     NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
-                            .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment, bundle);
+                            .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment, bundle);*/
                 })
                 // Si se clickea "No" se queda en la pantalla actual
                 .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.cancel());
