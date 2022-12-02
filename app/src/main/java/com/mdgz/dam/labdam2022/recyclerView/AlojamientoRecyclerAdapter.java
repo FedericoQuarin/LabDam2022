@@ -21,13 +21,18 @@ import java.util.UUID;
 public class AlojamientoRecyclerAdapter
         extends RecyclerView.Adapter<AlojamientoRecyclerAdapter.AlojamientoViewHolder> {
 
+    private final static Integer CAMBIADO_FAVORITOS = 1;
+
     private List<Alojamiento> alojamientos;
 
     private OnNoteListener onNoteListener;
+    private OnFavoriteChangedListener favoriteChangedListener;
 
     public AlojamientoRecyclerAdapter(List<Alojamiento> alojamientos, OnNoteListener onNoteListener){
         this.alojamientos = alojamientos;
         this.onNoteListener = onNoteListener;
+
+        this.favoriteChangedListener = (posicion, nuevoEstado) -> {};
     }
 
     public class AlojamientoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -68,6 +73,18 @@ public class AlojamientoRecyclerAdapter
                 .inflate(LayoutInflater.from(parent.getContext()), parent, false), this.onNoteListener);
     }
 
+    @Override
+    public void onBindViewHolder(@NonNull AlojamientoViewHolder alojamientoHolder, int position, @NonNull List<Object> payloads) {
+        if(!payloads.isEmpty()) {
+            if (payloads.get(0) instanceof Integer) {
+                if (payloads.get(0).equals(CAMBIADO_FAVORITOS)) {
+                    cambiarDrawableFavorito(alojamientoHolder, position);
+                }
+            }
+        }else {
+            super.onBindViewHolder(alojamientoHolder, position, payloads);
+        }
+    }
 
     @Override
     public void onBindViewHolder(AlojamientoViewHolder alojamientoHolder, int position) {
@@ -80,14 +97,10 @@ public class AlojamientoRecyclerAdapter
         alojamientoHolder.precio.setText("$" + alojamiento.getPrecioBase());
         alojamientoHolder.imagen.setImageResource(R.drawable.hotel_lp_012_1200x498);
 
-        if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
+        cambiarDrawableFavorito(alojamientoHolder, position);
 
         alojamientoHolder.botonFavorito.setOnClickListener((v) -> {
-            if(alojamiento.getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_vacio);
-            else alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
-
-            alojamiento.turnFavorito();
-
+            favoriteChangedListener.onChanged(position, !alojamiento.getEsFavorito());
         });
 
         alojamientoHolder.card.setTransitionName(alojamiento.getId().toString());
@@ -99,7 +112,31 @@ public class AlojamientoRecyclerAdapter
         return this.alojamientos.size();
     }
 
+
+    public void setData(List<Alojamiento> alojamientos) {
+        this.alojamientos = alojamientos;
+        notifyItemRangeChanged(0, alojamientos.size());
+    }
+
+    public void favoritoCambiado(int pos, boolean newValue) {
+        alojamientos.get(pos).setEsFavorito(newValue);
+        notifyItemChanged(pos, CAMBIADO_FAVORITOS);
+    }
+
     public interface OnNoteListener{
         void onNoteClick(int posicion, UUID idAlojamiento);
+    }
+
+    public interface OnFavoriteChangedListener {
+        void onChanged(int posicion, boolean nuevoEstado);
+    }
+
+    public void setOnFavoriteChangedListener(OnFavoriteChangedListener listener) {
+        this.favoriteChangedListener = listener;
+    }
+
+    private void cambiarDrawableFavorito(AlojamientoViewHolder alojamientoHolder, int position) {
+        if(alojamientos.get(position).getEsFavorito()) alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_lleno);
+        else alojamientoHolder.botonFavorito.setButtonDrawable(R.drawable.corazon_vacio);
     }
 }

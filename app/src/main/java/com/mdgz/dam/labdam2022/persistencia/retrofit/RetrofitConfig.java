@@ -3,6 +3,7 @@ package com.mdgz.dam.labdam2022.persistencia.retrofit;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mdgz.dam.labdam2022.R;
+import com.mdgz.dam.labdam2022.persistencia.retrofit.rest.FavoritoRest;
 import com.mdgz.dam.labdam2022.persistencia.retrofit.rest.ReservaRest;
 
 import java.io.IOException;
@@ -19,6 +20,7 @@ public class RetrofitConfig {
     final private String baseURL = "https://dam-recordatorio-favoritos-api.duckdns.org/";
     final private String authorization = "Basic Q2hvcnRRdWFyaW5SZXlub3NvOkNob3J0UXVhcmluUmV5bm9zbw==";
     public ReservaRest reservaRest;
+    public FavoritoRest favoritoRest;
     private static RetrofitConfig instance;
 
     private RetrofitConfig() {
@@ -45,9 +47,10 @@ public class RetrofitConfig {
                 .build();
 
         reservaRest = retrofit.create(ReservaRest.class);
+        favoritoRest = retrofit.create(FavoritoRest.class);
     }
 
-    public static RetrofitConfig getInstance() {
+    public synchronized static RetrofitConfig getInstance() {
         if (instance == null) {
             instance = new RetrofitConfig();
         }

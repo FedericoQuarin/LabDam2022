@@ -1,5 +1,7 @@
 package com.mdgz.dam.labdam2022.viewModels;
 
+import android.util.Pair;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,13 +13,17 @@ import com.mdgz.dam.labdam2022.persistencia.repositories.AlojamientoRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ResultadoBusquedaViewModel extends ViewModel implements OnResult<List<Alojamiento>> {
+public class ResultadoBusquedaViewModel extends ViewModel {
     final AlojamientoRepository alojamientoRepository;
+
+    // El primer elemento de alojamientoCollection es la lista de alojamientos en si
+    // El segundo marca la posicion actualizada en el caso de que se actualice una unica posicion
+    private final MutableLiveData<Pair<List<Alojamiento>, Integer>> _alojamientoCollection
+            = new MutableLiveData<>(new Pair<>(new ArrayList<>(), null));
+    public LiveData<Pair<List<Alojamiento>, Integer>> alojamientoCollection = _alojamientoCollection;
 
     private final MutableLiveData<Boolean> _loading = new MutableLiveData<>(false);
     public LiveData<Boolean> loading = _loading;
-    private final MutableLiveData<List<Alojamiento>> _alojamientoCollection = new MutableLiveData<>(new ArrayList<>());
-    public LiveData<List<Alojamiento>> alojamientoCollection = _alojamientoCollection;
     private final MutableLiveData<Throwable> _error = new MutableLiveData<>(null);
     public LiveData<Throwable> error = _error;
 
@@ -29,19 +35,49 @@ public class ResultadoBusquedaViewModel extends ViewModel implements OnResult<Li
     public void recuperarAlojamientos() {
         new Thread(() -> {
             _loading.postValue(true);
-            alojamientoRepository.recuperarAlojamientos(ResultadoBusquedaViewModel.this);
+            alojamientoRepository.recuperarAlojamientos(new OnResult<>() {
+                @Override
+                public void onSuccess(List<Alojamiento> result) {
+                    _loading.postValue(false);
+                    _alojamientoCollection.postValue(new Pair<>(result, null));
+                }
+
+                @Override
+                public void onError(Throwable exception) {
+                    _loading.postValue(false);
+                    _error.postValue(exception);
+                }
+            });
         }).start();
     }
 
-    @Override
-    public void onSuccess(final List<Alojamiento> result) {
-        _loading.postValue(false);
-        _alojamientoCollection.postValue(result);
-    }
+    public void cambiarFavorito(int posicion, boolean nuevoEstado) {
+        if (alojamientoCollection.getValue() != null) {
+            List<Alojamiento> alojamientos = alojamientoCollection.getValue().first;
 
-    @Override
-    public void onError(final Throwable exception) {
-        _loading.postValue(false);
-        _error.postValue(exception);
+            new Thread(() -> {
+                OnResult<Alojamiento> onResult = new OnResult<>() {
+                    @Override
+                    public void onSuccess(Alojamiento result) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable exception) {
+                        _error.postValue(exception);
+                    }
+                };
+
+                if (nuevoEstado) {
+                    alojamientoRepository.colocarFavorito(alojamientos.get(posicion).getId(), onResult);
+                }
+                else {
+                    alojamientoRepository.quitarFavorito(alojamientos.get(posicion).getId(), onResult);
+                }
+            }).start();
+
+            alojamientos.get(posicion).setEsFavorito(nuevoEstado);
+            _alojamientoCollection.postValue(new Pair<>(alojamientos, posicion));
+        }
     }
 }
