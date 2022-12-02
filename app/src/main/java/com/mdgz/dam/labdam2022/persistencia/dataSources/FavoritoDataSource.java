@@ -1,48 +1,12 @@
 package com.mdgz.dam.labdam2022.persistencia.dataSources;
 
-import com.mdgz.dam.labdam2022.model.Alojamiento;
-import com.mdgz.dam.labdam2022.persistencia.room.entities.FavoritoEntity;
+import android.util.Pair;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.UUID;
 
 public interface FavoritoDataSource {
-    interface GuardarFavoritoCallback {
-        void resultado(final boolean exito);
-    }
-    interface RecuperarFavoritoCallback {
-        void resultado(final boolean exito, final List<Alojamiento> resultados);
-    }
-    void guardarFavorito(final FavoritoEntity entidad, final FavoritoDataSource.GuardarFavoritoCallback callback);
-    void recuperarFavorito(final FavoritoDataSource.RecuperarFavoritoCallback callback);
+    void crearFavorito(final UUID idAlojamiento, final UUID idUsuario, final OnResult<Pair<UUID, UUID>> callback);
+    void recuperarFavoritos(final UUID idUsuario, final OnResult<LinkedHashSet<UUID>> callback);
+    void eliminarFavorito(final UUID idAlojamiento, final OnResult<Pair<UUID, UUID>> callback);
 }
-
-/*class FavoritoRoomDataSource implements FavoritoDataSource {
-    final AlojamientoDataSource alojamientoDS;
-
-    FavoritoRoomDataSource(AlojamientoDataSource alojamientoDS) {
-        this.alojamientoDS = alojamientoDS;
-    }
-
-    @Override
-    public void guardarFavorito(FavoritoEntity entidad, GuardarFavoritoCallback callback) {
-
-    }
-
-    @Override
-    public void recuperarFavorito(RecuperarFavoritoCallback callback) {
-        // me traigo los favoritosentity
-        alojamientoDS.recuperarAlojamientos(new OnResult<List<Alojamiento>>() {
-            @Override
-            public void onSuccess(List<Alojamiento> result) {
-                //filter
-                callback.resultado();
-            }
-
-            @Override
-            public void onError(Throwable exception) {
-
-            }
-        });
-    }
-
-}*/
