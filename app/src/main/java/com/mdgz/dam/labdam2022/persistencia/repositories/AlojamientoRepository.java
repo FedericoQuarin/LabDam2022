@@ -1,5 +1,7 @@
 package com.mdgz.dam.labdam2022.persistencia.repositories;
 
+import android.util.Log;
+
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
@@ -46,5 +48,39 @@ public class AlojamientoRepository implements AlojamientoDataSource {
     @Override
     public void recuperarAlojamiento(UUID idAlojamiento, OnResult<Alojamiento> callback) {
         alojamientoDataSource.recuperarAlojamiento(idAlojamiento, callback);
+    }
+
+    public void colocarFavorito(UUID idAlojamiento, OnResult<Alojamiento> callback) {
+        alojamientoDataSource.recuperarAlojamiento(idAlojamiento, new OnResult<>() {
+            @Override
+            public void onSuccess(Alojamiento result) {
+                result.setEsFavorito(true);
+                callback.onSuccess(result);
+            }
+
+            @Override
+            public void onError(Throwable exception) {
+
+            }
+        });
+
+        Log.e("AlojamientoRespository", "Persistencia favorito no implementada");
+    }
+
+    public void quitarFavorito(UUID idAlojamiento, OnResult<Alojamiento> callback) {
+        alojamientoDataSource.recuperarAlojamiento(idAlojamiento, new OnResult<>() {
+            @Override
+            public void onSuccess(Alojamiento result) {
+                result.setEsFavorito(false);
+                callback.onSuccess(result);
+            }
+
+            @Override
+            public void onError(Throwable exception) {
+
+            }
+        });
+
+        Log.e("AlojamientoRespository", "Persistencia favorito no implementada");
     }
 }

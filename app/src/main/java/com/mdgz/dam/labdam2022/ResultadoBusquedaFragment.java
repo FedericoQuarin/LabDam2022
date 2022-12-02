@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.google.android.material.transition.MaterialElevationScale;
 import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
+import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 import com.mdgz.dam.labdam2022.viewModels.ResultadoBusquedaViewModel;
 import com.mdgz.dam.labdam2022.viewModels.factories.ResultadoBusquedaViewModelFactory;
@@ -35,7 +36,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     private ResultadoBusquedaViewModel viewModel;
 
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private AlojamientoRecyclerAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     // Nombre del archivo
@@ -84,14 +85,27 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         recyclerView.setLayoutManager(layoutManager);
 
         adapter = new AlojamientoRecyclerAdapter(new ArrayList<>(), this);
+        adapter.setOnFavoriteChangedListener((posicion, nuevoEstado) -> {
+            viewModel.cambiarFavorito(posicion, nuevoEstado);
+        });
+
         recyclerView.setAdapter(adapter);
         recyclerView.setClickable(true);
 
         viewModel = new ViewModelProvider(this, new ResultadoBusquedaViewModelFactory(getContext())).get(
                 ResultadoBusquedaViewModel.class);
-        viewModel.alojamientoCollection.observe(getViewLifecycleOwner(), alojamientos -> {
-            adapter = new AlojamientoRecyclerAdapter(alojamientos, this);
-            recyclerView.setAdapter(adapter);
+
+        viewModel.alojamientoCollection.observe(getViewLifecycleOwner(), pairAlojamientos -> {
+            List<Alojamiento> alojamientoList = pairAlojamientos.first;
+            Integer posicion = pairAlojamientos.second;
+
+            if (adapter.getItemCount() == 0 || posicion == null) {
+                adapter.setData(alojamientoList);
+                binding.labelResultadoBusqueda.setText(alojamientoList.size() + " resultados encontrados");
+            }
+            else {
+                adapter.favoritoCambiado(posicion, alojamientoList.get(posicion).getEsFavorito());
+            }
         });
         
         binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
