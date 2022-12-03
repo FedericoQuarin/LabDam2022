@@ -4,17 +4,18 @@ import android.util.Pair;
 
 import androidx.annotation.NonNull;
 
+import com.mdgz.dam.labdam2022.model.Favorito;
 import com.mdgz.dam.labdam2022.persistencia.retrofit.entities.FavoritoEntity;
 
 import java.util.UUID;
 
 public class FavoritoMapper {
-    public static Pair<UUID, UUID> toModelClass(@NonNull FavoritoEntity entity) {
+    public static Favorito toModelClass(@NonNull FavoritoEntity entity) {
 
-        return new Pair<>(entity.getAlojamientoId(), entity.getUsuarioId());
+        return new Favorito(entity.getAlojamientoId(), entity.getUsuarioId());
     }
 
-    public static FavoritoEntity toEntity(@NonNull UUID idAlojamiento, UUID idUsuario) {
-        return new FavoritoEntity(idAlojamiento, idUsuario);
+    public static FavoritoEntity toEntity(@NonNull Favorito favorito) {
+        return new FavoritoEntity(favorito.getIdAlojamiento(), favorito.getIdUsuario());
     }
 }
