@@ -1,5 +1,7 @@
 package com.mdgz.dam.labdam2022.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.UUID;
 
 public class Ubicacion {
@@ -76,5 +78,16 @@ public class Ubicacion {
     @Override
     public String toString() {
         return calle + " " + numero + ", " + ciudad.getNombre();
+    }
+
+    @NonNull
+    @Override
+    public Ubicacion clone() {
+        return new Ubicacion(id,
+                lat,
+                lng,
+                calle,
+                numero,
+                ciudad);
     }
 }

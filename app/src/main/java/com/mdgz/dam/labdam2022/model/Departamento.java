@@ -1,5 +1,7 @@
 package com.mdgz.dam.labdam2022.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.UUID;
 
 public class Departamento extends Alojamiento{
@@ -17,7 +19,15 @@ public class Departamento extends Alojamiento{
         super();
     }
 
-    public Departamento(String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion, Boolean esFavorito) {
+    public Departamento(String titulo,
+                        String descripcion,
+                        Integer capacidad,
+                        Double precioBase,
+                        Boolean tieneWifi,
+                        Double costoLimpieza,
+                        Integer cantidadHabitaciones,
+                        Ubicacion ubicacion,
+                        Boolean esFavorito) {
         super(titulo, descripcion, capacidad, precioBase, esFavorito);
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
@@ -25,7 +35,16 @@ public class Departamento extends Alojamiento{
         this.ubicacion = ubicacion;
     }
 
-    public Departamento(UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Boolean tieneWifi, Double costoLimpieza, Integer cantidadHabitaciones,Ubicacion ubicacion, Boolean esFavorito) {
+    public Departamento(UUID id,
+                        String titulo,
+                        String descripcion,
+                        Integer capacidad,
+                        Double precioBase,
+                        Boolean tieneWifi,
+                        Double costoLimpieza,
+                        Integer cantidadHabitaciones,
+                        Ubicacion ubicacion,
+                        Boolean esFavorito) {
         super(id, titulo, descripcion, capacidad, precioBase, esFavorito);
         this.tieneWifi = tieneWifi;
         this.costoLimpieza = costoLimpieza;
@@ -81,5 +100,20 @@ public class Departamento extends Alojamiento{
                 ", cantidadHabitaciones=" + cantidadHabitaciones +
                 ", ubicacion=" + ubicacion +
                 '}';
+    }
+
+    @NonNull
+    @Override
+    public Alojamiento clone() {
+        return new Departamento(id,
+                titulo,
+                descripcion,
+                capacidad,
+                precioBase,
+                tieneWifi,
+                costoLimpieza,
+                cantidadHabitaciones,
+                ubicacion.clone(),
+                esFavorito);
     }
 }

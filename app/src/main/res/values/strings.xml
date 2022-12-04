@@ -41,4 +41,5 @@
     <string name="lorem_ipsum_250b">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed rutrum suscipit mauris. Praesent imperdiet ultrices euismod. Morbi purus enim, fringilla eget luctus sit amet, suscipit a est. Mauris at egestas risus. Vestibulum porttitor mi id odio cras.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="id_usuario_pruebas">34433635-b552-4b99-be2d-db8b820f0e21</string>
 </resources>

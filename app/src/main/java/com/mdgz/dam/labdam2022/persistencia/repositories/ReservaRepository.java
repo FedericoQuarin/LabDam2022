@@ -24,12 +24,12 @@ public class ReservaRepository implements ReservaDataSource {
     }
 
     @Override
-    public void recuperarReserva(UUID id, OnResult<Reserva> callback) {
-        recuperarReserva(id, callback);
+    public void recuperarReserva(UUID idReserva, OnResult<Reserva> callback) {
+        recuperarReserva(idReserva, callback);
     }
 
     @Override
-    public void eliminarReserva(UUID id, OnResult<Reserva> callback) {
-        ds.eliminarReserva(id, callback);
+    public void eliminarReserva(UUID idReserva, OnResult<Reserva> callback) {
+        ds.eliminarReserva(idReserva, callback);
     }
 }

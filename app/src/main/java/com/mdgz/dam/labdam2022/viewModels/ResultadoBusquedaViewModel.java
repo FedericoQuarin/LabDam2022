@@ -12,9 +12,12 @@ import com.mdgz.dam.labdam2022.persistencia.repositories.AlojamientoRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ResultadoBusquedaViewModel extends ViewModel {
     final AlojamientoRepository alojamientoRepository;
+
+    private UUID idUsuario;
 
     // El primer elemento de alojamientoCollection es la lista de alojamientos en si
     // El segundo marca la posicion actualizada en el caso de que se actualice una unica posicion
@@ -30,6 +33,10 @@ public class ResultadoBusquedaViewModel extends ViewModel {
     public ResultadoBusquedaViewModel(final AlojamientoRepository alojamientoRepository) {
         this.alojamientoRepository = alojamientoRepository;
         recuperarAlojamientos();
+    }
+
+    public void setearUsuario(UUID idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public void recuperarAlojamientos() {
@@ -56,9 +63,9 @@ public class ResultadoBusquedaViewModel extends ViewModel {
             List<Alojamiento> alojamientos = alojamientoCollection.getValue().first;
 
             new Thread(() -> {
-                OnResult<Alojamiento> onResult = new OnResult<>() {
+                OnResult<UUID> onResult = new OnResult<>() {
                     @Override
-                    public void onSuccess(Alojamiento result) {
+                    public void onSuccess(UUID result) {
 
                     }
 
@@ -69,10 +76,10 @@ public class ResultadoBusquedaViewModel extends ViewModel {
                 };
 
                 if (nuevoEstado) {
-                    alojamientoRepository.colocarFavorito(alojamientos.get(posicion).getId(), onResult);
+                    alojamientoRepository.colocarFavorito(alojamientos.get(posicion).getId(), idUsuario, onResult);
                 }
                 else {
-                    alojamientoRepository.quitarFavorito(alojamientos.get(posicion).getId(), onResult);
+                    alojamientoRepository.quitarFavorito(alojamientos.get(posicion).getId(), idUsuario, onResult);
                 }
             }).start();
 

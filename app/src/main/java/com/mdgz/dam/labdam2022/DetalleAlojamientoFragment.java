@@ -79,11 +79,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     private Integer tamDescripcionAcotada;
 
     // TODO ver el tema de usuarios
-    final private Usuario usuario = new Usuario(UUID.fromString("34433635-b552-4b99-be2d-db8b820f0e21"),
-            "Pedrito",
-            "pedrito@gmail.com",
-            new ArrayList<>(),
-            new ArrayList<>());
+    private Usuario usuario;
 
     public DetalleAlojamientoFragment() {
         // Required empty public constructor
@@ -159,6 +155,12 @@ public class DetalleAlojamientoFragment extends Fragment {
         botonReservar = binding.buttonReservar;
         descripcion = binding.txtViewDescripcion;
         buttonMasDescripcion = binding.buttonMasDescripcion;
+
+        usuario = new Usuario(UUID.fromString(getString(R.string.id_usuario_pruebas)),
+                "Pedrito",
+                "pedrito@gmail.com",
+                new ArrayList<>(),
+                new ArrayList<>());
 
         // Se busca ek correspondiente viewModel
         viewModel = new ViewModelProvider(this, new DetalleAlojamientoViewModelFactory(getContext())).get(

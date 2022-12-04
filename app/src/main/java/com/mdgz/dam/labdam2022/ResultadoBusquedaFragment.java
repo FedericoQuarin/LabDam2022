@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import com.google.android.material.transition.MaterialElevationScale;
 import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
+import com.mdgz.dam.labdam2022.model.Usuario;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
 import com.mdgz.dam.labdam2022.viewModels.ResultadoBusquedaViewModel;
 import com.mdgz.dam.labdam2022.viewModels.factories.ResultadoBusquedaViewModelFactory;
@@ -52,6 +53,9 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
     private MaterialElevationScale transicionElevationScale_exit;
 
+    // TODO ver el tema de usuarios
+    private Usuario usuario;
+
     public ResultadoBusquedaFragment() {
         // Required empty public constructor
     }
@@ -78,6 +82,12 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         postponeEnterTransition();
         OneShotPreDrawListener.add(view, this::startPostponedEnterTransition);
 
+        usuario = new Usuario(UUID.fromString(getString(R.string.id_usuario_pruebas)),
+                "Pedrito",
+                "pedrito@gmail.com",
+                new ArrayList<>(),
+                new ArrayList<>());
+
         // Se setea el recycler view
         recyclerView = binding.recyclerAlojamiento;
 
@@ -94,6 +104,8 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
         viewModel = new ViewModelProvider(this, new ResultadoBusquedaViewModelFactory(getContext())).get(
                 ResultadoBusquedaViewModel.class);
+
+        viewModel.setearUsuario(usuario.getId());
 
         viewModel.alojamientoCollection.observe(getViewLifecycleOwner(), pairAlojamientos -> {
             List<Alojamiento> alojamientoList = pairAlojamientos.first;

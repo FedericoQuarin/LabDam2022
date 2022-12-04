@@ -1,5 +1,7 @@
 package com.mdgz.dam.labdam2022.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.UUID;
 
 public class Habitacion  extends Alojamiento {
@@ -9,7 +11,15 @@ public class Habitacion  extends Alojamiento {
     private Boolean tieneEstacionamiento;
     private Hotel hotel;
 
-    public Habitacion(String titulo, String descripcion, Integer capacidad, Double precioBase, Integer camasIndividuales, Integer camasMatrimoniales, Boolean tieneEstacionamiento, Hotel hotel, Boolean esFavorito) {
+    public Habitacion(String titulo,
+                      String descripcion,
+                      Integer capacidad,
+                      Double precioBase,
+                      Integer camasIndividuales,
+                      Integer camasMatrimoniales,
+                      Boolean tieneEstacionamiento,
+                      Hotel hotel,
+                      Boolean esFavorito) {
         super(titulo, descripcion, capacidad, precioBase, esFavorito);
         this.camasIndividuales = camasIndividuales;
         this.camasMatrimoniales = camasMatrimoniales;
@@ -17,7 +27,16 @@ public class Habitacion  extends Alojamiento {
         this.hotel = hotel;
     }
 
-    public Habitacion(UUID id, String titulo, String descripcion, Integer capacidad, Double precioBase, Integer camasIndividuales, Integer camasMatrimoniales, Boolean tieneEstacionamiento, Hotel hotel, Boolean esFavorito) {
+    public Habitacion(UUID id,
+                      String titulo,
+                      String descripcion,
+                      Integer capacidad,
+                      Double precioBase,
+                      Integer camasIndividuales,
+                      Integer camasMatrimoniales,
+                      Boolean tieneEstacionamiento,
+                      Hotel hotel,
+                      Boolean esFavorito) {
         super(id, titulo, descripcion, capacidad, precioBase, esFavorito);
         this.camasIndividuales = camasIndividuales;
         this.camasMatrimoniales = camasMatrimoniales;
@@ -70,5 +89,20 @@ public class Habitacion  extends Alojamiento {
                 ", tieneEstacionamiento=" + tieneEstacionamiento +
                 ", hotel=" + hotel +
                 '}';
+    }
+
+    @NonNull
+    @Override
+    public Alojamiento clone() {
+        return new Habitacion(id,
+                titulo,
+                descripcion,
+                capacidad,
+                precioBase,
+                camasIndividuales,
+                camasMatrimoniales,
+                tieneEstacionamiento,
+                hotel,
+                esFavorito);
     }
 }

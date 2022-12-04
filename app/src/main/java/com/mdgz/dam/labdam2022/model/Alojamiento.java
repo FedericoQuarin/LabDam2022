@@ -1,5 +1,7 @@
 package com.mdgz.dam.labdam2022.model;
 
+import androidx.annotation.NonNull;
+
 import java.util.UUID;
 
 public abstract class Alojamiento {
@@ -71,4 +73,8 @@ public abstract class Alojamiento {
     public void setEsFavorito(Boolean esFavorito) { this.esFavorito = esFavorito; }
 
     public void turnFavorito() { this.esFavorito = !this.esFavorito; }
+
+    @NonNull
+    @Override
+    public abstract Alojamiento clone();
 }
