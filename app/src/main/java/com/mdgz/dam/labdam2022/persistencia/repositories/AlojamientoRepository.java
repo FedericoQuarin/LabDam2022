@@ -10,13 +10,15 @@ import com.mdgz.dam.labdam2022.persistencia.dataSources.AlojamientoDataSource;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.FavoritoDataSource;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.OnResult;
 
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.UUID;
 
 // Aca decimos que el repository implementa el ds para de forma
 // facil nos exponga todos los metodos pero no es necesario y podría
 // no ser lo que buscamos ( ej: exponer menos metodos o componer metodos del o los datasource)
-public class AlojamientoRepository implements AlojamientoDataSource {
+public class AlojamientoRepository {
 
     private final AlojamientoDataSource alojamientoDataSource;
     private final FavoritoDataSource favoritoDataSource;
@@ -28,32 +30,55 @@ public class AlojamientoRepository implements AlojamientoDataSource {
         this.favoritoDataSource = favoritoDataSource;
     }
 
-    @Override
     public void guardarHabitacion(Habitacion habitacion, OnResult<Habitacion> callback) {
         alojamientoDataSource.guardarHabitacion(habitacion, callback);
     }
 
-    @Override
     public void guardarDepartamento(Departamento departamento, OnResult<Departamento> callback) {
         alojamientoDataSource.guardarDepartamento(departamento, callback);
     }
 
-    @Override
     public void recuperarHabitaciones(OnResult<List<Habitacion>> callback) {
         alojamientoDataSource.recuperarHabitaciones(callback);
     }
 
-    @Override
     public void recuperarDepartamentos(OnResult<List<Departamento>> callback) {
         alojamientoDataSource.recuperarDepartamentos(callback);
     }
 
-    @Override
-    public void recuperarAlojamientos(OnResult<List<Alojamiento>> callback) {
-        alojamientoDataSource.recuperarAlojamientos(callback);
+    public void recuperarAlojamientos(UUID idUsuario, OnResult<List<Alojamiento>> callback) {
+        final List<Alojamiento> alojamientos = new ArrayList<>();
+        alojamientoDataSource.recuperarAlojamientos(new OnResult<>() {
+            @Override
+            public void onSuccess(List<Alojamiento> result) {
+                alojamientos.addAll(result);
+            }
+
+            @Override
+            public void onError(Throwable exception) {
+                callback.onError(exception);
+            }
+        });
+        final LinkedHashSet<UUID> favoritos = new LinkedHashSet<>();
+        favoritoDataSource.recuperarFavoritos(idUsuario, new OnResult<>() {
+            @Override
+            public void onSuccess(LinkedHashSet<UUID> result) {
+                favoritos.addAll(result);
+            }
+
+            @Override
+            public void onError(Throwable exception) {
+                callback.onError(exception);
+            }
+        });
+
+        for (Alojamiento a : alojamientos) {
+            if (favoritos.contains(a.getId())) a.setEsFavorito(true);
+        }
+
+        callback.onSuccess(alojamientos);
     }
 
-    @Override
     public void recuperarAlojamiento(UUID idAlojamiento, OnResult<Alojamiento> callback) {
         alojamientoDataSource.recuperarAlojamiento(idAlojamiento, callback);
     }

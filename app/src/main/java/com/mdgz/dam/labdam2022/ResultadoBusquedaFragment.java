@@ -107,6 +107,19 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
         viewModel.setearUsuario(usuario.getId());
 
+        viewModel.loading.observe(getViewLifecycleOwner(), loading -> {
+            if (loading) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.labelResultadoBusqueda.setVisibility(View.INVISIBLE);
+                binding.recyclerAlojamiento.setVisibility(View.INVISIBLE);
+            }
+            else {
+                binding.progressBar.setVisibility(View.GONE);
+                binding.labelResultadoBusqueda.setVisibility(View.VISIBLE);
+                binding.recyclerAlojamiento.setVisibility(View.VISIBLE);
+            }
+        });
+
         viewModel.alojamientoCollection.observe(getViewLifecycleOwner(), pairAlojamientos -> {
             List<Alojamiento> alojamientoList = pairAlojamientos.first;
             Integer posicion = pairAlojamientos.second;

@@ -46,7 +46,7 @@ public class GestorAlojamiento {
 
         List<Alojamiento> listaAlojamientos = new ArrayList<Alojamiento>();
 
-        alojamientoRepository.recuperarAlojamientos(new OnResult<List<Alojamiento>>() {
+        alojamientoRepository.recuperarAlojamientos(null, new OnResult<List<Alojamiento>>() {
             @Override
             public void onSuccess(List<Alojamiento> result) {
                 listaAlojamientos.addAll(result);
@@ -69,7 +69,7 @@ public class GestorAlojamiento {
 
         List<Alojamiento> listaAlojamientos = new ArrayList<Alojamiento>();
 
-        alojamientoRepository.recuperarAlojamientos(new OnResult<List<Alojamiento>>() {
+        alojamientoRepository.recuperarAlojamientos(null, new OnResult<List<Alojamiento>>() {
             @Override
             public void onSuccess(List<Alojamiento> result) {
                 listaAlojamientos.addAll(result);

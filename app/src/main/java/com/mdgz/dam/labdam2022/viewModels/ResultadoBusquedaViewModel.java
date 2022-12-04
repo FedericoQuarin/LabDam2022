@@ -42,7 +42,7 @@ public class ResultadoBusquedaViewModel extends ViewModel {
     public void recuperarAlojamientos() {
         new Thread(() -> {
             _loading.postValue(true);
-            alojamientoRepository.recuperarAlojamientos(new OnResult<>() {
+            alojamientoRepository.recuperarAlojamientos(idUsuario, new OnResult<>() {
                 @Override
                 public void onSuccess(List<Alojamiento> result) {
                     _loading.postValue(false);
