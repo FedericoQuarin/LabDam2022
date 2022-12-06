@@ -22,7 +22,7 @@ public class DetalleAlojamientoViewModel extends ViewModel {
     final AlojamientoRepository alojamientoRepository;
     final ReservaRepository reservaRepository;
 
-    private UUID idUsuario;
+    private Usuario usuario;
 
     final private MutableLiveData<Alojamiento> _alojamiento = new MutableLiveData<>();
     final public LiveData<Alojamiento> alojamiento = _alojamiento;
@@ -40,8 +40,8 @@ public class DetalleAlojamientoViewModel extends ViewModel {
         this.reservaRepository = reservaRepository;
     }
 
-    public void setearUsuario(UUID idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setearUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public void setearAlojamiento(Alojamiento alojamiento) {
@@ -52,8 +52,7 @@ public class DetalleAlojamientoViewModel extends ViewModel {
                              Date fechaEgreso,
                              Integer cantidadPersonas,
                              Double monto,
-                             Alojamiento alojamiento,
-                             Usuario usuario) {
+                             Alojamiento alojamiento) {
         Reserva reserva = new Reserva(fechaIngreso, fechaEgreso, cantidadPersonas, monto, alojamiento, usuario);
         new Thread(() -> {
             reservaRepository.guardarReserva(reserva, new OnResult<>() {
@@ -93,10 +92,10 @@ public class DetalleAlojamientoViewModel extends ViewModel {
                 };
 
                 if (nuevoEstado) {
-                    alojamientoRepository.colocarFavorito(aloj.getId(), idUsuario, onResult);
+                    alojamientoRepository.colocarFavorito(aloj.getId(), usuario.getId(), onResult);
                 }
                 else {
-                    alojamientoRepository.quitarFavorito(aloj.getId(), idUsuario, onResult);
+                    alojamientoRepository.quitarFavorito(aloj.getId(), usuario.getId(), onResult);
                 }
             }).start();
 

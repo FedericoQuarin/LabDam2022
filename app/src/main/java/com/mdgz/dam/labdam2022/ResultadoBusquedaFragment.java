@@ -56,9 +56,6 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
 
     private MaterialElevationScale transicionElevationScale_exit;
 
-    // TODO ver el tema de usuarios
-    private Usuario usuario;
-
     public ResultadoBusquedaFragment() {
         // Required empty public constructor
     }
@@ -85,11 +82,16 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         postponeEnterTransition();
         OneShotPreDrawListener.add(view, this::startPostponedEnterTransition);
 
-        usuario = new Usuario(UUID.fromString(getString(R.string.id_usuario_pruebas)),
-                "Pedrito",
-                "pedrito@gmail.com",
-                new ArrayList<>(),
-                new ArrayList<>());
+
+        // Se busca el viewModel correspondiente a la actividad
+        viewModelMainActivity = new ViewModelProvider(requireActivity(), new MainActivityViewModelFactory()).get(
+                MainActivityViewModel.class);
+
+
+        // Se busca el viewModel correspondiente al fragmento
+        viewModel = new ViewModelProvider(this, new ResultadoBusquedaViewModelFactory(getContext())).get(
+                ResultadoBusquedaViewModel.class);
+
 
         // Se setea el recycler view
         recyclerView = binding.recyclerAlojamiento;
@@ -105,10 +107,10 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         recyclerView.setAdapter(adapter);
         recyclerView.setClickable(true);
 
-        viewModel = new ViewModelProvider(this, new ResultadoBusquedaViewModelFactory(getContext())).get(
-                ResultadoBusquedaViewModel.class);
 
-        viewModel.setearUsuario(usuario.getId());
+        viewModelMainActivity.usuario.observe(getViewLifecycleOwner(), u -> {
+            viewModel.setearUsuario(u.getId());
+        });
 
         viewModel.loading.observe(getViewLifecycleOwner(), loading -> {
             if (loading) {
@@ -135,11 +137,6 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                 adapter.favoritoCambiado(posicion, alojamientoList.get(posicion).getEsFavorito());
             }
         });
-
-        viewModelMainActivity = new ViewModelProvider(requireActivity(), new MainActivityViewModelFactory()).get(
-                MainActivityViewModel.class);
-        
-        binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
 
         // Borra cualquier transicion que se haya colocado previamente
         setExitTransition(null);

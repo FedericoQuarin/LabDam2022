@@ -82,9 +82,6 @@ public class DetalleAlojamientoFragment extends Fragment {
 
     private Integer tamDescripcionAcotada;
 
-    // TODO ver el tema de usuarios
-    private Usuario usuario;
-
     public DetalleAlojamientoFragment() {
         // Required empty public constructor
     }
@@ -160,15 +157,23 @@ public class DetalleAlojamientoFragment extends Fragment {
         descripcion = binding.txtViewDescripcion;
         buttonMasDescripcion = binding.buttonMasDescripcion;
 
-        usuario = new Usuario(UUID.fromString(getString(R.string.id_usuario_pruebas)),
-                "Pedrito",
-                "pedrito@gmail.com",
-                new ArrayList<>(),
-                new ArrayList<>());
+        // Se busca el viewModel correspondiente a la actividad
+        viewModelMainActivity = new ViewModelProvider(requireActivity(), new MainActivityViewModelFactory()).get(
+                MainActivityViewModel.class);
 
         // Se busca el viewModel correspondiente al fragmento
         viewModel = new ViewModelProvider(this, new DetalleAlojamientoViewModelFactory(getContext())).get(
                 DetalleAlojamientoViewModel.class);
+
+
+        viewModelMainActivity.usuario.observe(getViewLifecycleOwner(), u -> {
+            viewModel.setearUsuario(u);
+        });
+
+        viewModelMainActivity.alojamientoSeleccionado.observe(getViewLifecycleOwner(), alojamientoSeleccionado -> {
+            viewModel.setearAlojamiento(alojamientoSeleccionado);
+        });
+
 
         // Se setea el observer sobre el alojamiento
         viewModel.alojamiento.observe(getViewLifecycleOwner(), alojamiento -> {
@@ -190,15 +195,6 @@ public class DetalleAlojamientoFragment extends Fragment {
             }
         });
 
-        // Se busca el viewModel correspondiente a la actividad
-        viewModelMainActivity = new ViewModelProvider(requireActivity(), new MainActivityViewModelFactory()).get(
-                MainActivityViewModel.class);
-
-        viewModel.setearUsuario(usuario.getId());
-
-        viewModelMainActivity.alojamientoSeleccionado.observe(getViewLifecycleOwner(), alojamientoSeleccionado -> {
-            viewModel.setearAlojamiento(alojamientoSeleccionado);
-        });
 
         botonFecha.setOnClickListener(v -> {
             botonFecha.setClickable(false);
@@ -431,7 +427,7 @@ public class DetalleAlojamientoFragment extends Fragment {
                 .setPositiveButton("Confirmar", (dialogInterface, i) -> {
                     viewModel.crearReserva(Date.from(Instant.ofEpochMilli(periodoSeleccionado.first+1000)),
                             Date.from(Instant.ofEpochMilli(periodoSeleccionado.second+1000)),
-                            cantidadPersonas, montoTotal, alojamiento, usuario);
+                            cantidadPersonas, montoTotal, alojamiento);
                 })
                 // Si se clickea "No" se queda en la pantalla actual
                 .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.cancel());
