@@ -36,13 +36,16 @@ import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Habitacion;
 import com.mdgz.dam.labdam2022.model.Usuario;
 import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
+import com.mdgz.dam.labdam2022.viewModels.MainActivityViewModel;
 import com.mdgz.dam.labdam2022.viewModels.factories.DetalleAlojamientoViewModelFactory;
+import com.mdgz.dam.labdam2022.viewModels.factories.MainActivityViewModelFactory;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -53,6 +56,7 @@ public class DetalleAlojamientoFragment extends Fragment {
     private DetalleAlojamientoHotelBinding bindingHotel;
 
     private DetalleAlojamientoViewModel viewModel;
+    private MainActivityViewModel viewModelMainActivity;
     private String idAlojamiento;
 
     private GestorReserva gestorReserva;
@@ -162,26 +166,20 @@ public class DetalleAlojamientoFragment extends Fragment {
                 new ArrayList<>(),
                 new ArrayList<>());
 
-        // Se busca ek correspondiente viewModel
+        // Se busca el viewModel correspondiente al fragmento
         viewModel = new ViewModelProvider(this, new DetalleAlojamientoViewModelFactory(getContext())).get(
                 DetalleAlojamientoViewModel.class);
+
         // Se setea el observer sobre el alojamiento
         viewModel.alojamiento.observe(getViewLifecycleOwner(), alojamiento -> {
             this.alojamiento = alojamiento;
             setearInfoAlojamiento();
         });
 
-        // Se busca el alojamiento
-        viewModel.buscarAlojamiento(UUID.fromString(idAlojamiento));
-
         // Se setea el observer sobre la variable reservaExitosa
         viewModel.reservaExitosa.observe(getViewLifecycleOwner(), reservaExitosa -> {
             if (reservaExitosa) {
-                Bundle bundle = new Bundle();
-                bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID
-
-                NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
-                        .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment, bundle);
+                volverAPantallaBusqueda();
             }
         });
 
@@ -190,6 +188,16 @@ public class DetalleAlojamientoFragment extends Fragment {
                 snackbarReservaFallida(fragmentView);
                 viewModel.observadoErrorReservar();
             }
+        });
+
+        // Se busca el viewModel correspondiente a la actividad
+        viewModelMainActivity = new ViewModelProvider(requireActivity(), new MainActivityViewModelFactory()).get(
+                MainActivityViewModel.class);
+
+        viewModel.setearUsuario(usuario.getId());
+
+        viewModelMainActivity.alojamientoSeleccionado.observe(getViewLifecycleOwner(), alojamientoSeleccionado -> {
+            viewModel.setearAlojamiento(alojamientoSeleccionado);
         });
 
         botonFecha.setOnClickListener(v -> {
@@ -220,12 +228,10 @@ public class DetalleAlojamientoFragment extends Fragment {
         else binding.txtCapacidadDetalleAlojamiento.setText(alojamiento.getCapacidad() + " personas");
 
         if(alojamiento.getEsFavorito()) binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_lleno);
+        else binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_vacio);
 
         binding.buttonDetalleFavorito.setOnClickListener((v) -> {
-            alojamiento.turnFavorito();
-
-            if(alojamiento.getEsFavorito()) binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_lleno);
-            else binding.buttonDetalleFavorito.setButtonDrawable(R.drawable.corazon_vacio);
+            viewModel.cambiarFavorito(!alojamiento.getEsFavorito());
         });
 
         // Si el alojamiento es un departamento se setean los parametros del detalleDepto
@@ -426,15 +432,6 @@ public class DetalleAlojamientoFragment extends Fragment {
                     viewModel.crearReserva(Date.from(Instant.ofEpochMilli(periodoSeleccionado.first+1000)),
                             Date.from(Instant.ofEpochMilli(periodoSeleccionado.second+1000)),
                             cantidadPersonas, montoTotal, alojamiento, usuario);
-                    /*gestorReserva.crearReserva(Date.from(Instant.ofEpochMilli(periodoSeleccionado.first)),
-                                               Date.from(Instant.ofEpochMilli(periodoSeleccionado.second)),
-                                               cantidadPersonas, montoTotal, alojamiento, null);
-                    */
-                    /*Bundle bundle = new Bundle();
-                    bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID
-
-                    NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
-                            .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment, bundle);*/
                 })
                 // Si se clickea "No" se queda en la pantalla actual
                 .setNegativeButton("No", (dialogInterface, i) -> dialogInterface.cancel());
@@ -452,5 +449,16 @@ public class DetalleAlojamientoFragment extends Fragment {
         descripcion.setText(alojamiento.getDescripcion());
         buttonMasDescripcion.setOnClickListener(v -> colocarDescripcionAcotada());
         buttonMasDescripcion.setText(R.string.button_ver_menos_descripcion);
+    }
+
+    public void volverAPantallaBusqueda() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("tipo", BusquedaFragment.VENTANA_DETALLE);  // TODO: ver tema ID
+
+        viewModelMainActivity.alojamientoSeleccionado.removeObservers(getViewLifecycleOwner());
+        viewModelMainActivity.setearAlojamientoSeleccionado(null);
+
+        NavHostFragment.findNavController(DetalleAlojamientoFragment.this)
+                .navigate(R.id.action_detalleAlojamientoFragment_to_busquedaFragment, bundle);
     }
 }

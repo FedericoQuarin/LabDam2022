@@ -1,6 +1,7 @@
 package com.mdgz.dam.labdam2022.viewModels;
 
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,20 +15,24 @@ import com.mdgz.dam.labdam2022.persistencia.repositories.AlojamientoRepository;
 import com.mdgz.dam.labdam2022.persistencia.repositories.ReservaRepository;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-public class DetalleAlojamientoViewModel extends ViewModel implements OnResult<Alojamiento> {
+public class DetalleAlojamientoViewModel extends ViewModel {
     final AlojamientoRepository alojamientoRepository;
     final ReservaRepository reservaRepository;
 
-    private MutableLiveData<Alojamiento> _alojamiento = new MutableLiveData<>();
-    public LiveData<Alojamiento> alojamiento = _alojamiento;
-    private MutableLiveData<Throwable> _errorBusquedaAlojamiento = new MutableLiveData<>();
-    public LiveData<Throwable> errorBusquedaAlojamiento = _errorBusquedaAlojamiento;
-    private MutableLiveData<Boolean> _reservaExitosa = new MutableLiveData<>();
-    public LiveData<Boolean> reservaExitosa = _reservaExitosa;
-    private MutableLiveData<Throwable> _errorReservar = new MutableLiveData<>();
-    public LiveData<Throwable> errorReservar = _errorReservar;
+    private UUID idUsuario;
+
+    final private MutableLiveData<Alojamiento> _alojamiento = new MutableLiveData<>();
+    final public LiveData<Alojamiento> alojamiento = _alojamiento;
+    final private MutableLiveData<Boolean> _reservaExitosa = new MutableLiveData<>();
+    final public LiveData<Boolean> reservaExitosa = _reservaExitosa;
+    final private MutableLiveData<Throwable> _errorReservar = new MutableLiveData<>();
+    final public LiveData<Throwable> errorReservar = _errorReservar;
+    final private MutableLiveData<Throwable> _error = new MutableLiveData<>();
+    final public LiveData<Throwable> error = _error;
+
 
     public DetalleAlojamientoViewModel(final AlojamientoRepository alojamientoRepository,
                                        final ReservaRepository reservaRepository) {
@@ -35,10 +40,12 @@ public class DetalleAlojamientoViewModel extends ViewModel implements OnResult<A
         this.reservaRepository = reservaRepository;
     }
 
-    public void buscarAlojamiento(UUID idAlojamiento) {
-        new Thread(() -> {
-            alojamientoRepository.recuperarAlojamiento(idAlojamiento, DetalleAlojamientoViewModel.this);
-        }).start();
+    public void setearUsuario(UUID idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public void setearAlojamiento(Alojamiento alojamiento) {
+        _alojamiento.setValue(alojamiento);
     }
 
     public void crearReserva(Date fechaIngreso,
@@ -63,17 +70,38 @@ public class DetalleAlojamientoViewModel extends ViewModel implements OnResult<A
         }).start();
     }
 
+    // Se utiliza para avisar al viewModel de que el error fue observado
     public void observadoErrorReservar() {
         _errorReservar.postValue(null);
     }
 
-    @Override
-    public void onSuccess(Alojamiento result) {
-        _alojamiento.postValue(result);
-    }
+    public void cambiarFavorito(boolean nuevoEstado) {
+        if (alojamiento.getValue() != null) {
+            Alojamiento aloj = alojamiento.getValue();
 
-    @Override
-    public void onError(Throwable exception) {
-        _errorBusquedaAlojamiento.postValue(exception);
+            new Thread(() -> {
+                OnResult<UUID> onResult = new OnResult<>() {
+                    @Override
+                    public void onSuccess(UUID result) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable exception) {
+                        _error.postValue(exception);
+                    }
+                };
+
+                if (nuevoEstado) {
+                    alojamientoRepository.colocarFavorito(aloj.getId(), idUsuario, onResult);
+                }
+                else {
+                    alojamientoRepository.quitarFavorito(aloj.getId(), idUsuario, onResult);
+                }
+            }).start();
+
+            aloj.setEsFavorito(nuevoEstado);
+            _alojamiento.postValue(aloj);
+        }
     }
 }

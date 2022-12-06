@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -30,8 +31,10 @@ import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.viewModels.BusquedaViewModel;
 import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
+import com.mdgz.dam.labdam2022.viewModels.MainActivityViewModel;
 import com.mdgz.dam.labdam2022.viewModels.factories.BusquedaViewModelFactory;
 import com.mdgz.dam.labdam2022.viewModels.factories.DetalleAlojamientoViewModelFactory;
+import com.mdgz.dam.labdam2022.viewModels.factories.MainActivityViewModelFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,6 +75,7 @@ public class BusquedaFragment extends Fragment {
 
     // ViewModel
     private BusquedaViewModel busquedaViewModel;
+    private MainActivityViewModel viewModelMainActivity;
 
     // Nombre del archivo
     private String FILENAME = "logs";

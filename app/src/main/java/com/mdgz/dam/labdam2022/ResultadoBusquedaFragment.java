@@ -22,7 +22,9 @@ import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Usuario;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
+import com.mdgz.dam.labdam2022.viewModels.MainActivityViewModel;
 import com.mdgz.dam.labdam2022.viewModels.ResultadoBusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewModels.factories.MainActivityViewModelFactory;
 import com.mdgz.dam.labdam2022.viewModels.factories.ResultadoBusquedaViewModelFactory;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     private FragmentResultadoBusquedaBinding binding;
 
     private ResultadoBusquedaViewModel viewModel;
+    private MainActivityViewModel viewModelMainActivity;
 
     private RecyclerView recyclerView;
     private AlojamientoRecyclerAdapter adapter;
@@ -132,6 +135,9 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                 adapter.favoritoCambiado(posicion, alojamientoList.get(posicion).getEsFavorito());
             }
         });
+
+        viewModelMainActivity = new ViewModelProvider(requireActivity(), new MainActivityViewModelFactory()).get(
+                MainActivityViewModel.class);
         
         binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
 
@@ -157,6 +163,8 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         if (selectedViewHolder != null) {
             Bundle bundle = new Bundle();
             bundle.putString("idAlojamiento", idAlojamiento.toString());
+
+            viewModelMainActivity.setearAlojamientoSeleccionado(adapter.getItem(posicion));
 
             FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
                     .addSharedElement(selectedViewHolder.card, selectedViewHolder.card.getTransitionName())

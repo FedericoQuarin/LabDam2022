@@ -112,6 +112,10 @@ public class AlojamientoRecyclerAdapter
         return this.alojamientos.size();
     }
 
+    public Alojamiento getItem(int posicion) {
+        return this.alojamientos.get(posicion);
+    }
+
 
     public void setData(List<Alojamiento> alojamientos) {
         this.alojamientos = alojamientos;
