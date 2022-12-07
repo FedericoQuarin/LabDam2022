@@ -21,14 +21,14 @@ public class ResultadoBusquedaViewModel extends ViewModel {
 
     // El primer elemento de alojamientoCollection es la lista de alojamientos en si
     // El segundo marca la posicion actualizada en el caso de que se actualice una unica posicion
-    private final MutableLiveData<Pair<List<Alojamiento>, Integer>> _alojamientoCollection
+    final private MutableLiveData<Pair<List<Alojamiento>, Integer>> _alojamientoCollection
             = new MutableLiveData<>(new Pair<>(new ArrayList<>(), null));
-    public LiveData<Pair<List<Alojamiento>, Integer>> alojamientoCollection = _alojamientoCollection;
+    final public LiveData<Pair<List<Alojamiento>, Integer>> alojamientoCollection = _alojamientoCollection;
 
-    private final MutableLiveData<Boolean> _loading = new MutableLiveData<>(false);
-    public LiveData<Boolean> loading = _loading;
-    private final MutableLiveData<Throwable> _error = new MutableLiveData<>(null);
-    public LiveData<Throwable> error = _error;
+    final private MutableLiveData<Boolean> _loading = new MutableLiveData<>(false);
+    final public LiveData<Boolean> loading = _loading;
+    final private MutableLiveData<Throwable> _error = new MutableLiveData<>(null);
+    final public LiveData<Throwable> error = _error;
 
     public ResultadoBusquedaViewModel(final AlojamientoRepository alojamientoRepository) {
         this.alojamientoRepository = alojamientoRepository;

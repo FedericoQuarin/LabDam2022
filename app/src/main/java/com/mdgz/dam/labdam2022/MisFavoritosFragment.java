@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.OneShotPreDrawListener;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.FragmentNavigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,31 +17,29 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.transition.MaterialElevationScale;
 import com.mdgz.dam.labdam2022.databinding.FragmentMisFavoritosBinding;
-import com.mdgz.dam.labdam2022.databinding.FragmentMisReservasBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Ubicacion;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
-import com.mdgz.dam.labdam2022.recyclerView.ReservaRecyclerAdapter;
+import com.mdgz.dam.labdam2022.viewModels.MainActivityViewModel;
+import com.mdgz.dam.labdam2022.viewModels.MisFavoritosViewModel;
+import com.mdgz.dam.labdam2022.viewModels.factories.MainActivityViewModelFactory;
+import com.mdgz.dam.labdam2022.viewModels.factories.MisFavoritosViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class MisFavoritosFragment extends Fragment implements AlojamientoRecyclerAdapter.OnNoteListener{
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private FragmentMisFavoritosBinding binding;
 
-    private String mParam1;
-    private String mParam2;
+    private MisFavoritosViewModel viewModel;
+    private MainActivityViewModel viewModelMainActivity;
 
     private MaterialElevationScale transicionElevationScale_exit;
 
@@ -48,22 +47,9 @@ public class MisFavoritosFragment extends Fragment implements AlojamientoRecycle
         // Required empty public constructor
     }
 
-    public static MisFavoritosFragment newInstance(String param1, String param2) {
-        MisFavoritosFragment fragment = new MisFavoritosFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -81,15 +67,29 @@ public class MisFavoritosFragment extends Fragment implements AlojamientoRecycle
         postponeEnterTransition();
         OneShotPreDrawListener.add(view, this::startPostponedEnterTransition);
 
+        // Se busca el viewModel correspondiente a la actividad
+        viewModelMainActivity = new ViewModelProvider(requireActivity(), new MainActivityViewModelFactory()).get(
+                MainActivityViewModel.class);
+
+        // Se busca el viewModel correspondiente al fragmento
+        viewModel = new ViewModelProvider(this, new MisFavoritosViewModelFactory(getContext())).get(
+                MisFavoritosViewModel.class);
+
+        viewModelMainActivity.usuario.observe(getViewLifecycleOwner(), usuario -> {
+            viewModel.setearUsuario(usuario.getId());
+        });
+
         this.recyclerView = binding.recyclerMisFavoritos;
         this.layoutManager = new LinearLayoutManager(view.getContext());
         this.recyclerView.setLayoutManager(layoutManager);
 
-        List<Alojamiento> listaFantasma = new ArrayList<>();
-
-        this.adapter = new AlojamientoRecyclerAdapter(metodoTemporalParaQueCompile(), this);
+        this.adapter = new AlojamientoRecyclerAdapter(new ArrayList<>(), this);
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setClickable(true);
+
+        viewModel.alojamientos.observe(getViewLifecycleOwner(), alojamientos -> {
+
+        });
 
         // Borra cualquier transicion que se haya colocado previamente
         setExitTransition(null);

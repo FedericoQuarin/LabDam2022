@@ -23,7 +23,7 @@ public class AlojamientoRecyclerAdapter
 
     private final static Integer CAMBIADO_FAVORITOS = 1;
 
-    private List<Alojamiento> alojamientos;
+    protected List<Alojamiento> alojamientos;
 
     private OnNoteListener onNoteListener;
     private OnFavoriteChangedListener favoriteChangedListener;
