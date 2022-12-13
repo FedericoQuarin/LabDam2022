@@ -1,5 +1,7 @@
 package com.mdgz.dam.labdam2022.viewModels;
 
+import android.util.Pair;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -8,6 +10,7 @@ import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.persistencia.dataSources.OnResult;
 import com.mdgz.dam.labdam2022.persistencia.repositories.AlojamientoRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,7 +19,9 @@ public class MisFavoritosViewModel extends ViewModel {
 
     private UUID idUsuario;
 
-    final private MutableLiveData<List<Alojamiento>> _alojamientos = new MutableLiveData<>();
+    private Integer posicion;
+
+    final private MutableLiveData<List<Alojamiento>> _alojamientos = new MutableLiveData<>(new ArrayList<>());
     final public LiveData<List<Alojamiento>> alojamientos = _alojamientos;
     final private MutableLiveData<Boolean> _loading = new MutableLiveData<>(false);
     final public LiveData<Boolean> loading = _loading;
@@ -29,6 +34,10 @@ public class MisFavoritosViewModel extends ViewModel {
 
     public void setearUsuario(UUID idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public Integer getPosicion() {
+        return this.posicion;
     }
 
     public void buscarFavoritos() {
@@ -48,5 +57,32 @@ public class MisFavoritosViewModel extends ViewModel {
                 }
             });
         }).start();
+    }
+
+    public void borrarFavorito(int posicion) {
+        if (alojamientos.getValue() != null) {
+            List<Alojamiento> listaAlojamientos = alojamientos.getValue();
+            UUID id = listaAlojamientos.get(posicion).getId();
+
+            new Thread(() -> {
+                OnResult<UUID> onResult = new OnResult<>() {
+                    @Override
+                    public void onSuccess(UUID result) {
+                        // noop
+                    }
+
+                    @Override
+                    public void onError(Throwable exception) {
+                        _error.postValue(exception);
+                    }
+                };
+
+                alojamientoRepository.quitarFavorito(id, idUsuario, onResult);
+            }).start();
+
+            listaAlojamientos.remove(posicion);
+            this.posicion = posicion;
+            _alojamientos.postValue(listaAlojamientos);
+        }
     }
 }

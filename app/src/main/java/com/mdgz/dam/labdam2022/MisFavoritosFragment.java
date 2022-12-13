@@ -22,6 +22,7 @@ import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.model.Departamento;
 import com.mdgz.dam.labdam2022.model.Ubicacion;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
+import com.mdgz.dam.labdam2022.recyclerView.MisFavoritosRecyclerAdapter;
 import com.mdgz.dam.labdam2022.viewModels.MainActivityViewModel;
 import com.mdgz.dam.labdam2022.viewModels.MisFavoritosViewModel;
 import com.mdgz.dam.labdam2022.viewModels.factories.MainActivityViewModelFactory;
@@ -33,7 +34,7 @@ import java.util.UUID;
 
 public class MisFavoritosFragment extends Fragment implements AlojamientoRecyclerAdapter.OnNoteListener{
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private MisFavoritosRecyclerAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
     private FragmentMisFavoritosBinding binding;
@@ -71,9 +72,10 @@ public class MisFavoritosFragment extends Fragment implements AlojamientoRecycle
         viewModelMainActivity = new ViewModelProvider(requireActivity(), new MainActivityViewModelFactory()).get(
                 MainActivityViewModel.class);
 
-        // Se busca el viewModel correspondiente al fragmento
+        // Se busca el viewModel correspondiente al fragmento y se buscan los favoritos
         viewModel = new ViewModelProvider(this, new MisFavoritosViewModelFactory(getContext())).get(
                 MisFavoritosViewModel.class);
+        viewModel.buscarFavoritos();
 
         viewModelMainActivity.usuario.observe(getViewLifecycleOwner(), usuario -> {
             viewModel.setearUsuario(usuario.getId());
@@ -83,12 +85,31 @@ public class MisFavoritosFragment extends Fragment implements AlojamientoRecycle
         this.layoutManager = new LinearLayoutManager(view.getContext());
         this.recyclerView.setLayoutManager(layoutManager);
 
-        this.adapter = new AlojamientoRecyclerAdapter(new ArrayList<>(), this);
+        this.adapter = new MisFavoritosRecyclerAdapter(new ArrayList<>(), this);
         this.recyclerView.setAdapter(adapter);
         this.recyclerView.setClickable(true);
+        this.adapter.setOnFavoriteChangedListener((pos, nuevoEstado) -> {
+            viewModel.borrarFavorito(pos);
+        });
+
+        viewModel.loading.observe(getViewLifecycleOwner(), loading -> {
+            if (loading) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+                binding.recyclerMisFavoritos.setVisibility(View.INVISIBLE);
+            }
+            else {
+                binding.progressBar.setVisibility(View.GONE);
+                binding.recyclerMisFavoritos.setVisibility(View.VISIBLE);
+            }
+        });
 
         viewModel.alojamientos.observe(getViewLifecycleOwner(), alojamientos -> {
-
+            if (viewModel.getPosicion() == null) {
+                adapter.setData(alojamientos);
+            }
+            else {
+                adapter.favoritoBorrado(viewModel.getPosicion());
+            }
         });
 
         // Borra cualquier transicion que se haya colocado previamente

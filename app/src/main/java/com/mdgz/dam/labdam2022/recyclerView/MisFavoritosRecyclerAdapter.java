@@ -17,6 +17,6 @@ public class MisFavoritosRecyclerAdapter extends AlojamientoRecyclerAdapter {
     }
 
     public void favoritoBorrado(int pos) {
-
+        notifyItemRemoved(pos);
     }
 }

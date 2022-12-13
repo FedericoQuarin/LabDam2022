@@ -59,7 +59,7 @@ public class MisReservasFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentMisReservasBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -87,9 +87,11 @@ public class MisReservasFragment extends Fragment {
         viewModel.loading.observe(getViewLifecycleOwner(), loading -> {
             if (loading) {
                 binding.progressBar.setVisibility(View.VISIBLE);
+                binding.recyclerMisReservas.setVisibility(View.INVISIBLE);
             }
             else {
                 binding.progressBar.setVisibility(View.GONE);
+                binding.recyclerMisReservas.setVisibility(View.VISIBLE);
             }
         });
     }

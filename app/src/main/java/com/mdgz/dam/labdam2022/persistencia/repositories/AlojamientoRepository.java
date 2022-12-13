@@ -124,6 +124,7 @@ public class AlojamientoRepository {
                     recuperarAlojamiento(idAlojamiento, new OnResult<Alojamiento>() {
                         @Override
                         public void onSuccess(Alojamiento result) {
+                            result.setEsFavorito(true);
                             alojamientos.add(result);
                         }
 
