@@ -2,7 +2,11 @@ package com.mdgz.dam.labdam2022;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.NavGraph;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -10,6 +14,7 @@ import androidx.preference.PreferenceManager;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,12 +23,21 @@ import android.view.View;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.transition.MaterialFadeThrough;
 import com.mdgz.dam.labdam2022.databinding.ActivityMainBinding;
+import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     private MaterialFadeThrough materialFadeThrough;
+
+    final private HashSet<Integer> destinosPrincipales = new HashSet<>();
+    private Integer dondeVolver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +56,17 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(navController.getGraph()).build();
 
+        NavGraph mainNavGraph = (NavGraph) navController.getGraph().findNode(R.id.mainNavGraph);
+
+        if (mainNavGraph != null) {
+            for (NavDestination d : mainNavGraph) {
+                destinosPrincipales.add(d.getId());
+                Log.e("MainActivity", String.valueOf(d.getId()));
+            }
+        }
+
+        dondeVolver = R.id.busquedaFragment;
+
         NavigationUI.setupWithNavController(
                 toolbar, navController, appBarConfiguration);
 
@@ -58,23 +83,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+        NavController navController = NavHostFragment.findNavController(binding.fragmentContainerView.getFragment());
+
+        NavHostFragment navHostFragment = binding.fragmentContainerView.getFragment();
+        Fragment fragment = navHostFragment.getChildFragmentManager().getPrimaryNavigationFragment();
+
+
+        if (fragment instanceof ResultadoBusquedaFragment) {
+            dondeVolver = R.id.resultadoBusquedaFragment;
+        }
+        else if (fragment instanceof DetalleAlojamientoFragment) {
+            dondeVolver = R.id.detalleAlojamientoFragment;
+        }
+        else if (fragment instanceof BusquedaFragment){
+            dondeVolver = R.id.busquedaFragment;
+        }
+
+        navController.popBackStack(dondeVolver, false);
+
         switch (item.getItemId()) {
             case R.id.boton_buscar:
-                NavHostFragment.findNavController(binding.fragmentContainerView.getFragment())
-                        .navigate(R.id.action_global_busquedaFragment);
+                navController.navigate(R.id.action_global_busquedaFragment);
                 return true;
             case R.id.mis_reservas:
-                NavHostFragment.findNavController(binding.fragmentContainerView.getFragment())
-                        .navigate(R.id.action_global_misReservasFragment);
+                navController.navigate(R.id.action_global_misReservasFragment);
                 return true;
             case R.id.mis_favoritos:
-                NavHostFragment.findNavController(binding.fragmentContainerView.getFragment())
-                        .navigate(R.id.action_global_misFavoritosFragment);
+                navController.navigate(R.id.action_global_misFavoritosFragment);
                 return true;
             case R.id.opciones:
-                NavHostFragment.findNavController(binding.fragmentContainerView.getFragment())
-                        .navigate(R.id.action_global_settingsFragment);
+                navController.navigate(R.id.action_global_settingsFragment);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
