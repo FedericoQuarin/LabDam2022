@@ -23,7 +23,7 @@ public class AlojamientoRecyclerAdapter
 
     private final static Integer CAMBIADO_FAVORITOS = 1;
 
-    private List<Alojamiento> alojamientos;
+    protected List<Alojamiento> alojamientos;
 
     private OnNoteListener onNoteListener;
     private OnFavoriteChangedListener favoriteChangedListener;
@@ -110,6 +110,10 @@ public class AlojamientoRecyclerAdapter
     @Override
     public int getItemCount() {
         return this.alojamientos.size();
+    }
+
+    public Alojamiento getItem(int posicion) {
+        return this.alojamientos.get(posicion);
     }
 
 

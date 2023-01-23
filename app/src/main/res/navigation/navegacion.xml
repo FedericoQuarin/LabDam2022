@@ -3,44 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navegacion"
-    app:startDestination="@id/busquedaFragment">
+    app:startDestination="@id/mainNavGraph">
 
-    <fragment
-        android:id="@+id/busquedaFragment"
-        android:name="com.mdgz.dam.labdam2022.BusquedaFragment"
-        android:label="AirBooking"
-        tools:layout="@layout/fragment_busqueda" >
-        <action
-            android:id="@+id/action_busquedaFragment_to_resultadoBusquedaFragment"
-            app:destination="@id/resultadoBusquedaFragment"
-            app:enterAnim="@anim/desplazamiento_derecha_in"
-            app:exitAnim="@anim/desplazamiento_derecha_out"
-            app:popEnterAnim="@anim/desplazamiento_izquierda_in"
-            app:popExitAnim="@anim/desplazamiento_izquierda_out" />
-    </fragment>
-    <fragment
-        android:id="@+id/resultadoBusquedaFragment"
-        android:name="com.mdgz.dam.labdam2022.ResultadoBusquedaFragment"
-        android:label="AirBooking"
-        tools:layout="@layout/fragment_resultado_busqueda" >
-        <action
-            android:id="@+id/action_resultadoBusquedaFragment_to_detalleAlojamientoFragment"
-            app:destination="@id/detalleAlojamientoFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/detalleAlojamientoFragment"
-        android:name="com.mdgz.dam.labdam2022.DetalleAlojamientoFragment"
-        android:label="AirBooking"
-        tools:layout="@layout/fragment_detalle_alojamiento" >
-        <action
-            android:id="@+id/action_detalleAlojamientoFragment_to_busquedaFragment"
-            app:destination="@id/busquedaFragment"
-            app:launchSingleTop="true"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popUpTo="@id/busquedaFragment"
-            app:popUpToInclusive="true" />
-    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.mdgz.dam.labdam2022.SettingsFragment"
@@ -62,46 +26,86 @@
     <action
         android:id="@+id/action_global_settingsFragment"
         app:destination="@id/settingsFragment"
-        app:launchSingleTop="true"
         app:enterAnim="@anim/fade_in"
         app:exitAnim="@anim/fade_out"
+        app:launchSingleTop="true"
         app:popEnterAnim="@anim/fade_in"
-        app:popExitAnim="@anim/fade_out"/>
+        app:popExitAnim="@anim/fade_out" />
     <action
         android:id="@+id/action_global_busquedaFragment"
-        app:destination="@id/busquedaFragment"
+        app:destination="@id/mainNavGraph"
         app:launchSingleTop="true"
         app:popUpTo="@id/busquedaFragment"
         app:popUpToInclusive="true"/>
     <action
         android:id="@+id/action_global_misReservasFragment"
-        app:launchSingleTop="true"
         app:destination="@id/misReservasFragment"
         app:enterAnim="@anim/desplazamiento_derecha_in"
         app:exitAnim="@anim/desplazamiento_derecha_out"
+        app:launchSingleTop="true"
         app:popEnterAnim="@anim/desplazamiento_izquierda_in"
-        app:popExitAnim="@anim/desplazamiento_izquierda_out" />
+        app:popExitAnim="@anim/desplazamiento_izquierda_out"
+        app:popUpToInclusive="false" />
     <action
         android:id="@+id/action_global_misFavoritosFragment"
-        app:launchSingleTop="true"
         app:destination="@id/misFavoritosFragment"
         app:enterAnim="@anim/desplazamiento_derecha_in"
         app:exitAnim="@anim/desplazamiento_derecha_out"
+        app:launchSingleTop="true"
         app:popEnterAnim="@anim/desplazamiento_izquierda_in"
         app:popExitAnim="@anim/desplazamiento_izquierda_out" />
     <fragment
         android:id="@+id/misReservasFragment"
         android:name="com.mdgz.dam.labdam2022.MisReservasFragment"
-        android:label="AirBooking"
+        android:label="Mis Reservas"
         tools:layout="@layout/fragment_mis_reservas" />
     <fragment
         android:id="@+id/misFavoritosFragment"
         android:name="com.mdgz.dam.labdam2022.MisFavoritosFragment"
-        android:label="MisFavoritosFragment"
+        android:label="Mis Favoritos"
         tools:layout="@layout/fragment_mis_favoritos" >
         <action
             android:id="@+id/action_misFavoritosFragment_to_detalleAlojamientoFragment"
-            app:destination="@id/detalleAlojamientoFragment" />
+            app:destination="@id/mainNavGraph" />
     </fragment>
+    <navigation android:id="@+id/mainNavGraph"
+        app:startDestination="@id/busquedaFragment">
+        <fragment
+            android:id="@+id/resultadoBusquedaFragment"
+            android:name="com.mdgz.dam.labdam2022.ResultadoBusquedaFragment"
+            android:label="AirBooking"
+            tools:layout="@layout/fragment_resultado_busqueda">
+            <action
+                android:id="@+id/action_resultadoBusquedaFragment_to_detalleAlojamientoFragment"
+                app:destination="@id/detalleAlojamientoFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/detalleAlojamientoFragment"
+            android:name="com.mdgz.dam.labdam2022.DetalleAlojamientoFragment"
+            android:label="AirBooking"
+            tools:layout="@layout/fragment_detalle_alojamiento">
+            <action
+                android:id="@+id/action_detalleAlojamientoFragment_to_busquedaFragment"
+                app:destination="@id/busquedaFragment"
+                app:enterAnim="@anim/fade_in"
+                app:exitAnim="@anim/fade_out"
+                app:launchSingleTop="true"
+                app:popUpTo="@id/busquedaFragment"
+                app:popUpToInclusive="true" />
+        </fragment>
+        <fragment
+            android:id="@+id/busquedaFragment"
+            android:name="com.mdgz.dam.labdam2022.BusquedaFragment"
+            android:label="AirBooking"
+            tools:layout="@layout/fragment_busqueda">
+            <action
+                android:id="@+id/action_busquedaFragment_to_resultadoBusquedaFragment"
+                app:destination="@id/resultadoBusquedaFragment"
+                app:enterAnim="@anim/desplazamiento_derecha_in"
+                app:exitAnim="@anim/desplazamiento_derecha_out"
+                app:popEnterAnim="@anim/desplazamiento_izquierda_in"
+                app:popExitAnim="@anim/desplazamiento_izquierda_out" />
+        </fragment>
+    </navigation>
 
 </navigation>

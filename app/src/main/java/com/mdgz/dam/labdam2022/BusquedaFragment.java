@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -30,8 +31,10 @@ import com.mdgz.dam.labdam2022.databinding.FragmentBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.Ciudad;
 import com.mdgz.dam.labdam2022.viewModels.BusquedaViewModel;
 import com.mdgz.dam.labdam2022.viewModels.DetalleAlojamientoViewModel;
+import com.mdgz.dam.labdam2022.viewModels.MainActivityViewModel;
 import com.mdgz.dam.labdam2022.viewModels.factories.BusquedaViewModelFactory;
 import com.mdgz.dam.labdam2022.viewModels.factories.DetalleAlojamientoViewModelFactory;
+import com.mdgz.dam.labdam2022.viewModels.factories.MainActivityViewModelFactory;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -72,6 +75,7 @@ public class BusquedaFragment extends Fragment {
 
     // ViewModel
     private BusquedaViewModel busquedaViewModel;
+    private MainActivityViewModel viewModelMainActivity;
 
     // Nombre del archivo
     private String FILENAME = "logs";
@@ -94,12 +98,15 @@ public class BusquedaFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        Log.e("BusquedaFragment", "OnCreate");
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e("BusquedaFragment", "OnCreateView");
 
         binding = FragmentBusquedaBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -108,6 +115,7 @@ public class BusquedaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.e("BusquedaFragment", "OnViewCreated");
         // Me guardo el contexto para generar el archivo
         this.ctx = view.getContext();
 

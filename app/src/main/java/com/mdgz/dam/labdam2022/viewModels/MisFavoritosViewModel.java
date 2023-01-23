@@ -14,39 +14,40 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ResultadoBusquedaViewModel extends ViewModel {
-    final AlojamientoRepository alojamientoRepository;
+public class MisFavoritosViewModel extends ViewModel {
+    private AlojamientoRepository alojamientoRepository;
 
     private UUID idUsuario;
 
-    // El primer elemento de alojamientoCollection es la lista de alojamientos en si
-    // El segundo marca la posicion actualizada en el caso de que se actualice una unica posicion
-    final private MutableLiveData<Pair<List<Alojamiento>, Integer>> _alojamientoCollection
-            = new MutableLiveData<>(new Pair<>(new ArrayList<>(), null));
-    final public LiveData<Pair<List<Alojamiento>, Integer>> alojamientoCollection = _alojamientoCollection;
+    private Integer posicion;
 
+    final private MutableLiveData<List<Alojamiento>> _alojamientos = new MutableLiveData<>(new ArrayList<>());
+    final public LiveData<List<Alojamiento>> alojamientos = _alojamientos;
     final private MutableLiveData<Boolean> _loading = new MutableLiveData<>(false);
     final public LiveData<Boolean> loading = _loading;
     final private MutableLiveData<Throwable> _error = new MutableLiveData<>(null);
     final public LiveData<Throwable> error = _error;
 
-    public ResultadoBusquedaViewModel(final AlojamientoRepository alojamientoRepository) {
+    public MisFavoritosViewModel(final AlojamientoRepository alojamientoRepository) {
         this.alojamientoRepository = alojamientoRepository;
-        recuperarAlojamientos();
     }
 
     public void setearUsuario(UUID idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public void recuperarAlojamientos() {
+    public Integer getPosicion() {
+        return this.posicion;
+    }
+
+    public void buscarFavoritos() {
         new Thread(() -> {
             _loading.postValue(true);
-            alojamientoRepository.recuperarAlojamientos(idUsuario, new OnResult<>() {
+            alojamientoRepository.recuperarAlojamientosFavoritos(idUsuario, new OnResult<List<Alojamiento>>() {
                 @Override
                 public void onSuccess(List<Alojamiento> result) {
                     _loading.postValue(false);
-                    _alojamientoCollection.postValue(new Pair<>(result, null));
+                    _alojamientos.postValue(result);
                 }
 
                 @Override
@@ -58,15 +59,16 @@ public class ResultadoBusquedaViewModel extends ViewModel {
         }).start();
     }
 
-    public void cambiarFavorito(int posicion, boolean nuevoEstado) {
-        if (alojamientoCollection.getValue() != null) {
-            List<Alojamiento> alojamientos = alojamientoCollection.getValue().first;
+    public void borrarFavorito(int posicion) {
+        if (alojamientos.getValue() != null) {
+            List<Alojamiento> listaAlojamientos = alojamientos.getValue();
+            UUID id = listaAlojamientos.get(posicion).getId();
 
             new Thread(() -> {
                 OnResult<UUID> onResult = new OnResult<>() {
                     @Override
                     public void onSuccess(UUID result) {
-
+                        // noop
                     }
 
                     @Override
@@ -75,16 +77,12 @@ public class ResultadoBusquedaViewModel extends ViewModel {
                     }
                 };
 
-                if (nuevoEstado) {
-                    alojamientoRepository.colocarFavorito(alojamientos.get(posicion).getId(), idUsuario, onResult);
-                }
-                else {
-                    alojamientoRepository.quitarFavorito(alojamientos.get(posicion).getId(), idUsuario, onResult);
-                }
+                alojamientoRepository.quitarFavorito(id, idUsuario, onResult);
             }).start();
 
-            alojamientos.get(posicion).setEsFavorito(nuevoEstado);
-            _alojamientoCollection.postValue(new Pair<>(alojamientos, posicion));
+            listaAlojamientos.remove(posicion);
+            this.posicion = posicion;
+            _alojamientos.postValue(listaAlojamientos);
         }
     }
 }

@@ -114,4 +114,34 @@ public class AlojamientoRepository {
 
         //Log.e("AlojamientoRespository", "Persistencia favorito no implementada");
     }
+
+    public void recuperarAlojamientosFavoritos(UUID idUsuario, OnResult<List<Alojamiento>> callback) {
+        favoritoDataSource.recuperarFavoritos(idUsuario, new OnResult<>() {
+            @Override
+            public void onSuccess(LinkedHashSet<UUID> result) {
+                List<Alojamiento> alojamientos = new ArrayList<>();
+                for (UUID idAlojamiento : result) {
+                    recuperarAlojamiento(idAlojamiento, new OnResult<Alojamiento>() {
+                        @Override
+                        public void onSuccess(Alojamiento result) {
+                            result.setEsFavorito(true);
+                            alojamientos.add(result);
+                        }
+
+                        @Override
+                        public void onError(Throwable exception) {
+                            callback.onError(exception);
+                        }
+                    });
+                }
+
+                callback.onSuccess(alojamientos);
+            }
+
+            @Override
+            public void onError(Throwable exception) {
+                callback.onError(exception);
+            }
+        });
+    }
 }

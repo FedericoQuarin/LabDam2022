@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,9 @@ import com.mdgz.dam.labdam2022.databinding.FragmentResultadoBusquedaBinding;
 import com.mdgz.dam.labdam2022.model.Alojamiento;
 import com.mdgz.dam.labdam2022.model.Usuario;
 import com.mdgz.dam.labdam2022.recyclerView.AlojamientoRecyclerAdapter;
+import com.mdgz.dam.labdam2022.viewModels.MainActivityViewModel;
 import com.mdgz.dam.labdam2022.viewModels.ResultadoBusquedaViewModel;
+import com.mdgz.dam.labdam2022.viewModels.factories.MainActivityViewModelFactory;
 import com.mdgz.dam.labdam2022.viewModels.factories.ResultadoBusquedaViewModelFactory;
 
 import java.util.ArrayList;
@@ -35,6 +38,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     private FragmentResultadoBusquedaBinding binding;
 
     private ResultadoBusquedaViewModel viewModel;
+    private MainActivityViewModel viewModelMainActivity;
 
     private RecyclerView recyclerView;
     private AlojamientoRecyclerAdapter adapter;
@@ -52,9 +56,6 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     private List<String> ListaCriteriosDeBusqueda = new ArrayList();
 
     private MaterialElevationScale transicionElevationScale_exit;
-
-    // TODO ver el tema de usuarios
-    private Usuario usuario;
 
     public ResultadoBusquedaFragment() {
         // Required empty public constructor
@@ -77,16 +78,21 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Log.e("ResultadoBusquedaFragment", "OnViewCreated");
         // Se pospone la transicion de entrada para que funcione la transicion al volver
         postponeEnterTransition();
         OneShotPreDrawListener.add(view, this::startPostponedEnterTransition);
 
-        usuario = new Usuario(UUID.fromString(getString(R.string.id_usuario_pruebas)),
-                "Pedrito",
-                "pedrito@gmail.com",
-                new ArrayList<>(),
-                new ArrayList<>());
+
+        // Se busca el viewModel correspondiente a la actividad
+        viewModelMainActivity = new ViewModelProvider(requireActivity(), new MainActivityViewModelFactory()).get(
+                MainActivityViewModel.class);
+
+
+        // Se busca el viewModel correspondiente al fragmento
+        viewModel = new ViewModelProvider(this, new ResultadoBusquedaViewModelFactory(getContext())).get(
+                ResultadoBusquedaViewModel.class);
+
 
         // Se setea el recycler view
         recyclerView = binding.recyclerAlojamiento;
@@ -102,10 +108,10 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         recyclerView.setAdapter(adapter);
         recyclerView.setClickable(true);
 
-        viewModel = new ViewModelProvider(this, new ResultadoBusquedaViewModelFactory(getContext())).get(
-                ResultadoBusquedaViewModel.class);
 
-        viewModel.setearUsuario(usuario.getId());
+        viewModelMainActivity.usuario.observe(getViewLifecycleOwner(), u -> {
+            viewModel.setearUsuario(u.getId());
+        });
 
         viewModel.loading.observe(getViewLifecycleOwner(), loading -> {
             if (loading) {
@@ -132,8 +138,6 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
                 adapter.favoritoCambiado(posicion, alojamientoList.get(posicion).getEsFavorito());
             }
         });
-        
-        binding.labelResultadoBusqueda.setText(adapter.getItemCount() + " alojamientos encontrados.");
 
         // Borra cualquier transicion que se haya colocado previamente
         setExitTransition(null);
@@ -157,6 +161,8 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
         if (selectedViewHolder != null) {
             Bundle bundle = new Bundle();
             bundle.putString("idAlojamiento", idAlojamiento.toString());
+
+            viewModelMainActivity.setearAlojamientoSeleccionado(adapter.getItem(posicion));
 
             FragmentNavigator.Extras extras = new FragmentNavigator.Extras.Builder()
                     .addSharedElement(selectedViewHolder.card, selectedViewHolder.card.getTransitionName())
