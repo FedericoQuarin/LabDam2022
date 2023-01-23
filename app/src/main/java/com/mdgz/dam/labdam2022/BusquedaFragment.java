@@ -98,12 +98,15 @@ public class BusquedaFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        Log.e("BusquedaFragment", "OnCreate");
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.e("BusquedaFragment", "OnCreateView");
 
         binding = FragmentBusquedaBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -112,6 +115,7 @@ public class BusquedaFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        Log.e("BusquedaFragment", "OnViewCreated");
         // Me guardo el contexto para generar el archivo
         this.ctx = view.getContext();
 

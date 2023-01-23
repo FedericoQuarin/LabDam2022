@@ -13,6 +13,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,7 @@ public class ResultadoBusquedaFragment extends Fragment implements AlojamientoRe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Log.e("ResultadoBusquedaFragment", "OnViewCreated");
         // Se pospone la transicion de entrada para que funcione la transicion al volver
         postponeEnterTransition();
         OneShotPreDrawListener.add(view, this::startPostponedEnterTransition);

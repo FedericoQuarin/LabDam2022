@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         //testing();
         binding = ActivityMainBinding.inflate(getLayoutInflater());
 
+        Log.e("MainActivity", "OnCreate");
+
         MaterialToolbar toolbar = binding.materialToolbar;
 
         View view = binding.getRoot();
@@ -61,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
         if (mainNavGraph != null) {
             for (NavDestination d : mainNavGraph) {
                 destinosPrincipales.add(d.getId());
-                Log.e("MainActivity", String.valueOf(d.getId()));
             }
         }
 
@@ -72,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         configurarTemaOscuro();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e("MainActivity", "OnDestroy");
     }
 
     @Override
